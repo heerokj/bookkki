@@ -1,15 +1,16 @@
 import Link from "next/link";
+import HeaderClient from "./Header-client";
 
 export default function Header() {
   return (
-    <>
-      <div>
-        <span>로고</span>
+    <div className="flex justify-between items-center border-b-[1px] h-[64px] px-[50px] ">
+      <div className="flex gap-8">
+        <Link href={"/"}>로고</Link>
         <Link href={"/feed"}>피드</Link>
-        <Link href={"/"}>나의 책들</Link>
-        <Link href={"/"}>챗챗</Link>
+        <Link href={"/my-books"}>나의 책들</Link>
+        <Link href={"/chatting"}>챗챗</Link>
       </div>
-      <div>다크모드 등등</div>
-    </>
+      <HeaderClient />
+    </div>
   );
 }
