@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Footer from "@/components/layout/Footer";
-import Header from "@/components/layout/Header";
+import { Noto_Sans_KR } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -12,6 +11,13 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// If loading a variable font, you don't need to specify the font weight
+const note_sans_kr = Noto_Sans_KR({
+  subsets: ["latin"],
+  display: "swap",
+  weight: ["400"],
 });
 
 export const metadata: Metadata = {
@@ -27,11 +33,12 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased ${note_sans_kr.className}`}
       >
-        <Header />
-        {children}
-        <Footer />
+        <div className=" bg-slate-100">
+          {/* max-w-[90%] my-0 mx-auto */}
+          {children}
+        </div>
       </body>
     </html>
   );
