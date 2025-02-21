@@ -19,8 +19,10 @@ export default function SearchBar() {
     }
   };
   return (
-    <div>
-      <button onSubmit={onSubmit}>돋보기</button>
+    <div className="flex justify-center m-[50px]">
+      <button onSubmit={onSubmit}>
+        <img src="icons/search.svg" alt="" />
+      </button>
       <input
         value={search}
         onChange={onChangeSearch}
