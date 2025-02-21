@@ -7,7 +7,7 @@ export default function Header() {
       <div className="flex gap-8">
         <Link href={"/"}>로고</Link>
         <Link href={"/feed"}>피드</Link>
-        <Link href={"/my-books"}>나의 책들</Link>
+        <Link href={"/my-books"}>내 서재</Link>
         <Link href={"/chatting"}>챗챗</Link>
       </div>
       <HeaderClient />

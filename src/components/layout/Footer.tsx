@@ -3,7 +3,7 @@ export default function Footer() {
     <div className="border-t-[1px] py-[20px] px-[50px]">
       <div className="flex justify-between p-[5px]">
         <p className="font-bold text-[16px]">(주)북끼 Bookkki</p>
-        <ul className="flex gap-4">
+        <ul className="flex gap-5">
           <li>
             <a href="mailto:wjdgmlfhr0321@gmail.com">
               <img src="/icons/mail.svg" alt="email" />
