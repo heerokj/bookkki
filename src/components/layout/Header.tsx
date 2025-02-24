@@ -3,7 +3,7 @@ import HeaderClient from "./Header-client";
 
 export default function Header() {
   return (
-    <div className="flex justify-between items-center border-b-[1px] h-[64px] px-[50px] ">
+    <div className="flex justify-between items-center border-b-[1px] h-[64px]">
       <div className="flex gap-[50px]">
         <Link href={"/"}>
           <img
@@ -16,7 +16,7 @@ export default function Header() {
         <div className="flex gap-[50px] mt-[10px]">
           <Link href={"/feed"}>피드</Link>
           <Link href={"/my-books"}>내 서재</Link>
-          <Link href={"/chatting"}>챗챗</Link>
+          <Link href={"/chat"}>챗챗</Link>
         </div>
       </div>
       <HeaderClient />

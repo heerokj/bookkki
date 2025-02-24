@@ -21,12 +21,15 @@ export default function WritePage() {
   };
 
   const handleChangeImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files as FileList; //NOTE - e.target.files의 files 속성이 존재하지 않기 때문에 files가 존재하는 HTMLInputElement타입을 as 키워드로 지정
+    //NOTE - e.target.files의 files 속성이 존재하지 않기 때문에 files가 존재하는 HTMLInputElement타입을 as 키워드로 지정
+    const fileList = e.target.files as FileList;
     if (fileList.length >= 9) {
       alert("사진은 최대 9장까지 등록가능합니다.");
       return;
     } else {
+      // 리스트를 배열로 저장
       const filesArray = Array.from(fileList);
+      // url로 변경
       const selectedFiles = filesArray.map((file) => {
         return URL.createObjectURL(file);
       });
@@ -38,7 +41,7 @@ export default function WritePage() {
   return (
     <div>
       <form>
-        <div className="flex justify-between items-center border-b-[1px] h-[50px] px-[350px] ">
+        <div className="flex justify-between items-center border-b-[1px] h-[50px]">
           <div>
             <button type="button" onClick={backSpaceBtn}>
               <img src="/icons/arrow-left.svg" alt="arrow-left" />

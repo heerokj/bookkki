@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <div className="border-t-[1px] py-[20px] px-[50px]">
+    <div className="border-t-[1px] py-[20px]">
       <div className="flex justify-between p-[5px]">
         <p className="font-bold text-[16px]">(주)북끼 Bookkki</p>
         <ul className="flex gap-5">
