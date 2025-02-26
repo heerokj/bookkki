@@ -9,7 +9,7 @@ import { useState } from "react";
 export default function WritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [previewImages, setPreviewImages] = useState<string[]>([]); //TODO - previewImages에 있는 파일이 blob:http://... 같은 blob URL이 아니라 File 객체여야 해!
 
   const route = useRouter();
   const supabase = createClient();
@@ -19,19 +19,34 @@ export default function WritePage() {
     route.push("/feed");
   };
 
+  const convertURLtoFile = async (url: string) => {
+    const response = await fetch(url);
+    const data = await response.blob();
+    const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
+    const filename = url.split("/").pop(); // url 구조에 맞게 수정할 것
+    const metadata = { type: `image/${ext}` };
+    return new File([data], filename!, metadata);
+  };
+
   // 이미지 스토리지에 업로드 후 url 반환
   const uploadImages = async () => {
     //이미지 스토리지에 업로드
     const uploadUrls = [];
 
+    //NOTE - previewImages에 있는 파일이 blob:http://... 같은 blob URL이 아니라 File 객체여야 해!
     for (const file of previewImages) {
       const fileUUid = uuid(); //supabase 한글명은 안됏엇나?.. 암튼 uuid로!
       const filePath = `post/${fileUUid}`; // 파일 저장 경로
 
+      //TODO - previewImages를 File 객체로 변환하기
+      const newFile = await convertURLtoFile(file);
+
       //파일 업로드
       const { data, error } = await supabase.storage
         .from("images")
-        .upload(filePath, file); //filePath는 문자열(string)이어야 한다.
+        .upload(filePath, newFile); //NOTE - filePath는 문자열(string)이어야 한다.
+      //NOTE - file은 blob:~~ 이면 안돼!!!!!!!!!
+      //Supabase의 .upload() 메서드는 File 객체 또는 Blob 객체를 받아야 해. 단순한 URL 문자열은 업로드 할 수 없다!!!
 
       if (error) {
         console.error("이미지 파일 업로드 실패 :", error.message);
@@ -54,15 +69,27 @@ export default function WritePage() {
   const handleClickUpload = async () => {
     alert("등록하시겠습니까?");
 
-    // url 가져오기
-    const uploadUrls = await uploadImages();
+    try {
+      // url 가져오기
+      const uploadUrls = await uploadImages();
 
-    const { data, error } = await supabase.from("posts").insert({
-      user_id: "42d9022d-2a87-4e71-bf1b-369b5599d057",
-      title: title,
-      content: content,
-      image_urls: uploadUrls,
-    });
+      const { data, error } = await supabase.from("posts").insert({
+        user_id: "42d9022d-2a87-4e71-bf1b-369b5599d057",
+        title: title,
+        content: content,
+        image_urls: uploadUrls,
+      });
+
+      if (error) {
+        console.error(error.message);
+        alert("등록에 실패했습니다.");
+      }
+
+      alert("등록되었습니다.");
+      route.push("/feed");
+    } catch (error) {
+      console.error("등록에 실패했습니다.", error);
+    }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -78,8 +105,6 @@ export default function WritePage() {
 
       // url로 변경
       const selectedFiles = filesArray.map((file) => {
-        console.log("🚀 ~ selectedFiles ~ file:", file);
-        console.log("🚀 ~ selectedFiles ~ file.name:", file.name);
         return URL.createObjectURL(file);
       });
       //NOTE -  images 상태 값에 배열 합치기
