@@ -37,7 +37,7 @@ export default async function FeedDetail({
 
   return (
     <>
-      <div className="feed-image-container flex justify-end">
+      <div className="feed-image-container flex justify-end ">
         <Link href={"/feed"} className="p-4">
           <img src="/icons/arrow-left.svg" alt="arrow" width={20} height={20} />
         </Link>

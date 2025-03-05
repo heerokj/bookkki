@@ -1,19 +1,28 @@
 "use client";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import Profile2 from "../Profile2";
 import createCommentAction from "@/action/create-comment-action";
+import { FeedComment } from "@/types/feed";
 
 export default function CommentEditor({
   focusTest,
   postId,
+  onCommentAdd,
 }: {
   focusTest: React.RefObject<HTMLInputElement | null>;
   postId: string;
+  onCommentAdd: (newComment: FeedComment) => void;
 }) {
   const [state, formAction, isPending] = useActionState(
     createCommentAction,
     null
   );
+
+  useEffect(() => {
+    if (state?.status && state?.data?.length) {
+      onCommentAdd(state.data[0]); // 전체 객체를 전달해야 함
+    }
+  }, [state]); // state가 변경될 때만 실행
 
   return (
     <form action={formAction}>

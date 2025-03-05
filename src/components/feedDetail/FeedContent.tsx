@@ -1,9 +1,9 @@
+"use client";
 import { FeedComment, FeedData } from "@/types/feed";
 import FeedContentProfileContainer from "./FeedContentProfileContainer";
 import FeedContentLikeContainer from "./FeedContentLikeContainer";
 import CommentEditor from "./CommentEditor";
-// import { useRef } from "react";
-
+import { useRef, useState } from "react";
 export default function FeedContent({
   feedData,
   commentDataList,
@@ -11,7 +11,8 @@ export default function FeedContent({
   feedData: FeedData;
   commentDataList: FeedComment[];
 }) {
-  // const focusTest = useRef<HTMLInputElement>(null);
+  const focusTest = useRef<HTMLInputElement>(null);
+  const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
   return (
     <div className="feed-contents flex flex-col justify-between border-[1px] rounded-sm">
@@ -19,7 +20,7 @@ export default function FeedContent({
       <div className="comments-section p-6 h-[280px] overflow-y-auto">
         <div className="pb-4">{feedData.content}</div>
         <div>
-          {commentDataList.map((comment) => (
+          {comments.map((comment) => (
             <div key={comment.id} className="flex gap-4 py-2">
               <div>프로필</div>
               <div>
@@ -33,10 +34,14 @@ export default function FeedContent({
           ))}
         </div>
       </div>
-      {/* <FeedContentLikeContainer feedData={feedData} focusTest={focusTest} />
-      <CommentEditor  postId={feedData.id} focusTest={focusTest} /> */}
-      <FeedContentLikeContainer feedData={feedData} />
-      <CommentEditor postId={feedData.id} />
+      <FeedContentLikeContainer feedData={feedData} focusTest={focusTest} />
+      <CommentEditor
+        postId={feedData.id}
+        focusTest={focusTest}
+        onCommentAdd={(newComment) =>
+          setComments((prev) => [newComment, ...prev])
+        }
+      />
     </div>
   );
 }
