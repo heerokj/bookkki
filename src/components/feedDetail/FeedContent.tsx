@@ -39,7 +39,7 @@ export default function FeedContent({
         postId={feedData.id}
         focusTest={focusTest}
         onCommentAdd={(newComment) =>
-          setComments((prev) => [newComment, ...prev])
+          setComments((prev) => [...prev, newComment])
         }
       />
     </div>
