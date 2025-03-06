@@ -70,7 +70,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                 </div>
               </div>
             )}
-            <button className="h-[50px] p-2 rounded-md w-[380px] my-2 bg-[#84bbe1]">
+            <button className="h-[50px] p-2 rounded-md w-[380px] my-2 bg-[#84bbe1] hover:bg-[#00bbf9] text-white">
               {mode === "signIn" ? "로그인" : "회원가입"}
             </button>
             <div className="flex justify-center gap-2 p-2">
