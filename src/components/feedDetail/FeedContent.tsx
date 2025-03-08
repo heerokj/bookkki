@@ -14,6 +14,7 @@ export default function FeedContent({
   commentDataList: FeedComment[];
 }) {
   const focusTest = useRef<HTMLInputElement>(null);
+  const activate = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
   const handleCommentDelete = async (commentId: string, postId: string) => {
@@ -21,6 +22,8 @@ export default function FeedContent({
     const data = await deleteComment(commentId, postId);
     setComments(data?.commentDataList as FeedComment[]);
   };
+
+  const handleCommentUpdate = async () => {};
 
   return (
     <div className="feed-contents flex flex-col justify-between border-[1px] rounded-sm">
@@ -30,18 +33,23 @@ export default function FeedContent({
         <div>
           {comments.map((comment) => (
             <div key={comment.id} className="flex justify-between py-2">
-              <div className="flex gap-2">
+              {/* 왼쪽 부분 (3) */}
+              <div className="flex gap-2 flex-[8]">
                 <Profile />
                 <div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-2 ">
                     <span className="text-[#313d44] font-bold">heerok</span>
+                    {/* <input value={comment.comment} disabled ref={activate} /> */}
                     <div>{comment.comment}</div>
                   </div>
                   <div>{comment.created_at}</div>
                 </div>
               </div>
-              <div className="text-[12px]">
-                <button className="p-[2px]">수정</button>
+              {/* 오른쪽 부분 (1) */}
+              <div className="button-bundle text-[11px] flex-[1] pl-2">
+                <button className="p-[2px]" onClick={handleCommentUpdate}>
+                  수정
+                </button>
                 <button
                   className="p-[2px]"
                   onClick={() => handleCommentDelete(comment.id, feedData.id)}
