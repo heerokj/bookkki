@@ -1,8 +1,8 @@
 "use client";
 import { useActionState, useEffect } from "react";
 import Profile2 from "../Profile2";
-import createCommentAction from "@/action/create-comment-action";
 import { FeedComment } from "@/types/feed";
+import createCommentAction from "@/lib/actions/create-comment-action";
 
 export default function CommentEditor({
   focusTest,

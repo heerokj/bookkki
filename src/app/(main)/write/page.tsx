@@ -42,7 +42,7 @@ export default function WritePage() {
       const newFile = await convertURLtoFile(file);
 
       //파일 업로드
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from("images")
         .upload(filePath, newFile); //NOTE - filePath는 문자열(string)이어야 한다.
       //NOTE - file은 blob:~~ 이면 안돼!!!!!!!!!
@@ -73,7 +73,7 @@ export default function WritePage() {
       // url 가져오기
       const uploadUrls = await uploadImages();
 
-      const { data, error } = await supabase.from("posts").insert({
+      const { error } = await supabase.from("posts").insert({
         user_id: "42d9022d-2a87-4e71-bf1b-369b5599d057",
         title: title,
         content: content,
