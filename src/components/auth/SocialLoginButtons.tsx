@@ -1,15 +1,8 @@
-"use server";
-import { auth } from "@/auth";
-import { SignInButton } from "./SignInBtn";
+"use client";
 
-export default async function SocialLoinButtons() {
-  const session = await auth();
-  console.log("🚀 ~ SocialLoinButtons ~ session:", session);
+import { login } from "@/lib/actions/auth";
 
-  if (session?.user) {
-    alert("로그인 되었습니다.");
-  }
-
+export default function SocialLoinButtons() {
   return (
     <div className="social-login-buttons flex gap-4">
       <button>
@@ -29,7 +22,9 @@ export default async function SocialLoinButtons() {
           width={40}
         />
       </button>
-      <SignInButton />
+      <button onClick={() => login()}>
+        <img src="images/github_btn.png" alt="깃허브" height={40} width={40} />
+      </button>
     </div>
   );
 }

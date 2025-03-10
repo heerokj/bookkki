@@ -14,7 +14,7 @@ export default function AuthForm({ mode }: { mode: string }) {
       <div className="col-span-2 h-screen">
         <BookImage />
       </div>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center overflow-hidden">
         <div className="w-[400px] p-2">
           <div className="text-left mb-[20px]">
             <p className="text-[30px] font-bold">텍스트힙에 퐁당</p>

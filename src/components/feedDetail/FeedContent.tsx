@@ -14,7 +14,7 @@ export default function FeedContent({
   commentDataList: FeedComment[];
 }) {
   const focusTest = useRef<HTMLInputElement>(null);
-  const activate = useRef<HTMLInputElement>(null);
+  // const activate = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
   const handleCommentDelete = async (commentId: string, postId: string) => {
