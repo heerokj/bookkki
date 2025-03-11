@@ -96,8 +96,8 @@ export default function WritePage() {
     //NOTE - e.target.files의 files 속성이 존재하지 않기 때문에 files가 존재하는 HTMLInputElement타입을 as 키워드로 지정
     const fileList = e.target.files as FileList;
 
-    if (fileList.length >= 9) {
-      alert("사진은 최대 9장까지 등록가능합니다.");
+    if (previewImages.length >= 6) {
+      alert("사진은 최대 6장까지 등록가능합니다.");
       return;
     } else {
       // 리스트를 배열로 저장
@@ -115,14 +115,14 @@ export default function WritePage() {
   return (
     <div>
       <form>
-        <div className="flex justify-between items-center border-b-[1px] h-[50px]">
+        <div className="bar flex justify-between items-center border-b-[1px] h-[50px]">
           <div>
             <button type="button" onClick={backSpaceBtn}>
               <img src="/icons/arrow-left.svg" alt="arrow-left" />
             </button>
           </div>
           <div>
-            <div>
+            <div className="flex gap-4">
               <button>임시저장</button>
               <button type="button" onClick={handleClickUpload}>
                 발행
@@ -130,10 +130,10 @@ export default function WritePage() {
             </div>
           </div>
         </div>
-        <section className="flex flex-col justify-between items-center">
-          <div className="title border-b-[1px] mt-[50px] h-[50px]">
+        <div className="editor-container flex flex-col m-auto mx-[250px]">
+          <div className="editor-heading h-[100px] border-b-[2px] mt-[50px] ">
             <input
-              className="h-[50px]"
+              className="h-full px-4 focus:outline-0 text-[30px]"
               type="text"
               placeholder="제목을 입력해주세요"
               value={title}
@@ -141,11 +141,12 @@ export default function WritePage() {
                 e.preventDefault();
                 setTitle(e.target.value);
               }}
+              maxLength={20}
             />
           </div>
-          <div className="border-2 m-2 p-7">
-            <div className="images">
-              {previewImages.length >= 9 ? (
+          <div className="editor-body p-7">
+            <div className="body-images">
+              {previewImages.length >= 6 ? (
                 <></>
               ) : (
                 <label htmlFor="file">
@@ -158,7 +159,7 @@ export default function WritePage() {
                     multiple
                     onChange={handleImageChange}
                   />
-                  <img src="/icons/plus.svg" alt="plus" />
+                  <img src="/icons/plus.svg" alt="plus" className="mb-[10px]" />
                 </label>
               )}
               {/* 이미지들이 보일 preview 자리 만들기 */}
@@ -167,8 +168,9 @@ export default function WritePage() {
                 setPreviewImages={setPreviewImages}
               />
             </div>
-            <div className="context">
+            <div className="body-context mt-[30px] h-[300px]">
               <textarea
+                className="w-full h-full focus:outline-0"
                 placeholder="내용을 입력해주세요"
                 value={content}
                 onChange={(e) => {
@@ -178,7 +180,7 @@ export default function WritePage() {
               ></textarea>
             </div>
           </div>
-        </section>
+        </div>
       </form>
     </div>
   );

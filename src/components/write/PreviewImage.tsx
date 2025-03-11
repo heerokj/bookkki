@@ -7,28 +7,26 @@ export default function PreviewImage({
   setPreviewImages: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-2 gap-4">
       {previewImages.map((img, i) => {
         return (
           <div key={img} className="flex">
-            <img
-              src={img}
-              alt={`${img}-${i}`}
-              className="object-cover"
-              width={150}
-              height={150}
-            />
-            <button
-              onClick={() =>
-                setPreviewImages(previewImages.filter((t) => t !== img))
-              }
-            >
+            <div className="w-[270px] h-[150px] overflow-hidden">
               <img
-                src="/icons/x.svg"
-                alt="x"
-                className="w-[15px] h-[15px] mb-[110px]"
+                src={img}
+                alt={`${img}-${i}`}
+                className="object-cover w-full h-full"
               />
-            </button>
+            </div>
+            <div>
+              <button
+                onClick={() =>
+                  setPreviewImages(previewImages.filter((t) => t !== img))
+                }
+              >
+                <img src="/icons/x.svg" alt="x" className="w-[15px] h-[15px]" />
+              </button>
+            </div>
           </div>
         );
       })}
