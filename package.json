@@ -13,6 +13,7 @@
     "@supabase/supabase-js": "^2.48.1",
     "@tanstack/react-query": "^5.67.1",
     "@tanstack/react-query-devtools": "^5.67.1",
+    "bcryptjs": "^3.0.2",
     "boring-avatars": "^1.11.2",
     "date-fns": "^4.1.0",
     "embla-carousel-autoplay": "^8.5.2",
