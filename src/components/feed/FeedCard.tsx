@@ -2,6 +2,7 @@
 import { FeedData } from "@/types/feed";
 import Link from "next/link";
 import Profile from "../Profile";
+import { getDistanceToNow } from "@/utils/Date/date";
 
 export default function FeedCard(data: FeedData) {
   return (
@@ -9,9 +10,9 @@ export default function FeedCard(data: FeedData) {
       {data ? (
         <div
           key={data.id}
-          className="feed-item border-[1px] rounded-sm shadow-sm"
+          className="feed-container border-[1px] rounded-sm shadow-sm hover:scale-[1.02]"
         >
-          <div className="flex justify-between p-2">
+          <div className="feed-heading flex justify-between p-2">
             <div className="flex gap-2">
               <Profile />
               <div>nickname</div>
@@ -20,7 +21,7 @@ export default function FeedCard(data: FeedData) {
               <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />
             </button>
           </div>
-          <Link href={`/feed/${data.id}`}>
+          <Link className="feed-body" href={`/feed/${data.id}`}>
             <div className="overflow-hidden">
               {data.image_urls?.map((img) => (
                 <div key={img} className="h-[300px]">
@@ -33,9 +34,11 @@ export default function FeedCard(data: FeedData) {
                 </div>
               ))}
             </div>
-            <div className="h-[80px] p-2">
+            <div className="h-[65px] p-2">
               <div>{data.title}</div>
-              <div className="text-[10px]">{data.created_at}</div>
+              <div className="text-[10px]">
+                {getDistanceToNow(data.created_at)}
+              </div>
             </div>
           </Link>
         </div>

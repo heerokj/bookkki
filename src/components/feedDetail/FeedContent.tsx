@@ -6,6 +6,7 @@ import CommentEditor from "./CommentEditor";
 import { useRef, useState } from "react";
 import Profile from "../Profile";
 import { deleteComment } from "@/hooks/fetchComments";
+import { getDistanceToNow } from "@/utils/Date/date";
 export default function FeedContent({
   feedData,
   commentDataList,
@@ -36,14 +37,14 @@ export default function FeedContent({
               {/* 왼쪽 부분 (3) */}
               <div className="flex gap-2 flex-[8]">
                 <Profile />
-                <div>
-                  <div className="flex gap-2 ">
-                    <span className="text-[#313d44] font-bold">heerok</span>
-                    {/* <input value={comment.comment} disabled ref={activate} /> */}
-                    <div>{comment.comment}</div>
+                <div className="flex flex-col gap-2 ">
+                  <div className="text-[#313d44] font-bold">heerok</div>
+                  <div className="text-[10px]">
+                    {getDistanceToNow(comment.created_at)}
                   </div>
-                  <div>{comment.created_at}</div>
                 </div>
+                {/* <input value={comment.comment} disabled ref={activate} /> */}
+                <div>{comment.comment}</div>
               </div>
               {/* 오른쪽 부분 (1) */}
               <div className="button-bundle text-[11px] flex-[1] pl-2">

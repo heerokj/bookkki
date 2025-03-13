@@ -1,6 +1,7 @@
 "use client";
 
 import { FeedData } from "@/types/feed";
+import { getDistanceToNow } from "@/utils/Date/date";
 import React, { MutableRefObject } from "react";
 
 export default function FeedContentLikeContainer({
@@ -27,7 +28,10 @@ export default function FeedContentLikeContainer({
       </div>
       <div>
         <div className="pt-2">좋아요 00개 </div>
-        <div className="text-[10px]">{feedData.created_at}</div>
+        <div className="text-[10px]">
+          {" "}
+          {getDistanceToNow(feedData.created_at)}
+        </div>
       </div>
     </div>
   );
