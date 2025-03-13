@@ -2,14 +2,14 @@
 
 import { HEADER_LISTS } from "@/shared/constants/header";
 import { useRouter } from "next/navigation";
-import Profile from "../Profile";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Header() {
+  const { data: session, status } = useSession();
   const router = useRouter();
-  const onclickSignIn = () => {
-    router.push("/sign-in");
-  };
+
   return (
     <div className="flex justify-between items-center border-b-[1px] h-[64px]">
       <div className="flex gap-[50px]">
@@ -18,7 +18,7 @@ export default function Header() {
             return (
               <Link key={`header${header.href}`} href={header.href}>
                 {header.text === "홈" ? (
-                  <img
+                  <Image
                     src="/images/bookkki-icon.png"
                     alt="bookkki-icon"
                     height={40}
@@ -33,15 +33,39 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-4">
-        {/* <span>아래 Profile은 임시프로필</span> */}
-        <Profile />
-        <img src="/icons/moon.svg" alt="moon" height={20} width={20} />
-        <button
-          onClick={onclickSignIn}
-          className="p-[7px] px-[13px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]"
-        >
-          로그인
-        </button>
+        <Image src="/icons/moon.svg" alt="moon" height={25} width={25} />
+        {status === "authenticated" && session?.user ? (
+          <>
+            <div className="pt-2">{session.user.name} 님 환영합니다!</div>
+            {session.user.image && (
+              <div className="w-[35px] h-[35px] overflow-hidden">
+                <Image
+                  src={session.user.image}
+                  width={40}
+                  height={40}
+                  alt={session.user.name ?? "Avatar"}
+                  style={{ borderRadius: "50%" }}
+                  className="w-full h-full object-full"
+                />
+              </div>
+            )}
+            <button
+              onClick={() => signOut({ redirectTo: "/" })}
+              className="w-[80px] h-[35px] p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]"
+            >
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              onClick={() => router.push("/sign-in")}
+              className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]"
+            >
+              로그인
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

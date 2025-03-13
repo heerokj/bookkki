@@ -3,24 +3,42 @@
 import BookImage from "./BookImage";
 import SocialLoinButtons from "./SocialLoginButtons";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/utils/supabase/client";
+import { useForm } from "react-hook-form";
+
+interface IFormInput {
+  userId: string;
+  nickname: string;
+  password: string;
+}
 
 export default function AuthForm({ mode }: { mode: string }) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<IFormInput>({ mode: "onChange" });
+
+  const supabase = createClient();
   const route = useRouter();
+
+  const onSubmit = (data: IFormInput) => {
+    console.log(data);
+  };
+
   const handleClick = () => {
     route.push(mode === "signIn" ? "/sign-up" : "/sign-in");
   };
   return (
     <div className="grid grid-cols-3 h-screen">
-      <div className="col-span-2 h-screen">
-        <BookImage />
-      </div>
-      <div className="flex flex-col justify-center items-center overflow-hidden">
+      <BookImage />
+      <div className="right-area flex flex-col justify-center items-center overflow-hidden">
         <div className="w-[400px] p-2">
-          <div className="text-left mb-[20px]">
+          <div className="title text-left mb-[20px]">
             <p className="text-[30px] font-bold">텍스트힙에 퐁당</p>
             <p>북끼에서 인생책을 공유하세요</p>
           </div>
-          <div>
+          <form onSubmit={handleSubmit(onSubmit)}>
             {mode === "signIn" ? (
               <div className="sign-in">
                 <div className="flex flex-col mb-[10px]">
@@ -49,7 +67,22 @@ export default function AuthForm({ mode }: { mode: string }) {
                       type="text"
                       placeholder="아이디를 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
+                      {...register("userId", {
+                        required: {
+                          value: true,
+                          message: "아이디를 입력해주세요",
+                        },
+                        maxLength: {
+                          value: 20,
+                          message: "아이디는 20자리 이하입니다.",
+                        },
+                      })}
                     />
+                    {errors?.userId && (
+                      <p className="text-[#ff0000] p-[2px]">
+                        {errors?.userId?.message}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col mb-[10px]">
                     <span className="mb-[2px]">닉네임</span>
@@ -57,7 +90,22 @@ export default function AuthForm({ mode }: { mode: string }) {
                       type="text"
                       placeholder="닉네임을 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
+                      {...register("nickname", {
+                        required: {
+                          value: true,
+                          message: "닉네임을 입력해주세요",
+                        },
+                        maxLength: {
+                          value: 10,
+                          message: "닉네임은 10자리 이하입니다.",
+                        },
+                      })}
                     />
+                    {errors?.nickname && (
+                      <p className="text-[#ff0000] p-[2px]">
+                        {errors?.nickname?.message}
+                      </p>
+                    )}
                   </div>
                   <div className="flex flex-col mb-[10px]">
                     <span className="mb-[2px]">비밀번호</span>
@@ -65,7 +113,26 @@ export default function AuthForm({ mode }: { mode: string }) {
                       type="text"
                       placeholder="비밀번호를 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
+                      {...register("password", {
+                        required: {
+                          value: true,
+                          message: "비밀번호를 입력해주세요",
+                        },
+                        minLength: {
+                          value: 8,
+                          message: "비밀번호는 8자리 이상 10자리 이하입니다.",
+                        },
+                        maxLength: {
+                          value: 10,
+                          message: "비밀번호는 10자리 이하입니다.",
+                        },
+                      })}
                     />
+                    {errors?.password && (
+                      <p className="text-[#ff0000] p-[2px]">
+                        {errors?.password?.message}
+                      </p>
+                    )}
                   </div>
                 </div>
               </div>
@@ -82,8 +149,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                 ID/PW 찾기
               </button>
             </div>
-          </div>
-          <div className="flex justify-around"></div>
+          </form>
         </div>
         <p className="mb-[16px] text-[10px]">또는</p>
         <SocialLoinButtons />
