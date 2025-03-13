@@ -22,8 +22,32 @@ export default function AuthForm({ mode }: { mode: string }) {
   const supabase = createClient();
   const route = useRouter();
 
-  const onSubmit = (data: IFormInput) => {
-    console.log(data);
+  const onSubmit = async (data: IFormInput) => {
+    try {
+      const { error: userInsertError } = await supabase
+        .from("users")
+        .insert({
+          user_id: data.userId,
+          password: data.password,
+          nickname: data.nickname,
+        })
+        .select();
+
+      if (userInsertError) {
+        console.error(userInsertError);
+        //TODO - 아이디 또는 닉네임 중복 확인하기
+        if (userInsertError.code === "23505") {
+          alert("아미 존재하는 회원입니다.");
+          return;
+        }
+        alert("회원가입에 실패했습니다.");
+        return;
+      }
+      alert("환영합니다!");
+      route.push("/sign-in");
+    } catch (userInsertError) {
+      console.error(userInsertError);
+    }
   };
 
   const handleClick = () => {
@@ -52,7 +76,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                 <div className="flex flex-col mb-[10px]">
                   <span className="mb-[2px]">비밀번호</span>
                   <input
-                    type="text"
+                    type="password"
                     placeholder="비밀번호를 입력해주세요"
                     className="h-[50px] p-2 border-2 rounded-md w-[380px]"
                   />
