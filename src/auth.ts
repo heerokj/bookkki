@@ -13,7 +13,40 @@ import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
+import { createClient } from "./utils/supabase/server";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
   providers: [GitHub, Kakao, Naver],
+  callbacks: {
+    async signIn({ user, account }) {
+      const supabase = await createClient();
+      //사용자 정보 없을 경우 로그인 차단
+      if (!user) return false;
+
+      //기존에 이미 로그인 한 회원인지 확인
+      const { data: existingUser } = await supabase
+        .from("users")
+        .select("user_id")
+        .eq("user_id", user.name)
+        .single();
+
+      if (existingUser?.user_id === user.name) {
+        return true; // 로그인 성공
+      } else {
+        // 사용자 정보 DB에 저장
+        const { error } = await supabase.from("users").insert({
+          user_id: user.name,
+          nickname: user.name,
+          email: user.email,
+          profile_url: user.image,
+          provider: account?.provider,
+        });
+        if (error) {
+          console.error("DB 저장 오류:", error);
+          return false;
+        }
+      }
+      return true; // 로그인 성공
+    },
+  },
 });
