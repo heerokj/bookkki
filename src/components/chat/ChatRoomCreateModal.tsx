@@ -1,0 +1,44 @@
+"use client";
+import { ModalProps } from "@/types/chat";
+import React, { useEffect } from "react";
+
+const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
+  // 모달 내부를 눌렀을 때 모달이 꺼지는 것을 방지
+  const preventOffModal = (event: React.MouseEvent) => {
+    event.stopPropagation();
+  };
+
+  // 모달이 뜬 상태에서는 뒷 화면 스크롤 방지
+  useEffect(() => {
+    // 모달이 뜨면 body의 overflow를 hidden으로 설정
+    document.body.style.overflow = "hidden";
+    // 모달이 사라지면 body의 overflow를 다시 auto로 설정
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, []);
+
+  return (
+    <div
+      id="모달 외부"
+      onClick={setModal}
+      className="fixed inset-0 flex justify-center items-center text-center w-full h-full bg-gray-500/50"
+    >
+      <div
+        id="모달"
+        onClick={preventOffModal}
+        className="bg-white w-1/3 h-1/4 rounded-md p-5"
+      >
+        <div className="text-gray-400 font-bold text-[20px]">{title}</div>
+        <div className="flex gap-2 justify-center my-8 ">
+          <input type="text" className="border-2 p-2 rounded-md w-[200px]" />
+          <button className="w-[100px] h-[35px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]">
+            생성
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ChatRoomCrateModal;
