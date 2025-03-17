@@ -21,7 +21,6 @@ export function useChatRoom() {
   return useQuery({
     queryKey: ["chatRooms"],
     queryFn: fetchChatRoom,
-    staleTime: 1000 * 60, //1분
   });
 }
 
