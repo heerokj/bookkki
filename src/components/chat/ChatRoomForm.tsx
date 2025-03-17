@@ -12,7 +12,7 @@ export default function ChatForm() {
 
   return (
     <>
-      <div className="write-icon-container flex justify-end p-2">
+      <div className="write-icon-container flex justify-end p-4">
         <button type="button" onClick={onHandleModalStatus}>
           <img src="/icons/square-plus.svg" alt="plus" width={20} height={20} />
         </button>
