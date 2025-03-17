@@ -22,6 +22,7 @@ export default function CommentEditor({
     if (state?.status && state?.data?.length) {
       onCommentAdd(state.data[0]); // 전체 객체를 전달해야 함
     }
+    focusTest.current?.focus();
   }, [state]); // state가 변경될 때만 실행
 
   return (

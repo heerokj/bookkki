@@ -36,7 +36,9 @@ export default function Header() {
         <Image src="/icons/moon.svg" alt="moon" height={25} width={25} />
         {status === "authenticated" && session?.user ? (
           <>
-            <div className="pt-2">{session.user.name} 님 환영합니다!</div>
+            <div className="pt-2">
+              <b>{session.user.name}</b> 님 환영합니다!
+            </div>
             {session.user.image && (
               <div className="w-[35px] h-[35px] overflow-hidden">
                 <Image
