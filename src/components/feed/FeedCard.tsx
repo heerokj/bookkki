@@ -1,9 +1,10 @@
 "use client";
 import { FeedData } from "@/types/feed";
 import Link from "next/link";
-import Profile from "../Profile";
 import { getDistanceToNow } from "@/utils/Date/date";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Avatar from "boring-avatars";
 
 export default function FeedCard(data: FeedData) {
   const session = useSession();
@@ -22,8 +23,21 @@ export default function FeedCard(data: FeedData) {
         >
           <div className="feed-heading flex justify-between p-2">
             <div className="flex gap-2">
-              <Profile />
-              <div>nickname</div>
+              {data.users.profile_url ? (
+                <div className="w-[35px] h-[35px] overflow-hidden">
+                  <Image
+                    src={data.users.profile_url}
+                    width={40}
+                    height={40}
+                    alt={data.users.user_id ?? "Avatar"}
+                    style={{ borderRadius: "50%" }}
+                    className="w-full h-full object-full"
+                  />
+                </div>
+              ) : (
+                <Avatar name="Harriet Tubman" variant="beam" size={30} />
+              )}
+              <div>{data.users.nickname}</div>
             </div>
             <button onClick={() => alert("준비중입니다.")}>
               <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />

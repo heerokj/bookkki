@@ -4,9 +4,13 @@ import FeedCard from "./FeedCard";
 export default async function FeedCards() {
   //NOTE - try/catch문으로 하면 그 안에서만 data사용하고 있어서 return문에서 사용 못했음
   const supabase = await createClient(); //NOTE - await
-  const { data, error } = await supabase.from("posts").select();
+  const { data, error } = await supabase.from("posts").select(
+    `
+        *,
+        users!id(user_id, nickname, email, profile_url )
+      `
+  );
 
-  console.log("🚀 ~ FeedItems ~ data:", data);
   if (error) {
     console.error(error.message);
     return <div>데이터를 불러오는데 오류가 발생했습니다.</div>;
