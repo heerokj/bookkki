@@ -4,15 +4,15 @@ import { useInfiniteChatRoom } from "@/hooks/useChatting";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import { useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 export default function ChatList() {
   const [ref, inView] = useInView();
+  const session = useSession();
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteChatRoom();
 
   const chatRoomList = data?.pages.flatMap((page) => page?.data) || [];
-
-  console.log("렌더링//./");
 
   useEffect(() => {
     // inView가 true 일때만 실행
@@ -20,6 +20,13 @@ export default function ChatList() {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  const handleClickChatRoom = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!session.data) {
+      alert("로그인이 필요합니다");
+      e.preventDefault();
+    }
+  };
 
   if (isLoading) return <span>로딩중입니다...</span>;
   if (error) return <span>오류가 발생했습니다 : {error.message}</span>;
@@ -37,7 +44,7 @@ export default function ChatList() {
               className="border-2 rounded-md w-[250px] h-[200px] text-center"
             >
               <p className="py-[20px] text-[16px]">{chat.chat_room_title}</p>
-              <Link href={`/chat/${chat.id}`}>
+              <Link href={`/chat/${chat.id}`} onClick={handleClickChatRoom}>
                 <button className="p-[7px] w-[100px] mt-[30px] rounded-md bg-[#7cb8e2] hover:bg-[#00bbf9] text-white text-[14px]">
                   입장하기
                 </button>
