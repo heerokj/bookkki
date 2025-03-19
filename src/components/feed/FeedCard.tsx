@@ -3,8 +3,16 @@ import { FeedData } from "@/types/feed";
 import Link from "next/link";
 import Profile from "../Profile";
 import { getDistanceToNow } from "@/utils/Date/date";
+import { useSession } from "next-auth/react";
 
 export default function FeedCard(data: FeedData) {
+  const session = useSession();
+  const handleClickFeedCard = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!session.data) {
+      alert("로그인이 필요합니다");
+      e.preventDefault();
+    }
+  };
   return (
     <>
       {data ? (
@@ -21,7 +29,11 @@ export default function FeedCard(data: FeedData) {
               <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />
             </button>
           </div>
-          <Link className="feed-body" href={`/feed/${data.id}`}>
+          <Link
+            className="feed-body"
+            href={`/feed/${data.id}`}
+            onClick={handleClickFeedCard}
+          >
             <div className="overflow-hidden">
               {data.image_urls?.map((img) => (
                 <div key={img} className="h-[300px]">

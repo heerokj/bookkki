@@ -23,9 +23,10 @@ export default function Header() {
                     alt="bookkki-icon"
                     height={40}
                     width={40}
+                    className="pb-2"
                   />
                 ) : (
-                  <div className="p-2 px-6">{header.text}</div>
+                  <div className="text-[17px] px-4 pt-2">{header.text}</div>
                 )}
               </Link>
             );
