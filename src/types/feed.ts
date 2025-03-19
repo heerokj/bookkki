@@ -5,6 +5,12 @@ export interface FeedData {
   title: string;
   content: string;
   image_urls: string[];
+  users: {
+    email: string;
+    nickname: string;
+    profile_url: string;
+    user_id: string;
+  };
 }
 
 export interface FeedComment {

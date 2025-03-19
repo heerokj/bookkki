@@ -5,8 +5,8 @@ import FeedContentLikeContainer from "./FeedContentLikeContainer";
 import CommentEditor from "./CommentEditor";
 import { useRef, useState } from "react";
 import Profile from "../Profile";
-import { deleteComment } from "@/hooks/fetchComments";
 import { getDistanceToNow } from "@/utils/Date/date";
+import { deleteComment } from "@/services/comments";
 export default function FeedContent({
   feedData,
   commentDataList,

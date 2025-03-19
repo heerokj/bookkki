@@ -1,51 +1,31 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { addChatRoom, fetchChatRoom } from "@/services/chatting";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
-const supabase = createClient();
+export const useInfiniteChatRoom = () => {
+  const { data, error, isLoading, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: ["chatRooms"],
+      queryFn: ({ pageParam }) => fetchChatRoom(pageParam, 20),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, allPages) => {
+        // 마지막 페이지가 있으면 현재 페이지 + 1
+        return lastPage?.hasNext ? allPages.length + 1 : undefined;
+      },
+    });
 
-const fetchChatRoom = async () => {
-  try {
-    const { error, data } = await supabase.from("chat").select();
-    if (error) {
-      console.error("채팅방 목록을 불러오는데 실패했습니다", error.message);
-    }
-    return data;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
-export function useChatRoom() {
-  return useQuery({
-    queryKey: ["chatRooms"],
-    queryFn: fetchChatRoom,
-  });
-}
-
-const addChatRoom = async (roomTitle: string) => {
-  alert("등록하시겠습니까?");
-
-  try {
-    const { error, data } = await supabase
-      .from("chat")
-      .insert({
-        chat_room_title: roomTitle,
-      })
-      .select();
-
-    if (error) {
-      console.error("채팅방 생성에 실패했습니다", error.message);
-      return null;
-    }
-    return data;
-  } catch (error) {
-    console.error("채팅방 생성에 실패했습니다.", error);
-    throw new Error("채팅방 생성 오류");
-    //NOTE -  useMutation에서 잡을 수 있도록 에러 던지기
-    //throw new Error()가 없으면 useMutation에서 실패 감지를 못 함.
-  }
+  return {
+    data,
+    isLoading,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  };
 };
 
 export function useAddChatRoom() {

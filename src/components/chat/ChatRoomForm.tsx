@@ -2,11 +2,17 @@
 
 import { useState } from "react";
 import ChatRoomCrateModal from "./ChatRoomCreateModal";
+import { useSession } from "next-auth/react";
 
 export default function ChatForm() {
   const [showModal, setShowModal] = useState(false);
+  const session = useSession();
 
   const onHandleModalStatus = () => {
+    if (!session.data) {
+      alert("로그인이 필요합니다");
+      return;
+    }
     setShowModal(!showModal);
   };
 

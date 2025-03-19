@@ -36,6 +36,7 @@ export default function AuthForm({ mode }: { mode: string }) {
 
       if (result?.error) {
         alert("로그인 실패하였습니다");
+        return;
       }
       //로그인 후 메인으로
       route.push("/");
@@ -90,8 +91,6 @@ export default function AuthForm({ mode }: { mode: string }) {
                     type="text"
                     placeholder="아이디를 입력해주세요"
                     className="h-[50px] p-2 border-2 rounded-md w-[380px]"
-                    // value={userId}
-                    // onChange={(e) => setUserId(e.target.value)}
                     {...register("userId", {
                       required: {
                         value: true,
@@ -106,8 +105,6 @@ export default function AuthForm({ mode }: { mode: string }) {
                     type="password"
                     placeholder="비밀번호를 입력해주세요"
                     className="h-[50px] p-2 border-2 rounded-md w-[380px]"
-                    // value={password}
-                    // onChange={(e) => setPassword(e.target.value)}
                     {...register("password", {
                       required: {
                         value: true,
