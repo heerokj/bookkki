@@ -1,14 +1,12 @@
 "use client";
 
 import { HEADER_LISTS } from "@/shared/constants/header";
-import { useRouter } from "next/navigation";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 
 export default function Header() {
   const { data: session, status } = useSession();
-  const router = useRouter();
 
   return (
     <div className="flex justify-between items-center border-b-[1px] h-[64px]">
@@ -26,7 +24,9 @@ export default function Header() {
                     className="pb-2"
                   />
                 ) : (
-                  <div className="text-[17px] px-4 pt-2">{header.text}</div>
+                  <div className="text-[17px] px-4 pt-2 font-bold">
+                    {header.text}
+                  </div>
                 )}
               </Link>
             );
@@ -61,12 +61,14 @@ export default function Header() {
           </>
         ) : (
           <>
-            <button
-              onClick={() => router.push("/sign-in")}
-              className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]"
-            >
-              로그인
-            </button>
+            <Link href="/sign-in">
+              <button
+                // onClick={() => router.push("/sign-in")}
+                className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]"
+              >
+                로그인
+              </button>
+            </Link>
           </>
         )}
       </div>
