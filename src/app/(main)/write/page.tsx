@@ -4,9 +4,11 @@ import PreviewImage from "@/components/write/PreviewImage";
 import { createClient } from "@/utils/supabase/client";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "@/context/UserContext";
 
 export default function WritePage() {
+  const userData = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [previewImages, setPreviewImages] = useState<string[]>([]); //TODO - previewImages에 있는 파일이 blob:http://... 같은 blob URL이 아니라 File 객체여야 해!
@@ -67,24 +69,22 @@ export default function WritePage() {
 
   //TODO - async, await 를 안적어줘서 insert안되엇음
   const handleClickUpload = async () => {
-    alert("등록하시겠습니까?");
-
     try {
       // url 가져오기
       const uploadUrls = await uploadImages();
 
-      const { error } = await supabase.from("posts").insert({
-        user_id: "42d9022d-2a87-4e71-bf1b-369b5599d057",
-        title: title,
-        content: content,
-        image_urls: uploadUrls,
-      });
-
-      if (error) {
-        console.error(error.message);
-        alert("등록에 실패했습니다.");
+      if (userData) {
+        const { error } = await supabase.from("posts").insert({
+          user_id: userData.id,
+          title: title,
+          content: content,
+          image_urls: uploadUrls,
+        });
+        if (error) {
+          console.error(error.message);
+          alert("등록에 실패했습니다.");
+        }
       }
-
       alert("등록되었습니다.");
       route.push("/feed");
     } catch (error) {
