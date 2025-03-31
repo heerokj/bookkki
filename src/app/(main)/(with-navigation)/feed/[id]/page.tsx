@@ -4,10 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import { FeedComment, FeedData } from "@/types/feed";
 import Link from "next/link";
 
-// const fetchComment = () =>{
-
-// }
-
 export default async function FeedDetail({
   params,
 }: {
@@ -20,16 +16,27 @@ export default async function FeedDetail({
   // 포스트 데이터 가져오기
   const { data, error: feedError } = await supabase
     .from("posts")
-    .select()
+    .select(
+      `
+        *,
+        users!id(user_id, nickname, email, profile_url )
+        `
+    )
     .eq("id", id)
     .returns<FeedData[]>();
 
   // 댓글 데이터 가져오기
   const { data: commentDataList, error: commentError } = await supabase
     .from("comments")
-    .select()
+    .select(
+      `
+      *,
+      users!id(user_id, nickname, email, profile_url )
+      `
+    )
     .eq("post_id", id)
     .returns<FeedComment[]>();
+  console.log("🚀 ~ commentDataList:", commentDataList);
 
   if (feedError) {
     console.error(feedError);

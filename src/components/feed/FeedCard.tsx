@@ -1,12 +1,15 @@
 "use client";
 import { FeedData } from "@/types/feed";
-import Link from "next/link";
 import { getDistanceToNow } from "@/utils/Date/date";
 import { useSession } from "next-auth/react";
+import { UserContext } from "@/context/UserContext";
+import { useContext } from "react";
 import Image from "next/image";
 import Avatar from "boring-avatars";
+import Link from "next/link";
 
 export default function FeedCard(data: FeedData) {
+  const userData = useContext(UserContext);
   const session = useSession();
   const handleClickFeedCard = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (!session.data) {
@@ -39,9 +42,11 @@ export default function FeedCard(data: FeedData) {
               )}
               <div>{data.users.nickname}</div>
             </div>
-            <button onClick={() => alert("준비중입니다.")}>
-              <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />
-            </button>
+            {data.users.nickname === userData?.user_id && (
+              <button onClick={() => alert("준비중입니다.")}>
+                <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />
+              </button>
+            )}
           </div>
           <Link
             className="feed-body"

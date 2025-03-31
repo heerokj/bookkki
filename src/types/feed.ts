@@ -19,4 +19,10 @@ export interface FeedComment {
   post_id: string;
   comment: string;
   user_id: string;
+  users: {
+    email: string;
+    nickname: string;
+    profile_url: string;
+    user_id: string;
+  };
 }
