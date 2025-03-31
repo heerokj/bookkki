@@ -7,6 +7,7 @@ const nextConfig: NextConfig = {
       "avatars.githubusercontent.com",
       "k.kakaocdn.net",
       "ssl.pstatic.net",
+      "shopping-phinf.pstatic.net",
     ],
   },
 };
