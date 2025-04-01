@@ -7,8 +7,10 @@ import { useContext } from "react";
 import Image from "next/image";
 import Avatar from "boring-avatars";
 import Link from "next/link";
+import { useDeleteFeed } from "@/hooks/use-feeds";
 
-export default function FeedCard(data: FeedData) {
+export default function FeedCard(feedData: FeedData) {
+  const { mutate: deleteFeed } = useDeleteFeed();
   const userData = useContext(UserContext);
   const session = useSession();
   const handleClickFeedCard = (e: React.MouseEvent<HTMLAnchorElement>) => {
@@ -17,22 +19,28 @@ export default function FeedCard(data: FeedData) {
       e.preventDefault();
     }
   };
+
+  const handleDeleteFeed = () => {
+    const isConfirmed = window.confirm("삭제하시겠습니까?");
+    if (!isConfirmed) return;
+    deleteFeed(feedData.id);
+  };
   return (
     <>
-      {data ? (
+      {feedData ? (
         <div
-          key={data.id}
+          key={feedData.id}
           className="feed-container border-[1px] rounded-sm shadow-sm hover:scale-[1.02]"
         >
           <div className="feed-heading flex justify-between p-2">
             <div className="flex gap-2">
-              {data.users.profile_url ? (
+              {feedData.users.profile_url ? (
                 <div className="w-[35px] h-[35px] overflow-hidden">
                   <Image
-                    src={data.users.profile_url}
+                    src={feedData.users.profile_url}
                     width={40}
                     height={40}
-                    alt={data.users.user_id ?? "Avatar"}
+                    alt={feedData.users.user_id ?? "Avatar"}
                     style={{ borderRadius: "50%" }}
                     className="w-full h-full object-full"
                   />
@@ -40,21 +48,19 @@ export default function FeedCard(data: FeedData) {
               ) : (
                 <Avatar name="Harriet Tubman" variant="beam" size={30} />
               )}
-              <div>{data.users.nickname}</div>
+              <div>{feedData.users.nickname}</div>
             </div>
-            {data.users.nickname === userData?.user_id && (
-              <button onClick={() => alert("준비중입니다.")}>
-                <img src="/icons/ellipsis.svg" alt="ellipsis" width={15} />
-              </button>
+            {feedData.users.nickname === userData?.user_id && (
+              <button onClick={handleDeleteFeed}>삭제</button>
             )}
           </div>
           <Link
             className="feed-body"
-            href={`/feed/${data.id}`}
+            href={`/feed/${feedData.id}`}
             onClick={handleClickFeedCard}
           >
             <div className="overflow-hidden">
-              {data.image_urls?.map((img) => (
+              {feedData.image_urls?.map((img) => (
                 <div key={img} className="h-[300px]">
                   <img
                     src={img}
@@ -66,9 +72,9 @@ export default function FeedCard(data: FeedData) {
               ))}
             </div>
             <div className="h-[65px] p-2">
-              <div>{data.title}</div>
+              <div>{feedData.title}</div>
               <div className="text-[10px]">
-                {getDistanceToNow(data.created_at)}
+                {getDistanceToNow(feedData.created_at)}
               </div>
             </div>
           </Link>

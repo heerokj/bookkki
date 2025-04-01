@@ -1,7 +1,12 @@
 "use client";
 
+import { deleteFeedAction } from "@/lib/actions/delete-feed-action";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 
 export const useGetFeedList = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
@@ -22,4 +27,14 @@ export const useGetFeedList = () => {
     fetchNextPage,
     hasNextPage,
   };
+};
+
+export const useDeleteFeed = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (feedId: string) => deleteFeedAction(feedId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["feeds"] });
+    },
+  });
 };
