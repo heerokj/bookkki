@@ -1,10 +1,10 @@
 "use client";
 
-import { useInfiniteChatRoom } from "@/hooks/useChatting";
 import { useInView } from "react-intersection-observer";
 import Link from "next/link";
 import { useEffect } from "react";
 import { useSession } from "next-auth/react";
+import { useInfiniteChatRoom } from "@/hooks/use-chats";
 
 export default function ChatList() {
   const [ref, inView] = useInView();
@@ -56,11 +56,7 @@ export default function ChatList() {
         )}
       </div>
       <div ref={ref} className="text-center">
-        {hasNextPage ? (
-          <div>더보기</div>
-        ) : (
-          <div>모든 채팅방을 불러왔습니다.</div>
-        )}
+        {hasNextPage ? <div>더보기</div> : <div>모든 방을 불러왔습니다.</div>}
       </div>
     </div>
   );

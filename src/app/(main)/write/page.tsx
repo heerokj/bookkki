@@ -123,7 +123,6 @@ export default function WritePage() {
           </div>
           <div>
             <div className="flex gap-4">
-              <button>임시저장</button>
               <button type="button" onClick={handleClickUpload}>
                 발행
               </button>

@@ -50,7 +50,7 @@ export default function FeedCard(feedData: FeedData) {
               )}
               <div>{feedData.users.nickname}</div>
             </div>
-            {feedData.users.nickname === userData?.user_id && (
+            {feedData.users.nickname === userData?.nickname && (
               <button onClick={handleDeleteFeed}>삭제</button>
             )}
           </div>

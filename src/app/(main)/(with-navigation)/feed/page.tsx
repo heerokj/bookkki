@@ -1,5 +1,6 @@
 import FeedCards from "@/components/feed/FeedCards";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
+
 import {
   dehydrate,
   HydrationBoundary,

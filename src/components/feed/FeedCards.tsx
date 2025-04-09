@@ -1,5 +1,5 @@
 "use client";
-import { useGetFeedList } from "@/hooks/useFeeds";
+import { useGetFeedList } from "@/hooks/use-feeds";
 import FeedCard from "./FeedCard";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
@@ -32,7 +32,7 @@ export default function FeedCards() {
           <div>데이터가 없습니다.</div>
         )}
       </div>
-      <div ref={ref} className="text-center">
+      <div ref={ref} className="text-center pt-[40px]">
         {hasNextPage ? <div>더보기</div> : <div>모든 피드를 불러왔습니다.</div>}
       </div>
     </div>

@@ -1,10 +1,11 @@
 "use client";
 import { useActionState, useEffect } from "react";
 import { FeedComment } from "@/types/feed";
-import createCommentAction from "@/lib/actions/create-comment-action";
+
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Avatar from "boring-avatars";
+import createCommentAction from "@/lib/actions/create-comment-action";
 
 export default function CommentEditor({
   focusTest,

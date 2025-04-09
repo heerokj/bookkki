@@ -6,8 +6,6 @@
 // providers: [GitHub]를 통해 GitHub 소셜 로그인을 활성화
 // auth: 현재 로그인된 사용자 정보를 가져오는 함수
 // handlers: GET과 POST 요청을 처리하는 핸들러 (API 라우트에서 사용됨)
-// signIn: 로그인 요청 함수
-// signOut: 로그아웃 요청 함수
 
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
@@ -43,12 +41,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (error || !loginUser) throw new Error("User not found");
 
         //패스워드 검증
-        const isValid = bcrypt.compare(password as string, loginUser.password);
-        if (!isValid) throw new Error("Invalid credentials");
+        const isValid = bcrypt.compare(password as string, loginUser.password); //bcrypt.compare는 비동기 함수
+
+        //그런데 bcrypt.compare()는 평문 vs 해시된 비밀번호를 비교하는 함수..
+
+        if (!isValid) throw new Error("패스워드가 잘못되었습니다");
+
         // 성공 시 유저 정보 반환
         return {
           id: loginUser.user_id,
-          name: loginUser.nickname,
+          name: loginUser.nickname, // 토큰 name에 닉네임 넣기(일반 로그인 시)
         };
       },
     }),
@@ -62,32 +64,3 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     },
   },
 });
-
-// async signIn({ user, account }) {
-//   const supabase = await createClient();
-//   //사용자 정보 없을 경우 로그인 차단
-//   if (!user) return false;
-//   //기존에 이미 로그인 한 회원인지 확인
-//   const { data: existingUser } = await supabase
-//     .from("users")
-//     .select("user_id")
-//     .eq("user_id", user.name)
-//     .single();
-//   if (existingUser?.user_id === user.name) {
-//     return true; // 로그인 성공
-//   } else {
-//     // 사용자 정보 DB에 저장
-//     const { error } = await supabase.from("users").insert({
-//       user_id: user.name,
-//       nickname: user.name,
-//       email: user.email,
-//       profile_url: user.image,
-//       provider: account?.provider,
-//     });
-//     if (error) {
-//       console.error("DB 저장 오류:", error);
-//       return false;
-//     }
-//   }
-//   return true; // 로그인 성공
-// },

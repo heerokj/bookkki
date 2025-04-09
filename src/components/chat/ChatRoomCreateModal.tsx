@@ -1,5 +1,6 @@
 "use client";
-import { useAddChatRoom } from "@/hooks/useChatting";
+
+import { useAddChatRoom } from "@/hooks/use-chats";
 import { ModalProps } from "@/types/chat";
 import React, { useEffect, useState } from "react";
 
@@ -45,7 +46,7 @@ const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
         onClick={preventOffModal}
         className="bg-white w-1/3 h-1/4 rounded-md p-5"
       >
-        <div className="text-gray-400 font-bold text-[20px]">{title}</div>
+        <div className="text-gray-400 font-bold text-[20px] py-6">{title}</div>
 
         <div className="flex gap-2 justify-center my-8 ">
           <form onSubmit={handleSubmit}>

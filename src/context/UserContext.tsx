@@ -1,7 +1,7 @@
 "use client";
 
+import { User } from "@/types/main";
 import { createClient } from "@/utils/supabase/client";
-import { User } from "next-auth";
 import { useSession } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
 
@@ -9,10 +9,9 @@ export const UserContext = createContext<User | null>(null);
 
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const [userData, setUserData] = useState<User | null>(null);
+  const supabase = createClient();
   const session = useSession();
   const userName = session.data?.user?.name;
-
-  const supabase = createClient();
 
   useEffect(() => {
     const getUser = async () => {
