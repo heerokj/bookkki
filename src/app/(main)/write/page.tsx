@@ -11,48 +11,45 @@ export default function WritePage() {
   const userData = useContext(UserContext);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [previewImages, setPreviewImages] = useState<string[]>([]); //TODO - previewImages에 있는 파일이 blob:http://... 같은 blob URL이 아니라 File 객체여야 해!
+  const [previewImages, setPreviewImages] = useState<string[]>([]);
 
   const route = useRouter();
   const supabase = createClient();
 
   const backSpaceBtn = () => {
-    alert("작성 중인 내용은 삭제됩니다.");
+    const isConfirmed = window.confirm("작성중인 내용은 삭제됩니다");
+    if (!isConfirmed) return;
     route.push("/feed");
   };
 
   const convertURLtoFile = async (url: string) => {
     const response = await fetch(url);
     const data = await response.blob();
-    const ext = url.split(".").pop(); // url 구조에 맞게 수정할 것
-    const filename = url.split("/").pop(); // url 구조에 맞게 수정할 것
+    const ext = url.split(".").pop();
+    const filename = url.split("/").pop();
     const metadata = { type: `image/${ext}` };
     return new File([data], filename!, metadata);
   };
 
   // 이미지 스토리지에 업로드 후 url 반환
   const uploadImages = async () => {
-    //이미지 스토리지에 업로드
     const uploadUrls = [];
 
-    //NOTE - previewImages에 있는 파일이 blob:http://... 같은 blob URL이 아니라 File 객체여야 해!
     for (const file of previewImages) {
-      const fileUUid = uuid(); //supabase 한글명은 안됏엇나?.. 암튼 uuid로!
-      const filePath = `post/${fileUUid}`; // 파일 저장 경로
+      const fileUUid = uuid();
+      const filePath = `post/${fileUUid}`;
 
-      //TODO - previewImages를 File 객체로 변환하기
+      //previewImages를 File 객체로 변환하기
       const newFile = await convertURLtoFile(file);
 
       //파일 업로드
       const { error } = await supabase.storage
         .from("images")
-        .upload(filePath, newFile); //NOTE - filePath는 문자열(string)이어야 한다.
-      //NOTE - file은 blob:~~ 이면 안돼!!!!!!!!!
-      //Supabase의 .upload() 메서드는 File 객체 또는 Blob 객체를 받아야 해. 단순한 URL 문자열은 업로드 할 수 없다!!!
+        .upload(filePath, newFile);
 
       if (error) {
         console.error("이미지 파일 업로드 실패 :", error.message);
-        return; //TODO - continue 해야하나
+        return;
       }
 
       //url 가져오기
@@ -67,10 +64,8 @@ export default function WritePage() {
     return uploadUrls;
   };
 
-  //TODO - async, await 를 안적어줘서 insert안되엇음
   const handleClickUpload = async () => {
     try {
-      // url 가져오기
       const uploadUrls = await uploadImages();
 
       if (userData) {
@@ -107,7 +102,7 @@ export default function WritePage() {
       const selectedFiles = filesArray.map((file) => {
         return URL.createObjectURL(file);
       });
-      //NOTE -  images 상태 값에 배열 합치기
+      //images 상태 값에 배열 합치기
       setPreviewImages((prev) => prev.concat(selectedFiles));
     }
   };

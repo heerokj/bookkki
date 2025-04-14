@@ -1,18 +1,17 @@
 "use client";
 
-import { deleteFeedAction } from "@/lib/actions/delete-feed-action";
-import { fetchFeeds } from "@/lib/actions/read-feed-action";
+import { addChatRoom, fetchChatRoom } from "@/services/chats";
 import {
   useInfiniteQuery,
   useMutation,
   useQueryClient,
 } from "@tanstack/react-query";
 
-export const useGetFeedList = () => {
+export const useInfiniteChatRoom = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["feeds"],
-      queryFn: ({ pageParam }) => fetchFeeds(pageParam, 10),
+      queryKey: ["chatRooms"],
+      queryFn: ({ pageParam }) => fetchChatRoom(pageParam, 20),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
         // 마지막 페이지가 있으면 현재 페이지 + 1
@@ -31,12 +30,17 @@ export const useGetFeedList = () => {
   };
 };
 
-export const useDeleteFeed = () => {
-  const queryClient = useQueryClient();
+export function useAddChatRoom() {
+  const queryClient = useQueryClient(); // React Query 캐시 업데이트
+
   return useMutation({
-    mutationFn: (feedId: string) => deleteFeedAction(feedId),
+    mutationFn: addChatRoom, // ✅ return 값이 있으므로 사용 가능
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["feeds"] });
+      // 성공 시, 기존 채팅방 목록을 다시 불러오기
+      queryClient.invalidateQueries({ queryKey: ["chatRooms"] });
+    },
+    onError: (error) => {
+      alert(error.message);
     },
   });
-};
+}

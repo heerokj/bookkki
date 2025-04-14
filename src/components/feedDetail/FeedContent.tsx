@@ -18,7 +18,6 @@ export default function FeedContent({
 }) {
   const feedUserData = useContext(UserContext);
   const focusTest = useRef<HTMLInputElement>(null);
-  // const activate = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
   const handleCommentDelete = async (commentId: string, postId: string) => {
@@ -37,7 +36,7 @@ export default function FeedContent({
         <div>
           {comments.map((comment) => (
             <div key={comment.id} className="flex justify-between py-2">
-              {/* 왼쪽 부분 (3) */}
+              {/* 왼쪽 부분 */}
               <div className="flex gap-2 flex-[8]">
                 {comment.users.profile_url ? (
                   <div className="w-[35px] h-[35px] overflow-hidden">
@@ -64,7 +63,7 @@ export default function FeedContent({
                 {/* <input value={comment.comment} disabled ref={activate} /> */}
                 <div>{comment.comment}</div>
               </div>
-              {/* 오른쪽 부분 (1) */}
+              {/* 오른쪽 부분 */}
               {comment.users.nickname === feedUserData?.user_id && (
                 <div className="button-bundle text-[11px] flex-[1] pl-2">
                   <button className="p-[2px]" onClick={handleCommentUpdate}>

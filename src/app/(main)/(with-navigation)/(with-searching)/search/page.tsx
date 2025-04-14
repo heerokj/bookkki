@@ -10,11 +10,9 @@ export default function SearchPage() {
   const searchParams = useSearchParams();
   const bookName = searchParams.get("q");
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
-    useInfiniteBooksData({ bookTitle: bookName });
+    useInfiniteBooksData({ bookTitle: bookName ?? "" });
 
   const bookList = data?.pages.flatMap((page) => page?.data) ?? [];
-
-  // const bookList = data?.pages[0].data;
   const total = data?.pages[0].count;
 
   useEffect(() => {

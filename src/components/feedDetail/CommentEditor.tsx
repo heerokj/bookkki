@@ -24,10 +24,10 @@ export default function CommentEditor({
 
   useEffect(() => {
     if (state?.status && state?.data?.length) {
-      onCommentAdd(state.data[0]); // 전체 객체를 전달해야 함
+      onCommentAdd(state.data[0]);
     }
     focusTest.current?.focus();
-  }, [state]); // state가 변경될 때만 실행
+  }, [state]);
 
   return (
     <form action={formAction}>
@@ -46,7 +46,6 @@ export default function CommentEditor({
         ) : (
           <Avatar name="Sacagawea" variant="beam" size={30} />
         )}
-        {/* readOnly적어줘야한다. */}
         <input type="text" name="postId" value={postId} hidden readOnly />
         <input
           type="text"

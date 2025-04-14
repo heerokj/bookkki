@@ -15,7 +15,6 @@ export default function ChatList() {
   const chatRoomList = data?.pages.flatMap((page) => page?.data) || [];
 
   useEffect(() => {
-    // inView가 true 일때만 실행
     if (inView && hasNextPage) {
       fetchNextPage();
     }

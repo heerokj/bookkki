@@ -15,9 +15,7 @@ const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
 
   // 모달이 뜬 상태에서는 뒷 화면 스크롤 방지
   useEffect(() => {
-    // 모달이 뜨면 body의 overflow를 hidden으로 설정
     document.body.style.overflow = "hidden";
-    // 모달이 사라지면 body의 overflow를 다시 auto로 설정
     return () => {
       document.body.style.overflow = "auto";
     };

@@ -26,3 +26,10 @@ export interface FeedComment {
     user_id: string;
   };
 }
+
+export interface FeedUser {
+  email: string;
+  nickname: string;
+  profile_url: string;
+  user_id: string;
+}

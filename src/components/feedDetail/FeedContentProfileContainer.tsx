@@ -1,14 +1,8 @@
 "use client";
 
+import { FeedUser } from "@/types/feed";
 import Avatar from "boring-avatars";
 import Image from "next/image";
-
-interface FeedUser {
-  email: string;
-  nickname: string;
-  profile_url: string;
-  user_id: string;
-}
 
 export default function FeedContentProfileContainer({
   feedUser,
