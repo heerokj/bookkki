@@ -1,5 +1,6 @@
 "use client";
-import { useAddChatRoom } from "@/hooks/useChatting";
+
+import { useAddChatRoom } from "@/hooks/use-chats";
 import { ModalProps } from "@/types/chat";
 import React, { useEffect, useState } from "react";
 
@@ -14,9 +15,7 @@ const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
 
   // 모달이 뜬 상태에서는 뒷 화면 스크롤 방지
   useEffect(() => {
-    // 모달이 뜨면 body의 overflow를 hidden으로 설정
     document.body.style.overflow = "hidden";
-    // 모달이 사라지면 body의 overflow를 다시 auto로 설정
     return () => {
       document.body.style.overflow = "auto";
     };
@@ -45,7 +44,7 @@ const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
         onClick={preventOffModal}
         className="bg-white w-1/3 h-1/4 rounded-md p-5"
       >
-        <div className="text-gray-400 font-bold text-[20px]">{title}</div>
+        <div className="text-gray-400 font-bold text-[20px] py-6">{title}</div>
 
         <div className="flex gap-2 justify-center my-8 ">
           <form onSubmit={handleSubmit}>

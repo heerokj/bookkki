@@ -1,9 +1,11 @@
-import { ReactNode } from "react";
+import { UserProvider } from "@/context/UserContext";
 
-export default function Layout({ children }: { children: ReactNode }) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-co justify-center">
-      <div className="wrap w-[1200px]">{children}</div>
-    </div>
+    <UserProvider>
+      <div className="flex flex-co justify-center">
+        <div className="wrap w-[1200px]">{children}</div>
+      </div>
+    </UserProvider>
   );
 }

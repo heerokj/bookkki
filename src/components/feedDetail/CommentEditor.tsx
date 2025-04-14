@@ -1,7 +1,10 @@
 "use client";
 import { useActionState, useEffect } from "react";
-import Profile2 from "../Profile2";
 import { FeedComment } from "@/types/feed";
+
+import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Avatar from "boring-avatars";
 import createCommentAction from "@/lib/actions/create-comment-action";
 
 export default function CommentEditor({
@@ -13,6 +16,7 @@ export default function CommentEditor({
   postId: string;
   onCommentAdd: (newComment: FeedComment) => void;
 }) {
+  const { data: session } = useSession();
   const [state, formAction, isPending] = useActionState(
     createCommentAction,
     null
@@ -20,16 +24,28 @@ export default function CommentEditor({
 
   useEffect(() => {
     if (state?.status && state?.data?.length) {
-      onCommentAdd(state.data[0]); // 전체 객체를 전달해야 함
+      onCommentAdd(state.data[0]);
     }
     focusTest.current?.focus();
-  }, [state]); // state가 변경될 때만 실행
+  }, [state]);
 
   return (
     <form action={formAction}>
       <div className="comment-input flex gap-2 border-t-[1px] p-3">
-        <Profile2 />
-        {/* readOnly적어줘야한다. */}
+        {session?.user && session.user.image ? (
+          <div className="w-[35px] h-[35px] overflow-hidden">
+            <Image
+              src={session.user.image}
+              width={40}
+              height={40}
+              alt={session.user.name ?? "Avatar"}
+              style={{ borderRadius: "50%" }}
+              className="w-full h-full object-full"
+            />
+          </div>
+        ) : (
+          <Avatar name="Sacagawea" variant="beam" size={30} />
+        )}
         <input type="text" name="postId" value={postId} hidden readOnly />
         <input
           type="text"

@@ -118,9 +118,12 @@ export default function AuthForm({ mode }: { mode: string }) {
               <div className="sign-up">
                 <div className="sign-in">
                   <div className="flex flex-col mb-[10px]">
-                    <span className="mb-[2px]">아이디</span>
+                    <label htmlFor="userId" className="mb-[2px]">
+                      아이디
+                    </label>
                     <input
                       type="text"
+                      id="userId"
                       placeholder="아이디를 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
                       {...register("userId", {
@@ -141,9 +144,12 @@ export default function AuthForm({ mode }: { mode: string }) {
                     )}
                   </div>
                   <div className="flex flex-col mb-[10px]">
-                    <span className="mb-[2px]">닉네임</span>
+                    <label htmlFor="nickname" className="mb-[2px]">
+                      닉네임
+                    </label>
                     <input
                       type="text"
+                      id="nickname"
                       placeholder="닉네임을 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
                       {...register("nickname", {
@@ -164,9 +170,12 @@ export default function AuthForm({ mode }: { mode: string }) {
                     )}
                   </div>
                   <div className="flex flex-col mb-[10px]">
-                    <span className="mb-[2px]">비밀번호</span>
+                    <label htmlFor="password" className="mb-[2px]">
+                      비밀번호
+                    </label>
                     <input
                       type="text"
+                      id="password"
                       placeholder="비밀번호를 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
                       {...register("password", {

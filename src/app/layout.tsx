@@ -39,7 +39,7 @@ export default function RootLayout({
       >
         <SessionProviders>
           <ReactQueryProvider>
-            <div>{children}</div>
+            <main>{children}</main>
           </ReactQueryProvider>
         </SessionProviders>
       </body>

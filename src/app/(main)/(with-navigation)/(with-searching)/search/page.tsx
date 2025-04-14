@@ -1,29 +1,44 @@
-import { fetchBooksData } from "@/services/main";
+"use client";
+import useInfiniteBooksData from "@/hooks/use-books-data";
 import Image from "next/image";
+import { useSearchParams } from "next/navigation";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ q: string }>;
-}) {
-  const { q } = await searchParams;
-  const { total, items } = await fetchBooksData(q, 10, 1);
+export default function SearchPage() {
+  const [ref, inView] = useInView();
+  const searchParams = useSearchParams();
+  const bookName = searchParams.get("q");
+  const { data, error, isLoading, fetchNextPage, hasNextPage } =
+    useInfiniteBooksData({ bookTitle: bookName ?? "" });
+
+  const bookList = data?.pages.flatMap((page) => page?.data) ?? [];
+  const total = data?.pages[0].count;
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, fetchNextPage]);
+
+  if (isLoading) return <span>로딩중입니다...</span>;
+  if (error) return <span>오류가 발생했습니다 : {error.message}</span>;
 
   return (
     <div>
       <p className="py-[20px]">검색결과 {total}</p>
-      <div className="flex flex-wrap gap-4">
-        {items.map((book) => {
+      <div className="grid grid-cols-5 gap-6">
+        {bookList.map((book, index) => {
           return (
             <div
-              key={book.isbn}
-              className="w-[180px] h-[350px] overflow-hidden"
+              key={`${book.isbn}-${index}`}
+              className="overflow-hidden h-[380px]"
             >
-              <div className="overflow-hidden h-[250px]">
+              <div className="overflow-hidden h-[300px]">
                 <Image
                   src={book.image}
                   width={150}
-                  height={80}
+                  height={100}
                   alt={book.title ?? "book"}
                   className="w-full h-full"
                 />
@@ -35,6 +50,9 @@ export default async function SearchPage({
             </div>
           );
         })}
+      </div>
+      <div ref={ref} className="text-center py-[40px]">
+        {hasNextPage ? <div>더보기</div> : <div>모든 피드를 불러왔습니다.</div>}
       </div>
     </div>
   );

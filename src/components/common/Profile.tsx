@@ -3,7 +3,7 @@ import Avatar from "boring-avatars";
 export default function Profile() {
   return (
     <div>
-      <Avatar name="Alice Paul" variant="beam" size={30} />
+      <Avatar name="Harriet Tubman" variant="beam" size={30} />
     </div>
   );
 }
