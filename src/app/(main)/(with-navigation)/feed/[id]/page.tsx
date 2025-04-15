@@ -7,10 +7,9 @@ import Link from "next/link";
 export default async function FeedDetail({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
-  const id = params.id;
-
+  const { id } = await params;
   const supabase = await createClient();
 
   // 포스트 데이터 가져오기
@@ -36,7 +35,6 @@ export default async function FeedDetail({
     )
     .eq("post_id", id)
     .returns<FeedComment[]>();
-  console.log("🚀 ~ commentDataList:", commentDataList);
 
   if (feedError) {
     console.error(feedError);
