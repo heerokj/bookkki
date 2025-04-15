@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
+import bcrypt from "bcryptjs";
 
 interface IFormInput {
   userId: string;
@@ -26,8 +27,6 @@ export default function AuthForm({ mode }: { mode: string }) {
   const onSubmit = async (data: IFormInput) => {
     if (mode === "signIn") {
       //로그인 처리
-      //signIn()는 서버액션의 login = async (social: string)가 아님
-      //클라이언트에서 실행됨
       const result = await signIn("credentials", {
         userID: data.userId,
         password: data.password,
@@ -35,28 +34,27 @@ export default function AuthForm({ mode }: { mode: string }) {
       });
 
       if (result?.error) {
-        alert("로그인 실패하였습니다");
+        alert("로그인 정보가 일치하지 않습니다");
         return;
       }
-      //로그인 후 메인으로
       route.push("/");
     } else {
       //회원가입 처리
       try {
+        const hashedPassword = await bcrypt.hash(data.password, 10);
         const { error: userInsertError } = await supabase
           .from("users")
           .insert({
             user_id: data.userId,
-            password: data.password,
+            password: hashedPassword,
             nickname: data.nickname,
           })
           .select();
 
         if (userInsertError) {
-          console.error(userInsertError);
           //TODO - 아이디 또는 닉네임 중복 확인하기
           if (userInsertError.code === "23505") {
-            alert("아미 존재하는 회원입니다.");
+            alert("이미 존재하는 회원입니다.");
             return;
           }
           alert("회원가입에 실패했습니다.");
@@ -174,7 +172,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                       비밀번호
                     </label>
                     <input
-                      type="text"
+                      type="password"
                       id="password"
                       placeholder="비밀번호를 입력해주세요"
                       className="h-[50px] p-2 border-2 rounded-md w-[380px]"
@@ -185,11 +183,11 @@ export default function AuthForm({ mode }: { mode: string }) {
                         },
                         minLength: {
                           value: 8,
-                          message: "비밀번호는 8자리 이상 10자리 이하입니다.",
+                          message: "비밀번호는 8자리 이상 12자리 이하입니다.",
                         },
                         maxLength: {
-                          value: 10,
-                          message: "비밀번호는 10자리 이하입니다.",
+                          value: 12,
+                          message: "비밀번호는 12자리 이하입니다.",
                         },
                       })}
                     />
