@@ -66,6 +66,10 @@ export default function WritePage() {
 
   const handleClickUpload = async () => {
     try {
+      if (!userData) {
+        alert("등록 중에 오류가 발생했습니다.");
+      }
+
       const uploadUrls = await uploadImages();
 
       if (userData) {
@@ -78,12 +82,14 @@ export default function WritePage() {
         if (error) {
           console.error(error.message);
           alert("등록에 실패했습니다.");
+          return;
         }
+        alert("등록되었습니다.");
+        route.push("/feed");
       }
-      alert("등록되었습니다.");
-      route.push("/feed");
     } catch (error) {
       console.error("등록에 실패했습니다.", error);
+      alert("등록 중에 오류가 발생했습니다.");
     }
   };
 
