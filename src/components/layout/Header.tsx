@@ -62,10 +62,7 @@ export default function Header() {
         ) : (
           <>
             <Link href="/sign-in">
-              <button
-                // onClick={() => router.push("/sign-in")}
-                className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]"
-              >
+              <button className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]">
                 로그인
               </button>
             </Link>
