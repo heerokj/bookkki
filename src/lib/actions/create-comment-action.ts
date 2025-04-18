@@ -1,8 +1,18 @@
 "use server";
+import { FeedComment } from "@/types/feed";
 import { createClient } from "@/utils/supabase/server";
 
+type StateType = {
+  status: boolean;
+  error: string;
+  data?: FeedComment[] | null;
+};
+
 //서버 액션 역할을 할 함수
-export default async function createCommentAction(_: any, formData: FormData) {
+export default async function createCommentAction(
+  prevState: StateType | null,
+  formData: FormData
+) {
   const supabase = await createClient();
 
   const comment = formData.get("comment") as string;
@@ -18,7 +28,7 @@ export default async function createCommentAction(_: any, formData: FormData) {
       .insert({
         post_id: postId,
         comment: comment,
-        user_id: "42d9022d-2a87-4e71-bf1b-369b5599d057",
+        user_id: "2bfde77a-cf38-42e0-9293-6bcc277de8ad",
       })
       .select();
 

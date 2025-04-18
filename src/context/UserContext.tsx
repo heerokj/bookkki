@@ -19,7 +19,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         const { data, error } = await supabase
           .from("users")
           .select("*")
-          .eq("user_id", userName);
+          .eq("nickname", userName);
 
         if (error) console.error(error.message);
         if (data) {

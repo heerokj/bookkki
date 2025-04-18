@@ -136,7 +136,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                       })}
                     />
                     {errors?.userId && (
-                      <p className="text-[#ff0000] p-[2px]">
+                      <p className="text-[#ff0000] p-[3px]">
                         {errors?.userId?.message}
                       </p>
                     )}
@@ -162,7 +162,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                       })}
                     />
                     {errors?.nickname && (
-                      <p className="text-[#ff0000] p-[2px]">
+                      <p className="text-[#ff0000] p-[3px]">
                         {errors?.nickname?.message}
                       </p>
                     )}
@@ -192,7 +192,7 @@ export default function AuthForm({ mode }: { mode: string }) {
                       })}
                     />
                     {errors?.password && (
-                      <p className="text-[#ff0000] p-[2px]">
+                      <p className="text-[#ff0000] p-[3px]">
                         {errors?.password?.message}
                       </p>
                     )}
