@@ -1,8 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📚 북끼 Bookkki
 
-## Getting Started
+## 📋 프로젝트 소개
 
-First, run the development server:
+Bookkki는 사용자가 읽은 책을 공유하고 기록하는 웹 어플리케이션입니다. 네이버 도서 API을 활용하여 도서를 제공하는 기능을 구현하였습니다.
+
+#### 🔗 배포 주소 </br>[아직배포안함](아직배포안함)
+
+## 🏗️ 개발 환경 및 기술 스택
+
+| 사용 기술           | 버전   |
+| ------------------- | ------ |
+| Next.js(App Router) | 15.3.0 |
+| React               | 19.0.0 |
+| TypeScript          | 5      |
+| Tanstack Query      | 5.74.3 |
+| Tailwind CSS        | 4      |
+
+## 📂 파일 구조
+
+<details>
+<summary>펼쳐보기</summary>
+
+<br>
 
 ```bash
 npm run dev
@@ -14,23 +33,27 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</details>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📌 주요 기능
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1️⃣ <strong>도서 검색</strong>
 
-## Learn More
+- d
+- d
 
-To learn more about Next.js, take a look at the following resources:
+2️⃣ <strong>피드 관리</strong>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3️⃣ <strong>도서 검색</strong>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+4️⃣ <strong>도서 검색</strong>
 
-## Deploy on Vercel
+## 🚨 트러블 슈팅
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 💡 개선 사항
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [ ] 반응형 디자인을 적용
+- [ ] 프로필 사진 컴포넌트로 분리
+- [ ] 피드 수정 기능
+- [ ] 댓글등록 오류
+- [ ] 에러바운더리, 서스팬스
