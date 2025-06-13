@@ -24,7 +24,7 @@ export default function FeedContentProfileContainer({
             />
           </div>
         ) : (
-          <Avatar name="Harriet Tubman" variant="beam" size={30} />
+          <Avatar name="Sacagawea" variant="beam" size={30} />
         )}
         <div>{feedUser.nickname}</div>
       </div>
