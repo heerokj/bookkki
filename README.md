@@ -44,9 +44,18 @@ bun dev
 
 2️⃣ <strong>피드 관리</strong>
 
+- d
+- d
+
 3️⃣ <strong>도서 검색</strong>
 
+- d
+- d
+
 4️⃣ <strong>도서 검색</strong>
+
+- d
+- d
 
 ## 🚨 트러블 슈팅
 
