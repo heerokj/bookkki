@@ -48,8 +48,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         // 성공 시 유저 정보 반환
         return {
-          id: loginUser.user_id,
-          name: loginUser.nickname, // 토큰 name에 닉네임 넣기(일반 로그인 시)
+          id: loginUser.id,
+          userId: loginUser.user_id, //유저ID
+          nickname: loginUser.nickname, //유저닉네임
         };
       },
     }),
@@ -57,9 +58,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.name = user.name;
+        const u = user as any; // 👈 이건 타입 회피용, typescript 안전 처리 시 확장 필요
+        token.id = u.id;
+        token.userId = u.userId;
+        token.nickname = u.nickname;
       }
       return token;
+    },
+    async session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token.id;
+        session.user.userId = token.userId;
+        session.user.nickname = token.nickname;
+      }
+      return session;
     },
   },
 });

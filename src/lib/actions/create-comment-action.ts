@@ -1,4 +1,5 @@
 "use server";
+import { auth } from "@/auth";
 import { FeedComment } from "@/types/feed";
 import { createClient } from "@/utils/supabase/server";
 
@@ -13,6 +14,12 @@ export default async function createCommentAction(
   prevState: StateType | null,
   formData: FormData
 ) {
+  const session = await auth();
+
+  if (!session?.user?.id) {
+    throw new Error("로그인이 필요합니다.");
+  }
+
   const supabase = await createClient();
 
   const comment = formData.get("comment") as string;
@@ -28,7 +35,7 @@ export default async function createCommentAction(
       .insert({
         post_id: postId,
         comment: comment,
-        user_id: "2bfde77a-cf38-42e0-9293-6bcc277de8ad",
+        user_id: session.user.id,
       })
       .select();
 
