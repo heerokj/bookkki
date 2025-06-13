@@ -5,7 +5,7 @@ import GitHub from "next-auth/providers/github";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createClient } from "./utils/supabase/server";
+import { createClient } from "@/shared/utils/supabase/server";
 import bcrypt from "bcryptjs";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -58,18 +58,18 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        const u = user as any; // 👈 이건 타입 회피용, typescript 안전 처리 시 확장 필요
-        token.id = u.id;
-        token.userId = u.userId;
-        token.nickname = u.nickname;
+        // const u = user as any; // 👈 이건 타입 회피용, typescript 안전 처리 시 확장 필요
+        token.id = user.id;
+        token.userId = user.userId;
+        token.nickname = user.nickname;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.id = token.id;
-        session.user.userId = token.userId;
-        session.user.nickname = token.nickname;
+        session.user.id = token.id as string;
+        session.user.userId = token.userId as string;
+        session.user.nickname = token.nickname as string;
       }
       return session;
     },
