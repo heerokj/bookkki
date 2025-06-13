@@ -1,11 +1,11 @@
 "use client";
 
 import PreviewImage from "@/components/write/PreviewImage";
-import { createClient } from "@/utils/supabase/client";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
+import { createClient } from "@/shared/utils/supabase/client";
 
 export default function WritePage() {
   const userData = useContext(UserContext);

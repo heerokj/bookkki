@@ -5,7 +5,7 @@ import GitHub from "next-auth/providers/github";
 import Kakao from "next-auth/providers/kakao";
 import Naver from "next-auth/providers/naver";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { createClient } from "./utils/supabase/server";
+import { createClient } from "@/shared/utils/supabase/server";
 import bcrypt from "bcryptjs";
 
 export const { auth, handlers, signIn, signOut } = NextAuth({
@@ -48,8 +48,9 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
 
         // 성공 시 유저 정보 반환
         return {
-          id: loginUser.user_id,
-          name: loginUser.nickname, // 토큰 name에 닉네임 넣기(일반 로그인 시)
+          id: loginUser.id,
+          userId: loginUser.user_id, //유저ID
+          nickname: loginUser.nickname, //유저닉네임
         };
       },
     }),
@@ -57,9 +58,20 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.name = user.name;
+        // const u = user as any; // 👈 이건 타입 회피용, typescript 안전 처리 시 확장 필요
+        token.id = user.id;
+        token.userId = user.userId;
+        token.nickname = user.nickname;
       }
       return token;
+    },
+    async session({ session, token }) {
+      if (session?.user) {
+        session.user.id = token.id as string;
+        session.user.userId = token.userId as string;
+        session.user.nickname = token.nickname as string;
+      }
+      return session;
     },
   },
 });

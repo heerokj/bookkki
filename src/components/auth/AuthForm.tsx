@@ -3,10 +3,10 @@
 import BookImage from "./BookImage";
 import SocialLoinButtons from "./SocialLoginButtons";
 import { useRouter } from "next/navigation";
-import { createClient } from "@/utils/supabase/client";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import bcrypt from "bcryptjs";
+import { createClient } from "@/shared/utils/supabase/client";
 
 interface IFormInput {
   userId: string;

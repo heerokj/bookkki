@@ -1,7 +1,7 @@
 //댓글 API 코드
 "use client";
 import { FeedComment } from "@/types/feed";
-import { createClient } from "@/utils/supabase/client";
+import { createClient } from "@/shared/utils/supabase/client";
 
 const supabase = createClient();
 

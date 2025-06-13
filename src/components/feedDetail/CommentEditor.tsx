@@ -1,11 +1,10 @@
 "use client";
-import { useActionState, useEffect } from "react";
+import { useActionState, useContext, useEffect } from "react";
 import { FeedComment } from "@/types/feed";
-
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Avatar from "boring-avatars";
 import createCommentAction from "@/lib/actions/create-comment-action";
+import { UserContext } from "@/context/UserContext";
 
 export default function CommentEditor({
   focusTest,
@@ -16,7 +15,7 @@ export default function CommentEditor({
   postId: string;
   onCommentAdd: (newComment: FeedComment) => void;
 }) {
-  const { data: session } = useSession();
+  const userData = useContext(UserContext);
   const [state, formAction, isPending] = useActionState(
     createCommentAction,
     null
@@ -32,13 +31,13 @@ export default function CommentEditor({
   return (
     <form action={formAction}>
       <div className="comment-input flex gap-2 border-t-[1px] p-3">
-        {session?.user && session.user.image ? (
+        {userData && userData.profile_url ? (
           <div className="w-[35px] h-[35px] overflow-hidden">
             <Image
-              src={session.user.image}
+              src={userData.profile_url}
               width={40}
               height={40}
-              alt={session.user.name ?? "Avatar"}
+              alt={userData.nickname ?? "Avatar"}
               style={{ borderRadius: "50%" }}
               className="w-full h-full object-full"
             />

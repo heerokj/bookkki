@@ -1,12 +1,15 @@
 "use client";
 
 import { HEADER_LISTS } from "@/shared/constants/header";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
+import { UserContext } from "@/context/UserContext";
+import { useContext } from "react";
+import Avatar from "boring-avatars";
 
 export default function Header() {
-  const { data: session, status } = useSession();
+  const userData = useContext(UserContext);
 
   return (
     <div className="flex justify-between items-center border-b-[1px] h-[64px]">
@@ -34,22 +37,25 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-4">
-        <Image src="/icons/moon.svg" alt="moon" height={25} width={25} />
-        {status === "authenticated" && session?.user ? (
+        {userData ? (
           <>
             <div className="pt-2">
-              <b>{session.user.name}</b> 님 환영합니다!
+              <b>{userData.nickname}</b> 님 환영합니다!
             </div>
-            {session.user.image && (
+            {userData.profile_url ? (
               <div className="w-[35px] h-[35px] overflow-hidden">
                 <Image
-                  src={session.user.image}
+                  src={userData.profile_url}
                   width={40}
                   height={40}
-                  alt={session.user.name ?? "Avatar"}
+                  alt={userData.nickname ?? "Avatar"}
                   style={{ borderRadius: "50%" }}
                   className="w-full h-full object-full"
                 />
+              </div>
+            ) : (
+              <div className="w-[35px] h-[35px] overflow-hidden">
+                <Avatar name="Sacagawea" variant="beam" size={30} />
               </div>
             )}
             <button

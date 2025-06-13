@@ -4,11 +4,11 @@ import FeedContentProfileContainer from "./FeedContentProfileContainer";
 import FeedContentLikeContainer from "./FeedContentLikeContainer";
 import CommentEditor from "./CommentEditor";
 import { useContext, useRef, useState } from "react";
-import { getDistanceToNow } from "@/utils/Date/date";
 import { deleteComment } from "@/services/comments";
 import Image from "next/image";
 import Avatar from "boring-avatars";
 import { UserContext } from "@/context/UserContext";
+import { getDistanceToNow } from "@/shared/utils/Date/date";
 export default function FeedContent({
   feedData,
   commentDataList,
@@ -16,7 +16,7 @@ export default function FeedContent({
   feedData: FeedData;
   commentDataList: FeedComment[];
 }) {
-  const feedUserData = useContext(UserContext);
+  const userData = useContext(UserContext);
   const focusTest = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
@@ -38,7 +38,7 @@ export default function FeedContent({
             <div key={comment.id} className="flex justify-between py-2">
               {/* 왼쪽 부분 */}
               <div className="flex gap-2 flex-[8]">
-                {comment.users.profile_url ? (
+                {comment.users?.profile_url ? (
                   <div className="w-[35px] h-[35px] overflow-hidden">
                     <Image
                       src={comment.users.profile_url}
@@ -46,25 +46,24 @@ export default function FeedContent({
                       height={40}
                       alt={comment.users.user_id ?? "Avatar"}
                       style={{ borderRadius: "50%" }}
-                      className="w-full h-full object-full"
+                      className="w-full h-full object-cover"
                     />
                   </div>
                 ) : (
-                  <Avatar name="Harriet Tubman" variant="beam" size={30} />
+                  <Avatar name="Sacagawea" variant="beam" size={30} />
                 )}
                 <div className="flex flex-col gap-2 ">
                   <div className="text-[#313d44] font-bold">
-                    {comment.users.nickname}
+                    {comment.users?.nickname}
                   </div>
                   <div className="text-[10px]">
                     {getDistanceToNow(comment.created_at)}
                   </div>
                 </div>
-                {/* <input value={comment.comment} disabled ref={activate} /> */}
                 <div>{comment.comment}</div>
               </div>
               {/* 오른쪽 부분 */}
-              {comment.users.nickname === feedUserData?.user_id && (
+              {comment.users?.nickname === userData?.nickname && (
                 <div className="button-bundle text-[11px] flex-[1] pl-2">
                   <button className="p-[2px]" onClick={handleCommentUpdate}>
                     수정

@@ -1,7 +1,7 @@
 "use client";
 
+import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedData } from "@/types/feed";
-import { getDistanceToNow } from "@/utils/Date/date";
 import React, { MutableRefObject } from "react";
 
 export default function FeedContentLikeContainer({

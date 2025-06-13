@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/shared/utils/supabase/server";
 
 export async function deleteFeedAction(feedId: string) {
   const supabase = await createClient();

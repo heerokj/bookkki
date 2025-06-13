@@ -1,6 +1,6 @@
 import FeedContent from "@/components/feedDetail/FeedContent";
 import FeedImage from "@/components/feedDetail/FeedImage";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/shared/utils/supabase/server";
 import { FeedComment, FeedData } from "@/types/feed";
 import Link from "next/link";
 
