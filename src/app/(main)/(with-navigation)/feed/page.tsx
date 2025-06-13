@@ -15,7 +15,10 @@ export default async function Feed() {
     queryKey: ["feeds"],
     queryFn: ({ pageParam }) => fetchFeeds(pageParam, 10),
     initialPageParam: 1,
-    getNextPageParam: (lastPage, allPages) => {
+    getNextPageParam: (
+      lastPage: { hasNext: boolean },
+      allPages: { hasNext: boolean }[]
+    ) => {
       return lastPage?.hasNext ? allPages.length + 1 : undefined;
     },
   });
