@@ -1,16 +1,27 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   eslint: {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: [
-      "avatars.githubusercontent.com",
-      "k.kakaocdn.net",
-      "ssl.pstatic.net",
-      "shopping-phinf.pstatic.net",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "k.kakaocdn.net",
+      },
+      {
+        protocol: "https",
+        hostname: "ssl.pstatic.net",
+      },
+      {
+        protocol: "https",
+        hostname: "shopping-phinf.pstatic.net",
+      },
     ],
   },
 };
