@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/shared/utils/supabase/server";
 
 export const fetchFeeds = async (pageParam: number, limit: number) => {
   const supabase = await createClient();

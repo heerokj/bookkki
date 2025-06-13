@@ -1,13 +1,13 @@
 "use client";
 import { FeedData } from "@/types/feed";
-import { getDistanceToNow } from "@/utils/Date/date";
 import { useSession } from "next-auth/react";
 import { UserContext } from "@/context/UserContext";
+import { useDeleteFeed } from "@/hooks/use-feeds";
+import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { useContext } from "react";
 import Image from "next/image";
 import Avatar from "boring-avatars";
 import Link from "next/link";
-import { useDeleteFeed } from "@/hooks/use-feeds";
 
 export default function FeedCard(feedData: FeedData) {
   const { mutate: deleteFeed } = useDeleteFeed();
@@ -46,7 +46,7 @@ export default function FeedCard(feedData: FeedData) {
                   />
                 </div>
               ) : (
-                <Avatar name="Harriet Tubman" variant="beam" size={30} />
+                <Avatar name="Sacagawea" variant="beam" size={30} />
               )}
               <div>{feedData.users.nickname}</div>
             </div>

@@ -1,7 +1,7 @@
 "use server";
 import { auth } from "@/auth";
+import { createClient } from "@/shared/utils/supabase/server";
 import { FeedComment } from "@/types/feed";
-import { createClient } from "@/utils/supabase/server";
 
 type StateType = {
   status: boolean;
