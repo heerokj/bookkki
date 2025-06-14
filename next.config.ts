@@ -22,6 +22,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "shopping-phinf.pstatic.net",
       },
+      {
+        protocol: "https",
+        hostname: "qbnzpjurriqxllfvgasr.supabase.co",
+      },
     ],
   },
 };

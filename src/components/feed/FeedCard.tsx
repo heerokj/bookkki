@@ -42,7 +42,6 @@ export default function FeedCard(feedData: FeedData) {
                     height={40}
                     alt={feedData.users.user_id ?? "Avatar"}
                     style={{ borderRadius: "50%" }}
-                    className="w-full h-full object-full"
                   />
                 </div>
               ) : (
@@ -61,11 +60,12 @@ export default function FeedCard(feedData: FeedData) {
           >
             <div className="overflow-hidden">
               {feedData.image_urls?.map((img) => (
-                <div key={img} className="h-[300px]">
-                  <img
+                <div key={img} className="h-[300px] width-[300px]">
+                  <Image
                     src={img}
                     alt="img"
                     height={250}
+                    width={300}
                     className="h-full w-full object-cover"
                   />
                 </div>
