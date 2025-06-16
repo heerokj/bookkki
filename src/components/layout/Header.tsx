@@ -14,7 +14,7 @@ export default function Header() {
   return (
     <div className="flex justify-between items-center border-b-[1px] h-[64px]">
       <div className="flex gap-[50px]">
-        <div className="flex gap-4  mt-[10px]">
+        <div className="flex gap-4 mt-[10px]">
           {HEADER_LISTS.map((header) => {
             return (
               <Link key={`header${header.href}`} href={header.href}>
@@ -24,7 +24,7 @@ export default function Header() {
                     alt="bookkki-icon"
                     height={40}
                     width={40}
-                    className="pb-2"
+                    className="w-[40px] h-[40px]"
                   />
                 ) : (
                   <div className="text-[17px] px-4 pt-2 font-bold">
