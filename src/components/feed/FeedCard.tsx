@@ -30,7 +30,7 @@ export default function FeedCard(feedData: FeedData) {
       {feedData ? (
         <div
           key={feedData.id}
-          className="feed-container border-[1px] rounded-sm shadow-sm hover:scale-[1.02]"
+          className="feed-container border-[1px] rounded-lg shadow-sm hover:scale-[1.02]"
         >
           <div className="feed-heading flex justify-between p-2">
             <div className="flex gap-2">
@@ -42,7 +42,6 @@ export default function FeedCard(feedData: FeedData) {
                     height={40}
                     alt={feedData.users.user_id ?? "Avatar"}
                     style={{ borderRadius: "50%" }}
-                    className="w-full h-full object-full"
                   />
                 </div>
               ) : (
@@ -61,11 +60,12 @@ export default function FeedCard(feedData: FeedData) {
           >
             <div className="overflow-hidden">
               {feedData.image_urls?.map((img) => (
-                <div key={img} className="h-[300px]">
-                  <img
+                <div key={img} className="h-[300px] width-[300px]">
+                  <Image
                     src={img}
                     alt="img"
                     height={250}
+                    width={300}
                     className="h-full w-full object-cover"
                   />
                 </div>

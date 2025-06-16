@@ -1,7 +1,7 @@
-import LoadingSkeleton from "@/components/skeleton/LoadingSkeleton";
+import FeedListSkeleton from "@/components/skeleton/FeedListSkeleton";
 import React from "react";
 
-export default function loading() {
+export default function Loading() {
   const count = 6;
   return (
     <div className="mb-6">
@@ -10,7 +10,7 @@ export default function loading() {
         {Array(count)
           .fill(0)
           .map((_, index) => (
-            <LoadingSkeleton key={index} />
+            <FeedListSkeleton key={index} />
           ))}
       </div>
     </div>

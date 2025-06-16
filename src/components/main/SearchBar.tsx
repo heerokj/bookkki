@@ -20,7 +20,7 @@ export default function SearchBar() {
   };
   return (
     <div className="input-area flex justify-center pt-[40px]">
-      <div className="inputWrapper flex gap-2 p-4 w-[600px] h-[46px] rounded-3xl shadow-md">
+      <div className="inputWrapper flex gap-2 px-4 w-[600px] h-[50px] rounded-3xl shadow-md">
         <button onSubmit={onSubmit}>
           <img src="icons/search.svg" alt="search" width={20} height={20} />
         </button>
