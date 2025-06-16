@@ -30,7 +30,7 @@ export default function FeedCard(feedData: FeedData) {
       {feedData ? (
         <div
           key={feedData.id}
-          className="feed-container border-[1px] rounded-sm shadow-sm hover:scale-[1.02]"
+          className="feed-container border-[1px] rounded-lg shadow-sm hover:scale-[1.02]"
         >
           <div className="feed-heading flex justify-between p-2">
             <div className="flex gap-2">
