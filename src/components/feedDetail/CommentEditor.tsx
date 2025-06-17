@@ -1,10 +1,10 @@
 "use client";
 import { useActionState, useContext, useEffect } from "react";
 import { FeedComment } from "@/types/feed";
-import Image from "next/image";
-import Avatar from "boring-avatars";
+
 import createCommentAction from "@/lib/actions/create-comment-action";
 import { UserContext } from "@/context/UserContext";
+import Profile from "../common/Profile";
 
 export default function CommentEditor({
   focusTest,
@@ -30,21 +30,8 @@ export default function CommentEditor({
 
   return (
     <form action={formAction}>
-      <div className="comment-input flex gap-2 border-t-[1px] p-3">
-        {userData && userData.profile_url ? (
-          <div className="w-[35px] h-[35px] overflow-hidden">
-            <Image
-              src={userData.profile_url}
-              width={40}
-              height={40}
-              alt={userData.nickname ?? "Avatar"}
-              style={{ borderRadius: "50%" }}
-              className="w-full h-full object-full"
-            />
-          </div>
-        ) : (
-          <Avatar name="Sacagawea" variant="beam" size={30} />
-        )}
+      <div className="comment-input flex items-center gap-3 border-t-[1px] p-3">
+        <Profile info={userData} />
         <input type="text" name="postId" value={postId} hidden readOnly />
         <input
           type="text"
@@ -54,7 +41,10 @@ export default function CommentEditor({
           className="w-full p-2"
           disabled={isPending}
         />
-        <button type="submit" className="relative w-[70px] h-[10px] p-2">
+        <button
+          type="submit"
+          className="w-[70px] h-[10px] text-lg mb-3 hover:text-gray-600"
+        >
           {isPending ? "..." : "게시"}
         </button>
       </div>

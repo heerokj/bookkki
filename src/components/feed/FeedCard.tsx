@@ -6,8 +6,8 @@ import { useDeleteFeed } from "@/hooks/use-feeds";
 import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { useContext } from "react";
 import Image from "next/image";
-import Avatar from "boring-avatars";
 import Link from "next/link";
+import Profile from "../common/Profile";
 
 export default function FeedCard(feedData: FeedData) {
   const { mutate: deleteFeed } = useDeleteFeed();
@@ -25,6 +25,7 @@ export default function FeedCard(feedData: FeedData) {
     if (!isConfirmed) return;
     deleteFeed(feedData.id);
   };
+
   return (
     <>
       {feedData ? (
@@ -33,20 +34,8 @@ export default function FeedCard(feedData: FeedData) {
           className="feed-container border-[1px] rounded-lg shadow-sm hover:scale-[1.02]"
         >
           <div className="feed-heading flex justify-between p-2">
-            <div className="flex gap-2">
-              {feedData.users.profile_url ? (
-                <div className="w-[35px] h-[35px] overflow-hidden">
-                  <Image
-                    src={feedData.users.profile_url}
-                    width={40}
-                    height={40}
-                    alt={feedData.users.user_id ?? "Avatar"}
-                    style={{ borderRadius: "50%" }}
-                  />
-                </div>
-              ) : (
-                <Avatar name="Sacagawea" variant="beam" size={30} />
-              )}
+            <div className="flex items-center gap-2">
+              <Profile info={feedData.users} size={35} />
               <div>{feedData.users.nickname}</div>
             </div>
             {feedData.users.nickname === userData?.nickname && (
