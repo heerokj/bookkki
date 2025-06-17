@@ -5,6 +5,7 @@ declare module "next-auth" {
     id: string;
     userId?: string;
     nickname?: string;
+    name?: string | null;
   }
 
   interface Session {
@@ -12,6 +13,7 @@ declare module "next-auth" {
       id: string;
       userId?: string | null;
       nickname?: string | null;
+      name?: string | null;
     };
   }
 
@@ -19,5 +21,6 @@ declare module "next-auth" {
     id: string;
     userId?: string | null;
     nickname?: string | null;
+    name?: string | null;
   }
 }
