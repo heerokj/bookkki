@@ -4,7 +4,7 @@ import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedData } from "@/types/feed";
 import React, { MutableRefObject } from "react";
 
-export default function FeedContentLikeContainer({
+export default function FeedLikeContainer({
   feedData,
   focusTest,
 }: {

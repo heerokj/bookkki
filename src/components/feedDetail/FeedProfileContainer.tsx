@@ -3,7 +3,7 @@
 import { FeedUser } from "@/types/feed";
 import Profile from "../common/Profile";
 
-export default function FeedContentProfileContainer({
+export default function FeedProfileContainer({
   feedUser,
 }: {
   feedUser: FeedUser;

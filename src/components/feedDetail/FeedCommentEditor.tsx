@@ -6,7 +6,7 @@ import createCommentAction from "@/lib/actions/create-comment-action";
 import { UserContext } from "@/context/UserContext";
 import Profile from "../common/Profile";
 
-export default function CommentEditor({
+export default function FeedCommentEditor({
   focusTest,
   postId,
   onCommentAdd,
