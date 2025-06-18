@@ -49,7 +49,7 @@ export default function FeedCard(feedData: FeedData) {
           >
             <div className="overflow-hidden">
               {feedData.image_urls?.map((img) => (
-                <div key={img} className="h-[300px] width-[300px]">
+                <div key={img} className="h-[300px]">
                   <Image
                     src={img}
                     alt="img"

@@ -214,7 +214,7 @@ export default function AuthForm({ mode }: { mode: string }) {
             </div>
           </form>
         </div>
-        <p className="mb-[16px] text-[10px]">또는</p>
+        <p className="mt-7 mb-4 text-sm">간편하게 로그인하기</p>
         <SocialLoinButtons />
       </div>
     </div>

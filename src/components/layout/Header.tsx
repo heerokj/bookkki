@@ -27,7 +27,7 @@ export default function Header() {
                     className="w-[40px] h-[40px]"
                   />
                 ) : (
-                  <div className="text-[17px] px-4 pt-2 font-bold">
+                  <div className="text-[17px] px-4 pt-2 font-bold hover:text-gray-400">
                     {header.text}
                   </div>
                 )}
