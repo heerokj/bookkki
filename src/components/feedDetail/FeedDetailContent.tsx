@@ -38,15 +38,17 @@ export default function FeedDetailContent({
               {/* 왼쪽 부분 */}
               <div className="flex gap-2 flex-[8]">
                 <Profile info={comment.users} />
-                <div className="flex flex-col gap-2 w-18">
-                  <p className="text-[#313d44] font-bold">
-                    {comment.users?.nickname}
-                  </p>
-                  <p className="text-[10px]">
-                    {getDistanceToNow(comment.created_at)}
-                  </p>
+                <div>
+                  <div className="flex gap-2 items-center">
+                    <p className="text-[#313d44] font-bold">
+                      {comment.users?.nickname}
+                    </p>
+                    <p className="text-[10px] text-gray-500">
+                      {getDistanceToNow(comment.created_at)}
+                    </p>
+                  </div>
+                  <div>{comment.comment}</div>
                 </div>
-                <div>{comment.comment}</div>
               </div>
               {/* 오른쪽 부분 */}
               {comment.users?.nickname === userData?.nickname && (

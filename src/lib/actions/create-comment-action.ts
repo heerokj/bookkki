@@ -30,14 +30,14 @@ export default async function createCommentAction(
   }
 
   try {
-    const { data, error } = await supabase
-      .from("comments")
-      .insert({
-        post_id: postId,
-        comment: comment,
-        user_id: session.user.id,
-      })
-      .select();
+    const { data, error } = await supabase.from("comments").insert({
+      post_id: postId,
+      comment: comment,
+      user_id: session.user.id,
+    }).select(`
+    *,
+    users!id(user_id, nickname, email, profile_url)
+  `);
 
     if (error) {
       console.error(error);
