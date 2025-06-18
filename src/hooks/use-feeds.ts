@@ -1,7 +1,7 @@
 "use client";
 
 import { deleteFeedAction } from "@/lib/actions/delete-feed-action";
-import { fetchFeeds } from "@/lib/actions/read-feed-action";
+import { fetchFeedList } from "@/lib/services/feeds";
 import {
   useInfiniteQuery,
   useMutation,
@@ -12,7 +12,7 @@ export const useGetFeedList = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ["feeds"],
-      queryFn: ({ pageParam }) => fetchFeeds(pageParam, 10),
+      queryFn: ({ pageParam }) => fetchFeedList(pageParam, 10),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
         // 마지막 페이지가 있으면 현재 페이지 + 1
@@ -37,6 +37,9 @@ export const useDeleteFeed = () => {
     mutationFn: (feedId: string) => deleteFeedAction(feedId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["feeds"] });
+    },
+    onError: (error) => {
+      alert(error.message);
     },
   });
 };

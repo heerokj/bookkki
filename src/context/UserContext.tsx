@@ -11,7 +11,7 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [userData, setUserData] = useState<User | null>(null);
   const supabase = createClient();
   const session = useSession();
-  const userName = session.data?.user?.nickname;
+  const userName = session.data?.user?.name;
 
   useEffect(() => {
     const getUser = async () => {

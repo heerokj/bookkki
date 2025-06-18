@@ -47,21 +47,65 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
         if (!isValid) throw new Error("로그인 정보가 일치하지 않습니다");
 
         // 성공 시 유저 정보 반환
+        // jwt의 user로 반환
         return {
-          id: loginUser.id,
+          id: loginUser.id, //PK ID
           userId: loginUser.user_id, //유저ID
-          nickname: loginUser.nickname, //유저닉네임
+          name: loginUser.nickname, //유저닉네임
         };
       },
     }),
   ],
   callbacks: {
+    async signIn({ user, account }) {
+      const supabase = await createClient();
+      // 소셜로그인 경우
+      if (user && account?.provider !== "credentials") {
+        // 유저 정보 추출
+        const user_id = account?.providerAccountId;
+        const nickname = user.name;
+        const profile_url = user.image;
+        const provider = account?.provider;
+
+        // DB에 유저 존재 여부 확인
+        const { data: loginUser } = await supabase
+          .from("users")
+          .select()
+          .eq("user_id", user_id)
+          .single();
+
+        // 존재하지 않으면 유저 저장
+        if (!loginUser) {
+          const { data: insertedUser, error: Error } = await supabase
+            .from("users")
+            .insert({
+              user_id,
+              nickname,
+              profile_url,
+              provider,
+            })
+            .select()
+            .single();
+
+          if (Error) console.error("소셜로그인 유저 저장 실패:", Error.message);
+
+          // 댓글 등록시 session의 정보를 사용하는데 그 전, session에 유저 pk ID 를 넣기위함
+          if (insertedUser) {
+            user.id = insertedUser.id;
+          }
+        } else {
+          user.id = loginUser.id;
+        }
+        // 존재하면 패스
+        return true;
+      }
+      return true;
+    },
     async jwt({ token, user }) {
       if (user) {
-        // const u = user as any; // 👈 이건 타입 회피용, typescript 안전 처리 시 확장 필요
         token.id = user.id;
         token.userId = user.userId;
-        token.nickname = user.nickname;
+        token.name = user.name;
       }
       return token;
     },
@@ -69,7 +113,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
       if (session?.user) {
         session.user.id = token.id as string;
         session.user.userId = token.userId as string;
-        session.user.nickname = token.nickname as string;
+        session.user.name = token.name as string;
       }
       return session;
     },

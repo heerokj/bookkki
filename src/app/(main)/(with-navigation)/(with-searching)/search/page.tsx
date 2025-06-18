@@ -1,9 +1,10 @@
 "use client";
-import useInfiniteBooksData from "@/hooks/use-books-data";
-import Image from "next/image";
+
+import useInfiniteBooksData from "@/hooks/use-search-books";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
+import Image from "next/image";
 
 export default function SearchPage() {
   const [ref, inView] = useInView();
