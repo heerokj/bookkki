@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 // API 라우트 호출
-export const fetchBooksDatas = async (
+export const fetchBooksData = async (
   bookTitle: string,
   pageParam: number,
   display: number
@@ -26,7 +26,7 @@ export default function useInfiniteBooksData({
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: ["books", bookTitle],
-      queryFn: ({ pageParam }) => fetchBooksDatas(bookTitle, pageParam, 10),
+      queryFn: ({ pageParam }) => fetchBooksData(bookTitle, pageParam, 10),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
         // 마지막 페이지가 있으면 현재 페이지 + 1
