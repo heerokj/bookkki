@@ -1,6 +1,6 @@
 "use client";
 
-import { addChatRoom, fetchChatRoom } from "@/services/chats";
+import { addChatRoom, fetchChatRoom } from "@/lib/services/chats";
 import {
   useInfiniteQuery,
   useMutation,
