@@ -6,7 +6,11 @@ export default function FeedListSkeleton() {
       <div className="skeleton-container border rounded-lg shadow-sm">
         <div className="skeleton-heading flex justify-between p-2">
           <div className="flex gap-2 h-[35px]">
-            <SkeletonBox width="w-[35px]" height="h-[35px]" rounded="full" />
+            <SkeletonBox
+              width="w-[35px]"
+              height="h-[35px]"
+              rounded="rounded-full"
+            />
             <SkeletonBox width="w-28" height="h-4" className="mt-4" />
           </div>
         </div>

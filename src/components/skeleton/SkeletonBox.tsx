@@ -10,12 +10,12 @@ type Props = {
 export default function SkeletonBox({
   width,
   height,
-  rounded = "sm",
+  rounded,
   className = "",
 }: Props) {
   return (
     <div
-      className={`${width} ${height} rounded-${rounded} ${className} skeleton-item`}
+      className={`${width} ${height} ${rounded} ${className} skeleton-item`}
     ></div>
   );
 }
