@@ -1,4 +1,4 @@
-import FeedContent from "@/components/feedDetail/FeedContent";
+import FeedDetailContent from "@/components/feedDetail/FeedDetailContent";
 import FeedImage from "@/components/feedDetail/FeedImage";
 import { createClient } from "@/shared/utils/supabase/server";
 import { FeedComment, FeedData } from "@/types/feed";
@@ -55,7 +55,10 @@ export default async function FeedDetail({
       </div>
       <div className="feed-content-container grid grid-cols-2 mb-[50px] h-[500px]">
         <FeedImage feedImage={data[0]} />
-        <FeedContent feedData={data[0]} commentDataList={commentDataList} />
+        <FeedDetailContent
+          feedData={data[0]}
+          commentDataList={commentDataList}
+        />
       </div>
     </>
   );
