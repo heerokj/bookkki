@@ -20,7 +20,8 @@ export default function FeedDetailContent({
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
   const handleCommentDelete = async (commentId: string, postId: string) => {
-    alert("삭제하시겠습니까?");
+    const isConfirmed = window.confirm("삭제하시겠습니까?");
+    if (!isConfirmed) return;
     const data = await deleteComment(commentId, postId);
     setComments(data?.commentDataList as FeedComment[]);
   };
