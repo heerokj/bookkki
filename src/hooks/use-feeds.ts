@@ -2,6 +2,7 @@
 
 import { deleteFeedAction } from "@/lib/actions/delete-feed-action";
 import { fetchFeedList } from "@/lib/services/feeds";
+import { queryKeys } from "@/shared/constants/queryKey";
 import {
   useInfiniteQuery,
   useMutation,
@@ -11,7 +12,7 @@ import {
 export const useGetFeedList = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["feeds"],
+      queryKey: queryKeys.feeds.all,
       queryFn: ({ pageParam }) => fetchFeedList(pageParam, 10),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
@@ -36,7 +37,7 @@ export const useDeleteFeed = () => {
   return useMutation({
     mutationFn: (feedId: string) => deleteFeedAction(feedId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["feeds"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.feeds.all });
     },
     onError: (error) => {
       alert(error.message);

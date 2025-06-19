@@ -7,6 +7,8 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import bcrypt from "bcryptjs";
 import { createClient } from "@/shared/utils/supabase/client";
+import { useState } from "react";
+import Toast from "../common/Toast";
 
 interface IFormInput {
   userId: string;
@@ -20,6 +22,9 @@ export default function AuthForm({ mode }: { mode: string }) {
     handleSubmit,
     formState: { errors },
   } = useForm<IFormInput>({ mode: "onChange" });
+  const [loginErrorToast, setLoginErrorToast] = useState(false);
+  const [signUpErrorToast, setSignUpErrorToast] = useState(false);
+  const [successSignUpToast, setSuccessSignUpToast] = useState(false);
 
   const supabase = createClient();
   const route = useRouter();
@@ -34,7 +39,7 @@ export default function AuthForm({ mode }: { mode: string }) {
       });
 
       if (result?.error) {
-        alert("로그인 정보가 일치하지 않습니다");
+        setLoginErrorToast(true);
         return;
       }
       route.push("/");
@@ -52,16 +57,18 @@ export default function AuthForm({ mode }: { mode: string }) {
           .select();
 
         if (userInsertError) {
-          //TODO - 아이디 또는 닉네임 중복 확인하기
           if (userInsertError.code === "23505") {
-            alert("이미 존재하는 회원입니다.");
+            setSignUpErrorToast(true);
             return;
           }
           alert("회원가입에 실패했습니다.");
           return;
         }
-        alert("환영합니다!");
-        route.push("/sign-in");
+        setSuccessSignUpToast(true);
+
+        setTimeout(() => {
+          route.push("/sign-in");
+        }, 2000);
       } catch (userInsertError) {
         console.error(userInsertError);
       }
@@ -208,11 +215,31 @@ export default function AuthForm({ mode }: { mode: string }) {
                 {mode === "signUp" ? "로그인" : "회원가입"}
               </button>
               <div>|</div>
-              <button onClick={() => alert("추후 업데이트 될 예정입니다🙂")}>
-                ID/PW 찾기
-              </button>
+              <button>ID/PW 찾기</button>
             </div>
           </form>
+          {loginErrorToast && (
+            <Toast
+              text="아이디 또는 비밀번혼 정보가 일치하지 않습니다"
+              setToast={setLoginErrorToast}
+              time={1000}
+            />
+          )}
+          {signUpErrorToast && (
+            <Toast
+              text="이미 존재하는 회원입니다."
+              setToast={setSignUpErrorToast}
+              time={1000}
+            />
+          )}
+          {successSignUpToast && (
+            <Toast
+              text="환영합니다!! 회원이 되신걸 축하합니다!"
+              setToast={setSuccessSignUpToast}
+              time={1000}
+              isError={false}
+            />
+          )}
         </div>
         <p className="mt-7 mb-4 text-sm">간편하게 로그인하기</p>
         <SocialLoinButtons />

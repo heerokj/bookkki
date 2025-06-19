@@ -43,8 +43,9 @@ export default function Profile({
         </div>
       ) : (
         <Avatar
-          name="Sacagawea"
+          name="Fabiola Cabeza"
           variant="beam"
+          colors={["#ffabab", "#ffdaab", "#ddffab", "#abe4ff", "#d9abff"]}
           size={size}
           onClick={onClick}
           className={className}

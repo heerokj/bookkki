@@ -3,7 +3,7 @@ import SkeletonBox from "./SkeletonBox";
 export default function FeedListSkeleton() {
   return (
     <>
-      <div className="skeleton-container border rounded-lg shadow-sm">
+      <div className="skeleton-container border rounded-2xl shadow-sm">
         <div className="skeleton-heading flex justify-between p-2">
           <div className="flex gap-2 h-[35px]">
             <SkeletonBox
