@@ -1,5 +1,6 @@
 import FeedCards from "@/components/feed/FeedCards";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
+import { queryKeys } from "@/shared/constants/queryKey";
 
 import {
   dehydrate,
@@ -12,7 +13,7 @@ export default async function Feed() {
   const queryClient = new QueryClient();
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["feeds"],
+    queryKey: queryKeys.feeds.all,
     queryFn: ({ pageParam }) => fetchFeeds(pageParam, 10),
     initialPageParam: 1,
     getNextPageParam: (

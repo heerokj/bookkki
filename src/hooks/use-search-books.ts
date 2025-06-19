@@ -1,3 +1,4 @@
+import { queryKeys } from "@/shared/constants/queryKey";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 // API 라우트 호출
@@ -25,7 +26,7 @@ export default function useInfiniteBooksData({
 }) {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["books", bookTitle],
+      queryKey: queryKeys.search.all(bookTitle),
       queryFn: ({ pageParam }) => fetchBooksData(bookTitle, pageParam, 10),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {

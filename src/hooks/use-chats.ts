@@ -1,6 +1,7 @@
 "use client";
 
 import { addChatRoom, fetchChatRoom } from "@/lib/services/chats";
+import { queryKeys } from "@/shared/constants/queryKey";
 import {
   useInfiniteQuery,
   useMutation,
@@ -10,7 +11,7 @@ import {
 export const useInfiniteChatRoom = () => {
   const { data, error, isLoading, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
-      queryKey: ["chatRooms"],
+      queryKey: queryKeys.chat.all,
       queryFn: ({ pageParam }) => fetchChatRoom(pageParam, 20),
       initialPageParam: 1,
       getNextPageParam: (lastPage, allPages) => {
@@ -37,7 +38,7 @@ export function useAddChatRoom() {
     mutationFn: addChatRoom, // ✅ return 값이 있으므로 사용 가능
     onSuccess: () => {
       // 성공 시, 기존 채팅방 목록을 다시 불러오기
-      queryClient.invalidateQueries({ queryKey: ["chatRooms"] });
+      queryClient.invalidateQueries({ queryKey: queryKeys.chat.all });
     },
     onError: (error) => {
       alert(error.message);
