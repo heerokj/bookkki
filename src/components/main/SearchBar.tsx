@@ -20,7 +20,7 @@ export default function SearchBar() {
   };
   return (
     <div className="input-area flex justify-center pt-[40px]">
-      <div className="inputWrapper flex gap-2 px-4 w-[600px] h-[50px] rounded-3xl shadow-md">
+      <div className="inputWrapper flex gap-2 px-4 w-[600px] h-[60px] rounded-full shadow-md">
         <button onSubmit={onSubmit}>
           <img src="icons/search.svg" alt="search" width={20} height={20} />
         </button>
@@ -29,7 +29,7 @@ export default function SearchBar() {
           onChange={onChangeSearch}
           onKeyDown={onKeyDownSearch}
           placeholder="검색어를 입력하세요"
-          className="w-full h-full text-[15px] focus:outline-0"
+          className="w-full h-full text-[17px] focus:outline-0 bg-transparent"
         />
       </div>
     </div>
