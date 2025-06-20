@@ -47,7 +47,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
                     alt={slide.id}
                     quality={100}
                     sizes="(max-width: 768px) 100vw, 1000px"
-                    className="w-full h-auto object-cover"
                   />
                 </div>
               </Link>
