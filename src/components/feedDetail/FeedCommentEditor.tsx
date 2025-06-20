@@ -1,51 +1,62 @@
 "use client";
-import { useActionState, useContext, useEffect } from "react";
-import { FeedComment } from "@/types/feed";
-
-import createCommentAction from "@/lib/actions/create-comment-action";
+import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
 import Profile from "../common/Profile";
+import { useForm } from "react-hook-form";
+import { useInsertComment } from "@/hooks/use-comments";
+
+type FormValues = {
+  postId: string;
+  comment: string;
+};
 
 export default function FeedCommentEditor({
-  focusTest,
   postId,
-  onCommentAdd,
 }: {
   focusTest: React.RefObject<HTMLInputElement | null>;
   postId: string;
-  onCommentAdd: (newComment: FeedComment) => void;
 }) {
   const userData = useContext(UserContext);
-  const [state, formAction, isPending] = useActionState(
-    createCommentAction,
-    null
-  );
+  const mutation = useInsertComment();
 
-  useEffect(() => {
-    if (state?.status && state?.data?.length) {
-      onCommentAdd(state.data[0]);
-    }
-    focusTest.current?.focus();
-  }, [state]);
+  const { register, handleSubmit, getValues, reset } = useForm<FormValues>();
+  console.log("🚀 ~ getValues:", getValues);
+  console.log("🚀 ~ reset:", reset);
+
+  if (!userData) return <div>유저 정보가 없습니다!</div>;
+
+  const onSubmit = (data: FormValues) => {
+    mutation.mutate({
+      userId: userData.id,
+      postId: data.postId,
+      comment: data.comment,
+    });
+  };
 
   return (
-    <form action={formAction}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="comment-input flex items-center gap-3 border-t-[1px] p-3">
         <Profile info={userData} />
-        <input type="text" name="postId" value={postId} hidden readOnly />
         <input
+          {...register("postId")}
           type="text"
-          name="comment"
+          id="postId"
+          value={postId}
+          hidden
+          readOnly
+        />
+        <input
+          {...register("comment")}
+          type="text"
+          id="comment"
           placeholder="댓글 달기..."
-          ref={focusTest}
           className="w-full p-2"
-          disabled={isPending}
         />
         <button
           type="submit"
           className="w-[70px] h-[10px] text-lg mb-3 hover:text-gray-600"
         >
-          {isPending ? "..." : "게시"}
+          게시
         </button>
       </div>
     </form>

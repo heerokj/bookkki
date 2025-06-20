@@ -23,7 +23,44 @@ export async function getCommentLists(post_id: string) {
   }
 }
 
-//한 포스터 내에서 댓글 삭제하기
+//한 포스터 내에서 댓글 등록하기
+export async function insertComment(
+  userId: string,
+  postId: string,
+  comment: string
+) {
+  try {
+    const { error } = await supabase
+      .from("comments")
+      .insert({ user_id: userId, post_id: postId, comment: comment });
+
+    if (error) {
+      console.error(error.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+//한 포스터 내에서 댓글 수정하기
+export async function updateComment(postId: string, comment: string) {
+  try {
+    const { error } = await supabase
+      .from("comments")
+      .update({ comment: comment })
+      .eq("post_id", postId);
+
+    if (error) {
+      console.error(error.message);
+      return;
+    }
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+//한 포스터 내에서 댓글 삭제하기 (사용중)
 export async function deleteComment(commentId: string, postId: string) {
   try {
     const { error: commentDeleteError } = await supabase
