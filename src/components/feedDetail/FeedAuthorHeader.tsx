@@ -3,11 +3,7 @@
 import { FeedUser } from "@/types/feed";
 import Profile from "../common/Profile";
 
-export default function FeedProfileContainer({
-  feedUser,
-}: {
-  feedUser: FeedUser;
-}) {
+export default function FeedAuthorHeader({ feedUser }: { feedUser: FeedUser }) {
   return (
     <div className="feed-profile flex justify-between p-3 border-b-[1px]">
       <div className="flex gap-3 items-center">
