@@ -30,14 +30,18 @@ export async function insertComment(
   comment: string
 ) {
   try {
-    const { error } = await supabase
+    const { data, error } = await supabase
       .from("comments")
-      .insert({ user_id: userId, post_id: postId, comment: comment });
+      .insert({ user_id: userId, post_id: postId, comment: comment }).select(`
+        *,
+        users!id(user_id, nickname, email, profile_url)
+        `);
 
     if (error) {
       console.error(error.message);
       return;
     }
+    return data;
   } catch (error) {
     console.error(error);
   }

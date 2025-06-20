@@ -4,6 +4,7 @@ import { UserContext } from "@/context/UserContext";
 import Profile from "../common/Profile";
 import { useForm } from "react-hook-form";
 import { useInsertComment } from "@/hooks/use-comments";
+import { FeedComment } from "@/types/feed";
 
 type FormValues = {
   postId: string;
@@ -12,25 +13,33 @@ type FormValues = {
 
 export default function FeedCommentEditor({
   postId,
+  setComments,
 }: {
-  focusTest: React.RefObject<HTMLInputElement | null>;
   postId: string;
+  setComments: React.Dispatch<React.SetStateAction<FeedComment[]>>;
 }) {
   const userData = useContext(UserContext);
   const mutation = useInsertComment();
 
   const { register, handleSubmit, getValues, reset } = useForm<FormValues>();
-  console.log("🚀 ~ getValues:", getValues);
-  console.log("🚀 ~ reset:", reset);
 
   if (!userData) return <div>유저 정보가 없습니다!</div>;
 
   const onSubmit = (data: FormValues) => {
-    mutation.mutate({
-      userId: userData.id,
-      postId: data.postId,
-      comment: data.comment,
-    });
+    mutation.mutate(
+      {
+        userId: userData.id,
+        postId: data.postId,
+        comment: data.comment,
+      },
+      {
+        onSuccess: (data) => {
+          if (data) {
+            setComments((prev) => [...prev, data[0]]);
+          }
+        },
+      }
+    );
   };
 
   return (

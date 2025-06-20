@@ -6,6 +6,7 @@ import FeedCommentEditor from "./FeedCommentEditor";
 import FeedLikeContainer from "./FeedLikeContainer";
 import FeedAuthorHeader from "./FeedAuthorHeader";
 import FeedCommentList from "./FeedCommentList";
+
 export default function FeedContent({
   feedData,
   commentDataList,
@@ -32,13 +33,7 @@ export default function FeedContent({
         setComments={setComments}
       />
       <FeedLikeContainer feedData={feedData} focusTest={focusTest} />
-      <FeedCommentEditor
-        postId={feedData.id}
-        focusTest={focusTest}
-        onCommentAdd={(newComment) =>
-          setComments((prev) => [...prev, newComment])
-        }
-      />
+      <FeedCommentEditor postId={feedData.id} setComments={setComments} />
     </div>
   );
 }
