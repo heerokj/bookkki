@@ -95,9 +95,9 @@ export default function FeedCommentList({
           return (
             <div key={comment.id} className="flex justify-between py-2">
               {/* 왼쪽 부분 */}
-              <div className="flex gap-2 flex-[8]">
+              <div className="flex gap-2 flex-[8] ">
                 <Profile info={comment.users} />
-                <div>
+                <div className="w-full">
                   <div className="flex gap-2 items-center">
                     <p className="text-[#313d44] font-bold">
                       {comment.users?.nickname}
@@ -112,7 +112,7 @@ export default function FeedCommentList({
                       ref={inputRef}
                       value={editComment}
                       onChange={(e) => setEditComment(e.target.value)}
-                      className=""
+                      className="w-full border-2 border-gray-200 rounded-sm px-2"
                     />
                   ) : (
                     <div className="w-full">{comment.comment}</div>
@@ -122,7 +122,7 @@ export default function FeedCommentList({
 
               {/* 오른쪽 부분 */}
               {comment.users?.nickname === userData?.nickname && (
-                <div className="button-bundle text-sm flex-[1] pl-2">
+                <div className="button-bundle text-sm flex-[1] pl-2 mt-2">
                   <button
                     className="p-[2px]"
                     onClick={() =>
