@@ -21,7 +21,7 @@ export default function FeedCommentEditor({
   const userData = useContext(UserContext);
   const mutation = useInsertComment();
 
-  const { register, handleSubmit } = useForm<FormValues>();
+  const { register, handleSubmit, reset } = useForm<FormValues>();
 
   if (!userData) return <div>유저 정보가 없습니다!</div>;
 
@@ -36,6 +36,7 @@ export default function FeedCommentEditor({
         onSuccess: (data) => {
           if (data) {
             setComments((prev) => [...prev, data[0]]);
+            reset();
           }
         },
       }
