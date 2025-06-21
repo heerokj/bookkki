@@ -14,7 +14,7 @@ export interface FeedData {
 }
 
 export interface FeedComment {
-  id: string;
+  id: number;
   created_at: string;
   post_id: string;
   comment: string;
