@@ -41,7 +41,7 @@ export function useAddChatRoom() {
       queryClient.invalidateQueries({ queryKey: queryKeys.chat.all });
     },
     onError: (error) => {
-      alert(error.message);
+      console.error(error.message);
     },
   });
 }

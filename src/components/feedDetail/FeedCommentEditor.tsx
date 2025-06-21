@@ -21,7 +21,7 @@ export default function FeedCommentEditor({
   const userData = useContext(UserContext);
   const mutation = useInsertComment();
 
-  const { register, handleSubmit, getValues, reset } = useForm<FormValues>();
+  const { register, handleSubmit } = useForm<FormValues>();
 
   if (!userData) return <div>유저 정보가 없습니다!</div>;
 

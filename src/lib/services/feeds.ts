@@ -5,8 +5,6 @@ import { createClient } from "@/shared/utils/supabase/client";
 const supabase = createClient();
 
 export const fetchFeedList = async (pageParam: number, limit: number) => {
-  console.log("클라이언트 피드데이터 가져오기");
-
   const from = (pageParam - 1) * limit;
   const to = pageParam * limit - 1;
 
