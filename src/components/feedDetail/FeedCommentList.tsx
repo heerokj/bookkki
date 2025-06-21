@@ -3,9 +3,8 @@ import React, { useRef, useState } from "react";
 import Profile from "../common/Profile";
 import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedComment, FeedData } from "@/types/feed";
-import { deleteComment } from "@/lib/services/comments";
 import { User } from "@/types/user";
-import { useUpdateComment } from "@/hooks/use-comments";
+import { useDeleteComment, useUpdateComment } from "@/hooks/use-comments";
 
 export default function FeedCommentList({
   feedData,
@@ -23,11 +22,12 @@ export default function FeedCommentList({
   const [editComment, setEditComment] = useState("");
   const inputRef = useRef(null);
 
-  const mutation = useUpdateComment();
+  const mutationUpdate = useUpdateComment();
+  const mutationDelete = useDeleteComment();
 
   // 저장버튼
   const handleClickSave = async () => {
-    mutation.mutate(
+    mutationUpdate.mutate(
       {
         commentId: editTargetId as number,
         comment: editComment as string,
@@ -54,25 +54,35 @@ export default function FeedCommentList({
     );
   };
 
-  //취소버튼
-  const handleClickCancel = (id: number) => {
-    if (editTargetId !== id) return;
+  // 취소버튼
+  const handleClickCancel = (commentId: number) => {
+    if (editTargetId !== commentId) return;
     setEditTargetId(null);
     setEditComment("");
   };
 
   // 수정버튼
-  const handleClickUpdate = (id: number, comment: string) => {
-    setEditTargetId(id);
+  const handleClickUpdate = (commentId: number, comment: string) => {
+    setEditTargetId(commentId);
     setEditComment(comment);
   };
 
   // 삭제버튼
-  const handleClickDelete = async (commentId: number, postId: string) => {
+  const handleClickDelete = async (commentId: number) => {
     const isConfirmed = window.confirm("삭제하시겠습니까?");
     if (!isConfirmed) return;
-    const data = await deleteComment(commentId, postId);
-    setComments(data?.commentDataList as FeedComment[]);
+    mutationDelete.mutate(
+      {
+        commentId: commentId,
+      },
+      {
+        onSuccess: () => {
+          setComments((prev) =>
+            prev.filter((comment) => comment.id !== commentId)
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -129,7 +139,7 @@ export default function FeedCommentList({
                     onClick={() =>
                       isEditing
                         ? handleClickCancel(comment.id)
-                        : handleClickDelete(comment.id, feedData.id)
+                        : handleClickDelete(comment.id)
                     }
                   >
                     {isEditing ? "취소" : "삭제"}
