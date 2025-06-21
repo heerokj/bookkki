@@ -34,6 +34,7 @@ export default async function FeedDetail({
       `
     )
     .eq("post_id", id)
+    .order("created_at", { ascending: true })
     .returns<FeedComment[]>();
 
   if (feedError) {

@@ -5,6 +5,7 @@ import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedComment, FeedData } from "@/types/feed";
 import { deleteComment } from "@/lib/services/comments";
 import { User } from "@/types/user";
+import { useUpdateComment } from "@/hooks/use-comments";
 
 export default function FeedCommentList({
   feedData,
@@ -18,28 +19,56 @@ export default function FeedCommentList({
   comments: FeedComment[];
   setComments: React.Dispatch<React.SetStateAction<FeedComment[]>>;
 }) {
-  const [editTargetId, setEditTargetId] = useState<string | null>(null);
+  const [editTargetId, setEditTargetId] = useState<number | null>(null);
   const [editComment, setEditComment] = useState("");
   const inputRef = useRef(null);
 
+  const mutation = useUpdateComment();
+
   // 저장버튼
-  const handleClickSave = async () => {};
+  const handleClickSave = async () => {
+    mutation.mutate(
+      {
+        commentId: editTargetId as number,
+        comment: editComment as string,
+      },
+      {
+        onSuccess: (data) => {
+          if (data) {
+            const updatedComment = comments.map((comment) => {
+              if (comment.id === data[0].id) {
+                return {
+                  ...comment,
+                  comment: data[0].comment,
+                };
+              } else {
+                return comment;
+              }
+            });
+            setComments(updatedComment);
+          }
+          setEditTargetId(null);
+          setEditComment("");
+        },
+      }
+    );
+  };
 
   //취소버튼
-  const handleClickCancel = (id: string) => {
+  const handleClickCancel = (id: number) => {
     if (editTargetId !== id) return;
     setEditTargetId(null);
     setEditComment("");
   };
 
   // 수정버튼
-  const handleClickUpdate = (id: string, comment: string) => {
+  const handleClickUpdate = (id: number, comment: string) => {
     setEditTargetId(id);
     setEditComment(comment);
   };
 
   // 삭제버튼
-  const handleClickDelete = async (commentId: string, postId: string) => {
+  const handleClickDelete = async (commentId: number, postId: string) => {
     const isConfirmed = window.confirm("삭제하시겠습니까?");
     if (!isConfirmed) return;
     const data = await deleteComment(commentId, postId);
@@ -52,6 +81,7 @@ export default function FeedCommentList({
       <div>
         {comments.map((comment) => {
           const isEditing = comment.id === editTargetId;
+
           return (
             <div key={comment.id} className="flex justify-between py-2">
               {/* 왼쪽 부분 */}
@@ -72,9 +102,10 @@ export default function FeedCommentList({
                       ref={inputRef}
                       value={editComment}
                       onChange={(e) => setEditComment(e.target.value)}
+                      className=""
                     />
                   ) : (
-                    <div>{comment.comment}</div>
+                    <div className="w-full">{comment.comment}</div>
                   )}
                 </div>
               </div>

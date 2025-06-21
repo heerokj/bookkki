@@ -30,8 +30,13 @@ export const useInsertComment = () => {
 export const useUpdateComment = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: ({ postId, comment }: { postId: string; comment: string }) =>
-      updateComment(postId, comment),
+    mutationFn: ({
+      commentId,
+      comment,
+    }: {
+      commentId: number;
+      comment: string;
+    }) => updateComment(commentId, comment),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: queryKeys.comment.all });
     },
