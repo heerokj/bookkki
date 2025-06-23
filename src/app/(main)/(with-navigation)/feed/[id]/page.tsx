@@ -1,8 +1,34 @@
 import FeedContent from "@/components/feedDetail/FeedContent";
 import FeedImage from "@/components/feedDetail/FeedImage";
 import { createClient } from "@/shared/utils/supabase/server";
-import { FeedComment, FeedData } from "@/types/feed";
+import { fetchFeedDetailAction } from "@/lib/actions/read-feed-detail-action";
+import { fetchCommentListAction } from "@/lib/actions/read-comment-action";
+import type { Metadata } from "next";
 import Link from "next/link";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}): Promise<Metadata> {
+  const { id } = await params;
+  const supabase = await createClient();
+  const { data } = await supabase.from("posts").select("title").eq("id", id);
+
+  if (!data) {
+    return {
+      title: "피드 상세 - Not Found",
+      description: "존재하지 않는 게시글입니다.",
+    };
+  }
+
+  const postTitle = data[0].title;
+
+  return {
+    title: `${postTitle} - 북끼`,
+    description: `게시글 "${postTitle}"의 상세 페이지입니다.`,
+  };
+}
 
 export default async function FeedDetail({
   params,
@@ -10,41 +36,15 @@ export default async function FeedDetail({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const supabase = await createClient();
 
-  // 포스트 데이터 가져오기
-  const { data, error: feedError } = await supabase
-    .from("posts")
-    .select(
-      `
-        *,
-        users!id(user_id, nickname, email, profile_url )
-        `
-    )
-    .eq("id", id)
-    .returns<FeedData[]>();
+  const postDetailData = await fetchFeedDetailAction(id);
+  const commentDataList = await fetchCommentListAction(id);
 
-  // 댓글 데이터 가져오기
-  const { data: commentDataList, error: commentError } = await supabase
-    .from("comments")
-    .select(
-      `
-      *,
-      users!id(user_id, nickname, email, profile_url )
-      `
-    )
-    .eq("post_id", id)
-    .order("created_at", { ascending: true })
-    .returns<FeedComment[]>();
-
-  if (feedError) {
-    console.error(feedError);
-    return <div>데이터를 불러오는데 오류가 발생했습니다.</div>;
+  if (!postDetailData) {
+    return <div>삭제된 포스터거나 데이터를 불러오는데 오류가 발생했습니다</div>;
   }
-
-  if (commentError) {
-    console.error(commentError);
-    return <div>댓글을 불러오는데 오류가 발생했습니다.</div>;
+  if (!commentDataList) {
+    return <div>댓글 데이터를 불러오는데 오류가 발생했습니다.</div>;
   }
 
   return (
@@ -55,8 +55,11 @@ export default async function FeedDetail({
         </Link>
       </div>
       <div className="feed-content-container grid grid-cols-2 mb-[50px] h-[500px]">
-        <FeedImage feedImage={data[0]} />
-        <FeedContent feedData={data[0]} commentDataList={commentDataList} />
+        <FeedImage feedImage={postDetailData} />
+        <FeedContent
+          feedData={postDetailData}
+          commentDataList={commentDataList}
+        />
       </div>
     </>
   );
