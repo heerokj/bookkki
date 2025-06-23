@@ -1,6 +1,7 @@
 import FeedCards from "@/components/feed/FeedCards";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
 import { queryKeys } from "@/shared/constants/queryKey";
+import type { Metadata } from "next";
 
 import {
   dehydrate,
@@ -8,6 +9,11 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import Link from "next/link";
+
+export const metadata: Metadata = {
+  title: "피드 - 북끼",
+  description: "유저가 남긴 글을 볼 수 있는 피드 페이지입니다.",
+};
 
 export default async function Feed() {
   const queryClient = new QueryClient();

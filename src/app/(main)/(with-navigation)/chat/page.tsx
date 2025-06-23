@@ -1,5 +1,11 @@
 import ChatForm from "@/components/chat/ChatRoomForm";
 import ChatList from "@/components/chat/ChatRoomList";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "채팅 - 북끼 ",
+  description: "유저들이 소통할 수 있는 채팅 페이지입니다.",
+};
 
 export default function ChattingPage() {
   return (
