@@ -5,26 +5,6 @@ import { createClient } from "@/shared/utils/supabase/client";
 
 const supabase = createClient();
 
-//한 포스터에 해당하는 댓글 전체 가져오기 (사용안함)
-// export async function getCommentLists(post_id: string) {
-//   console.log("댓글 전체 가져오기 로직");
-
-//   try {
-//     const { data: commentDataList, error: commentFetchError } = await supabase
-//       .from("comments")
-//       .select()
-//       .eq("post_id", post_id)
-//       .returns<FeedComment[]>();
-
-//     if (commentFetchError) {
-//       console.error(commentFetchError.message);
-//     }
-//     return { commentDataList, commentFetchError };
-//   } catch (error) {
-//     console.error(error);
-//   }
-// }
-
 //한 포스터 내에서 댓글 등록하기
 export async function insertComment(
   userId: string,
