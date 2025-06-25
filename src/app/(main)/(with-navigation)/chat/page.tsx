@@ -1,5 +1,6 @@
 import ChatForm from "@/components/chat/ChatRoomForm";
 import ChatList from "@/components/chat/ChatRoomList";
+import { META } from "@/shared/constants/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,6 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "채팅 - 북끼",
     description: "북끼에서 우리 같이 실시간 소통해요!",
+    images: META.ogImage,
   },
 };
 

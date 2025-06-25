@@ -9,6 +9,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import Link from "next/link";
+import { META } from "@/shared/constants/metadata";
 
 export const metadata: Metadata = {
   title: "피드 - 북끼",
@@ -16,6 +17,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "피드 - 북끼",
     description: "어떤 책을 읽으시나요? 서로 공유해봐요!",
+    images: META.ogImage,
   },
 };
 
