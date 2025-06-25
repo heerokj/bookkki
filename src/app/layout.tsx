@@ -2,18 +2,22 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SessionProviders from "@/providers/SessionProvider";
 import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { META } from "@/shared/constants/metadata";
 
 export const metadata: Metadata = {
-  title: "북끼",
-  description: "텍스트 힙! 도서를 검색하고 읽은 책을 북끼와 공유해봐요!",
+  title: META.title,
+  description: META.description,
   openGraph: {
-    title: "북끼",
-    description: "텍스트 힙! 도서를 검색하고 읽은 책을 북끼와 공유해봐요!",
-    images: "https://bookkki.vercel.app/opengraph-image.png",
-    url: "https://bookkki.vercel.app",
-    siteName: "Bookkki | 북끼",
-    locale: "ko_KR",
-    type: "website",
+    title: META.title,
+    description: META.description,
+    images: META.ogImage,
+    url: META.url,
+    siteName: META.siteName,
+    locale: META.locale,
+    type: META.type,
+  },
+  verification: {
+    google: META.googleVerification,
   },
 };
 
