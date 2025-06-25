@@ -1,3 +1,4 @@
+import { META } from "@/shared/constants/metadata";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -6,6 +7,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "검색하기 - 북끼",
     description: "북끼에서 원하는 도서를 검색해보세요!",
+    images: META.ogImage,
   },
 };
 
