@@ -5,6 +5,10 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "채팅 - 북끼 ",
   description: "유저들이 소통할 수 있는 채팅 페이지입니다.",
+  openGraph: {
+    title: "채팅 - 북끼",
+    description: "북끼에서 우리 같이 실시간 소통해요!",
+  },
 };
 
 export default function ChattingPage() {

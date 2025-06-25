@@ -27,6 +27,10 @@ export async function generateMetadata({
   return {
     title: `${postTitle} - 북끼`,
     description: `게시글 "${postTitle}"의 상세 페이지입니다.`,
+    openGraph: {
+      title: `${postTitle} - 북끼`,
+      description: `게시글 "${postTitle}"에 어떤 글이 올라왔을까요?`,
+    },
   };
 }
 

@@ -13,6 +13,10 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "피드 - 북끼",
   description: "유저가 남긴 글을 볼 수 있는 피드 페이지입니다.",
+  openGraph: {
+    title: "피드 - 북끼",
+    description: "어떤 책을 읽으시나요? 서로 공유해봐요!",
+  },
 };
 
 export default async function Feed() {
