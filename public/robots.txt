@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bookkki.vercel.app
+
+# Sitemaps
+Sitemap: https://bookkki.vercel.app/sitemap.xml
