@@ -1,115 +1,38 @@
+목차
+
+- [📚 북끼 Bookkki](#북끼-bookkki)
+- [🔗 배포 주소](#배포-주소)
+- [🏗️ 개발 환경 및 기술 스택](#개발-환경-및-기술-스택)
+- [📌 기능 구현 소개](#기능-구현-소개)
+  - [사용한 무한 스크롤](#useInfiniteQuery-기반-무한-스크롤-처리)
+  - [websocket을 사용한 알림 기능 구현](#websocket을-사용한-알림-기능-구현)
+
 # 📚 북끼 Bookkki
 
-## 📋 프로젝트 소개
+Bookkki는 사용자가 읽은 책을 자유롭게 공유하고 기록할 수 있는 독서 기반 커뮤니티 서비스입니다.  
+독서가 거창한 일이 아닌 일상의 한 장면이 되기를 소망하며 진행했습니다. 이를 통해 재미있고 가벼운 독서 공유 문화가 퍼져나가길 꿈꿉니다.
 
-Bookkki는 사용자가 읽은 책을 공유하고 기록하는 웹 어플리케이션입니다. 네이버 도서 API을 활용하여 도서를 제공하는 기능을 구현하였습니다.
+# 🔗 배포 주소
 
-#### 🔗 배포 주소 </br>[북끼 바로가기](https://bookkki.vercel.app/)
+[읽은 책을 공유해볼까요? - 북끼](https://bookkki.vercel.app/)
 
-## 🏗️ 개발 환경 및 기술 스택
+# 🏗️ 개발 환경 및 기술 스택
 
 | 사용 기술           | 버전   |
 | ------------------- | ------ |
-| Next.js(App Router) | 15.3.0 |
 | React               | 19.0.0 |
+| Next.js(App Router) | 15.3.0 |
 | TypeScript          | 5      |
 | Tanstack Query      | 5.74.3 |
 | Tailwind CSS        | 4      |
 
-## 📂 파일 구조
+# 📌 기능 구현 소개
 
-<details>
-<summary>펼쳐보기</summary>
+## <strong>useInfiniteQuery 기반 무한 스크롤 처리</strong>
 
-<br>
+책 검색 페이지에서 네이버 도서API를 활용해 검색 결과를 불러옵니다.  
+많은 데이터를 로드해야 하는 상황에서 무한스크롤을 구현하는 방법은 다양하지만, 저는 `React Query`의 `useInfiniteQuery`를 사용해 클라이언트에서 데이터를 효율적으로 페이징 처리했습니다. 첫 페이지(초기 검색 결과)는 `SSR`로 미리 렌더링해 초기 로딩 속도와 SEO를 고려했습니다.
 
-```bash
-📦src
- ┣ 📂app
- ┃ ┣ 📂(auth)
- ┃ ┃ ┣ 📂sign-in
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┣ 📂sign-up
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┗ 📜layout.tsx
- ┃ ┣ 📂(main)
- ┃ ┃ ┣ 📂(with-navigation)
- ┃ ┃ ┃ ┣ 📂(with-searching)
- ┃ ┃ ┃ ┃ ┣ 📂search
- ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📜layout.tsx
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂chat
- ┃ ┃ ┃ ┃ ┣ 📜loading.tsx
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂feed
- ┃ ┃ ┃ ┃ ┣ 📂[id]
- ┃ ┃ ┃ ┃ ┃ ┣ 📜loading.tsx
- ┃ ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┃ ┣ 📜loading.tsx
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┣ 📂my-books
- ┃ ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┃ ┗ 📜layout.tsx
- ┃ ┃ ┣ 📂write
- ┃ ┃ ┃ ┗ 📜page.tsx
- ┃ ┃ ┗ 📜layout.tsx
- ┃ ┣ 📂api
- ┃ ┃ ┣ 📂auth
- ┃ ┃ ┃ ┗ 📂[...nextauth]
- ┃ ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┃ ┗ 📂books
- ┃ ┃ ┃ ┗ 📜route.ts
- ┃ ┣ 📜favicon.ico
- ┃ ┣ 📜globals.css
- ┃ ┣ 📜layout.tsx
- ┃ ┗ 📜not-found.tsx
- ┣ 📂assets
- ┣ 📂components
- ┃ ┣ 📂auth
- ┃ ┣ 📂carousel
- ┃ ┣ 📂chat
- ┃ ┣ 📂common
- ┃ ┣ 📂feed
- ┃ ┣ 📂feedDetail
- ┃ ┣ 📂layout
- ┃ ┣ 📂main
- ┃ ┣ 📂skeleton
- ┃ ┗ 📂write
- ┣ 📂context
- ┣ 📂hooks
- ┣ 📂lib
- ┃ ┣ 📂actions
- ┃ ┗ 📂services
- ┣ 📂providers
- ┣ 📂shared
- ┣ 📂types
- ┗ 📜auth.ts
-```
+## <strong>websocket을 사용한 알림 기능 구현</strong>
 
-</details>
-
-## 📌 주요 기능
-
-1️⃣ <strong>도서 검색</strong>
-
-- 원하는 도서를 검색할 수 있습니다.
-
-2️⃣ <strong>피드 관리</strong>
-
-- 이미지를 등록하여 원하는 내용을 사용자들과 공유할 수 있습니다
-- 각 피드를 디테일하게 볼 수 있으며, 그 안에서 댓글을 달며 소통할 수 있습니다.
-
-3️⃣ <strong>채팅 관리</strong>
-
-- 사용자들과 대화할 수 있는 채팅방을 생성할 수 있습니다.
-
-4️⃣ <strong>로그인/회원가입</strong>
-
-- 북끼 회원가입을 할 수 있습니다.
-- 회원가입한 아이디로 북끼에 로그인 할 수 있습니다.
-
-## 💡 개선 사항
-
-- [ ] 채팅 기능
-- [ ] 반응형 디자인 적용
+구현중
