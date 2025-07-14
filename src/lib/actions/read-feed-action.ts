@@ -18,7 +18,8 @@ export const fetchFeeds = async (pageParam: number, limit: number) => {
         `,
         { count: "exact" }
       )
-      .range(from, to);
+      .range(from, to)
+      .order("created_at", { ascending: false });
 
     if (error)
       console.error("피드 목록을 불러오는데 실패했습니다", error.message);
