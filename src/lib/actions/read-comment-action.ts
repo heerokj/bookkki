@@ -17,7 +17,7 @@ export const fetchCommentListAction = async (postId: string) => {
     .order("created_at", { ascending: true })
     .returns<FeedComment[]>();
 
-  if (error || !data || data.length === 0) {
+  if (error) {
     console.error("댓글 데이터를 불러오는데 오류가 발생:", error);
     return null;
   }
