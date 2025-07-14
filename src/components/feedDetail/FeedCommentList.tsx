@@ -87,7 +87,7 @@ export default function FeedCommentList({
 
   return (
     <div className="comments-section px-4 pb-4 h-[280px] overflow-y-auto">
-      <div className="p-4">{feedData.content}</div>
+      <div className="p-4  whitespace-pre-wrap">{feedData.content}</div>
       <div>
         {comments.map((comment) => {
           const isEditing = comment.id === editTargetId;
