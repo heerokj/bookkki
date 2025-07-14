@@ -212,10 +212,8 @@ export default function AuthForm({ mode }: { mode: string }) {
             </button>
             <div className="flex justify-center gap-2 p-2">
               <button type="button" onClick={handleClick}>
-                {mode === "signUp" ? "로그인" : "회원가입"}
+                {mode === "signUp" ? "로그인 하러가기" : "회원가입 하러가기"}
               </button>
-              <div>|</div>
-              <button>ID/PW 찾기</button>
             </div>
           </form>
           {loginErrorToast && (
