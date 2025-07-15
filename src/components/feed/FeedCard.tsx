@@ -48,17 +48,17 @@ export default function FeedCard(feedData: FeedData) {
             onClick={handleClickFeedCard}
           >
             <div className="overflow-hidden">
-              {feedData.image_urls?.map((img) => (
-                <div key={img} className="h-[300px]">
+              {feedData.image_urls && (
+                <div className="h-[300px]">
                   <Image
-                    src={img}
+                    src={feedData.image_urls[0]}
                     alt="img"
                     height={250}
                     width={300}
                     className="h-full w-full object-cover"
                   />
                 </div>
-              ))}
+              )}
             </div>
             <div className="h-[65px] p-2">
               <div>{feedData.title}</div>
