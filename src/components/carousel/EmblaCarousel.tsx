@@ -7,22 +7,18 @@ import {
   PrevButton,
   usePrevNextButtons,
 } from "./EmblaCarouselArrowButtons";
-import Link from "next/link";
-import Image, { StaticImageData } from "next/image";
 
-type Slide = {
-  id: string;
-  img: StaticImageData;
-  link: string;
-};
-
-type PropType = {
-  slides: Slide[];
+type EmblaCarouselProps<T> = {
+  slides: T[];
   options?: EmblaOptionsType;
+  renderSlide: (slide: T, index: number) => React.ReactNode;
 };
 
-const EmblaCarousel: React.FC<PropType> = (props) => {
-  const { slides, options } = props;
+function EmblaCarousel<T>({
+  slides,
+  options,
+  renderSlide,
+}: EmblaCarouselProps<T>) {
   const [emblaRef, emblaApi] = useEmblaCarousel(options);
 
   const {
@@ -36,20 +32,11 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <section className={styles.embla}>
       <div className={styles.embla__viewport} ref={emblaRef}>
         <div className={styles.embla__container}>
-          {slides.map((slide, index) => (
-            <div className={styles.embla__slide} key={index}>
-              <Link href={slide.link}>
-                <div className={styles.embla__slide__number}>
-                  <Image
-                    src={slide.img}
-                    width={1000}
-                    height={1000}
-                    alt={slide.id}
-                    quality={100}
-                    sizes="(max-width: 768px) 100vw, 1000px"
-                  />
-                </div>
-              </Link>
+          {slides.map((slide, idx) => (
+            <div className={styles.embla__slide} key={`${slide}-${idx}`}>
+              <div className={styles.embla__slide__number}>
+                {renderSlide(slide, idx)}
+              </div>
             </div>
           ))}
         </div>
@@ -63,6 +50,6 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
       </div>
     </section>
   );
-};
+}
 
 export default EmblaCarousel;
