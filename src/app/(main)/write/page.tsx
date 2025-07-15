@@ -133,7 +133,7 @@ export default function WritePage() {
         <div className="editor-container flex flex-col m-auto mx-[250px]">
           <div className="editor-heading h-[100px] border-b-[2px] mt-[50px] ">
             <input
-              className="h-full px-4 focus:outline-0 text-[30px]"
+              className="h-full w-full px-4 focus:outline-0 text-[30px]"
               type="text"
               placeholder="제목을 입력해주세요"
               value={title}
@@ -141,7 +141,7 @@ export default function WritePage() {
                 e.preventDefault();
                 setTitle(e.target.value);
               }}
-              maxLength={20}
+              maxLength={50}
             />
           </div>
           <div className="editor-body p-7">
