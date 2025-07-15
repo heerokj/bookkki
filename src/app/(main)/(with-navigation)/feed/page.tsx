@@ -1,4 +1,4 @@
-import FeedCards from "@/components/feed/FeedCards";
+import FeedCardList from "@/components/feed/FeedCardList";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
 import { queryKeys } from "@/shared/constants/queryKey";
 import type { Metadata } from "next";
@@ -26,7 +26,7 @@ export default async function Feed() {
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: queryKeys.feeds.all,
-    queryFn: ({ pageParam }) => fetchFeeds(pageParam, 10),
+    queryFn: ({ pageParam }) => fetchFeeds(pageParam, 9),
     initialPageParam: 1,
     getNextPageParam: (
       lastPage: { hasNext: boolean },
@@ -52,7 +52,7 @@ export default async function Feed() {
         </Link>
       </div>
       <HydrationBoundary state={dehydratedState}>
-        <FeedCards />
+        <FeedCardList />
       </HydrationBoundary>
     </div>
   );
