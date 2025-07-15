@@ -1,20 +1,18 @@
+"use client";
 import { FeedData } from "@/types/feed";
 import Image from "next/image";
+import EmblaCarousel from "../carousel/EmblaCarousel";
 
 export default function FeedImage({ feedImage }: { feedImage: FeedData }) {
   return (
-    <div className="feed-image w-full h-full overflow-hidden">
-      {feedImage.image_urls?.map((img) => (
-        <div key={img} className="h-full">
-          <Image
-            src={img}
-            height={250}
-            width={300}
-            alt="img"
-            className="w-full h-full"
-          />
-        </div>
-      ))}
+    <div className="feed-image overflow-hidden">
+      <EmblaCarousel
+        slides={feedImage.image_urls}
+        options={{ loop: false }}
+        renderSlide={(slide) => (
+          <Image src={slide} height={300} width={300} alt="img" />
+        )}
+      />
     </div>
   );
 }
