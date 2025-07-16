@@ -13,14 +13,8 @@ export default function WritePage() {
   const [content, setContent] = useState("");
   const [previewImages, setPreviewImages] = useState<string[]>([]);
 
-  const route = useRouter();
+  const router = useRouter();
   const supabase = createClient();
-
-  const backSpaceBtn = () => {
-    const isConfirmed = window.confirm("작성중인 내용은 삭제됩니다");
-    if (!isConfirmed) return;
-    route.push("/feed");
-  };
 
   const convertURLtoFile = async (url: string) => {
     const response = await fetch(url);
@@ -72,7 +66,12 @@ export default function WritePage() {
 
       const uploadUrls = await uploadImages();
 
-      if (userData) {
+      if (uploadUrls?.length === 0) {
+        alert("이미지를 등록해주세요");
+        return;
+      }
+
+      if (userData && uploadUrls?.length !== 0) {
         const { error } = await supabase.from("posts").insert({
           user_id: userData.id,
           title: title,
@@ -85,7 +84,7 @@ export default function WritePage() {
           return;
         }
         alert("등록되었습니다.");
-        route.push("/feed");
+        router.push("/feed");
       }
     } catch (error) {
       console.error("등록에 실패했습니다.", error);
@@ -113,75 +112,74 @@ export default function WritePage() {
     }
   };
 
+  const backSpaceBtn = () => {
+    const isConfirmed = window.confirm("작성중인 내용은 삭제됩니다");
+    if (!isConfirmed) return;
+    router.back();
+  };
+
   return (
     <div>
-      <form>
-        <div className="bar flex justify-between items-center border-b-[1px] h-[50px]">
-          <div>
-            <button type="button" onClick={backSpaceBtn}>
-              <img src="/icons/arrow-left.svg" alt="arrow-left" />
-            </button>
-          </div>
-          <div>
-            <div className="flex gap-4">
-              <button type="button" onClick={handleClickUpload}>
-                발행
-              </button>
-            </div>
-          </div>
+      <section className="bar flex justify-between items-center border-b-[1px] h-[50px]">
+        <button type="button" onClick={backSpaceBtn}>
+          <img src="/icons/arrow-left.svg" alt="arrow-left" />
+        </button>
+        <button type="button" onClick={handleClickUpload}>
+          발행
+        </button>
+      </section>
+
+      <section className="editor-container flex flex-col m-auto mx-[250px]">
+        <div className="editor-heading h-[100px] border-b-[2px] mt-[50px] ">
+          <input
+            className="h-full w-full px-4 focus:outline-0 text-[30px]"
+            type="text"
+            placeholder="제목을 입력해주세요"
+            value={title}
+            onChange={(e) => {
+              e.preventDefault();
+              setTitle(e.target.value);
+            }}
+            maxLength={50}
+          />
         </div>
-        <div className="editor-container flex flex-col m-auto mx-[250px]">
-          <div className="editor-heading h-[100px] border-b-[2px] mt-[50px] ">
-            <input
-              className="h-full w-full px-4 focus:outline-0 text-[30px]"
-              type="text"
-              placeholder="제목을 입력해주세요"
-              value={title}
-              onChange={(e) => {
-                e.preventDefault();
-                setTitle(e.target.value);
-              }}
-              maxLength={50}
+        <div className="editor-body p-7">
+          <div className="body-images">
+            {previewImages.length >= 6 ? (
+              <></>
+            ) : (
+              <label htmlFor="file">
+                <input
+                  type="file"
+                  id="file"
+                  name="file"
+                  accept="image/*"
+                  hidden
+                  multiple
+                  onChange={handleImageChange}
+                />
+                <img src="/icons/plus.svg" alt="plus" className="mb-[10px]" />
+              </label>
+            )}
+            {/* 이미지들이 보일 preview 자리 만들기 */}
+            <PreviewImage
+              previewImages={previewImages}
+              setPreviewImages={setPreviewImages}
             />
           </div>
-          <div className="editor-body p-7">
-            <div className="body-images">
-              {previewImages.length >= 6 ? (
-                <></>
-              ) : (
-                <label htmlFor="file">
-                  <input
-                    type="file"
-                    id="file"
-                    name="file"
-                    accept="image/*"
-                    hidden
-                    multiple
-                    onChange={handleImageChange}
-                  />
-                  <img src="/icons/plus.svg" alt="plus" className="mb-[10px]" />
-                </label>
-              )}
-              {/* 이미지들이 보일 preview 자리 만들기 */}
-              <PreviewImage
-                previewImages={previewImages}
-                setPreviewImages={setPreviewImages}
-              />
-            </div>
-            <div className="body-context mt-[30px] h-[300px]">
-              <textarea
-                className="w-full h-full focus:outline-0"
-                placeholder="내용을 입력해주세요"
-                value={content}
-                onChange={(e) => {
-                  e.preventDefault();
-                  setContent(e.target.value);
-                }}
-              ></textarea>
-            </div>
+          <div className="body-context mt-[30px] h-[300px]">
+            <textarea
+              className="w-full h-full focus:outline-0"
+              placeholder="내용을 입력해주세요"
+              value={content}
+              onChange={(e) => {
+                e.preventDefault();
+                setContent(e.target.value);
+              }}
+            ></textarea>
           </div>
         </div>
-      </form>
+      </section>
     </div>
   );
 }
