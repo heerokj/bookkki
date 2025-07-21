@@ -154,24 +154,33 @@ export default function WritePage() {
             maxLength={50}
           />
         </div>
-        <div className="editor-body p-7">
-          <div className="body-images">
-            {previewImages.length >= 6 ? (
-              <></>
-            ) : (
-              <label htmlFor="file">
-                <input
-                  type="file"
-                  id="file"
-                  name="file"
-                  accept="image/*"
-                  hidden
-                  multiple
-                  onChange={handleImageChange}
-                />
-                <img src="/icons/plus.svg" alt="plus" className="mb-[10px]" />
-              </label>
-            )}
+        <div className="editor-body">
+          <div className="body-images bg-gray-50 p-6">
+            <p className="font-extrabold">사진 추가하기</p>
+            <label htmlFor="inputFile">
+              <div
+                className={`p-2 py-3 my-4 font-medium border-[1px] border-gray-300 rounded-xl text-center w-1/4 bg-white ${
+                  previewImages.length < 6
+                    ? `hover:bg-gray-100 cursor-pointer`
+                    : `bg-gray-100 text-gray-300 `
+                }`}
+              >
+                사진 선택
+              </div>
+            </label>
+            <p className="text-gray-400">
+              * 사진은 최대 6장까지 첨부할 수 있습니다.
+            </p>
+            <input
+              type="file"
+              id="inputFile"
+              name="file"
+              accept="image/*"
+              hidden
+              multiple
+              onChange={handleImageChange}
+              disabled={previewImages.length >= 6}
+            />
             {/* 이미지들이 보일 preview 자리 만들기 */}
             <PreviewImage
               previewImages={previewImages}
@@ -180,7 +189,7 @@ export default function WritePage() {
           </div>
           <div className="body-context mt-[30px] h-[300px]">
             <textarea
-              className="w-full h-full focus:outline-0"
+              className="w-full h-full focus:outline-0 p-2"
               placeholder="내용을 입력해주세요"
               value={content}
               onChange={(e) => {

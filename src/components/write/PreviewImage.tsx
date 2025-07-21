@@ -7,7 +7,7 @@ export default function PreviewImage({
   setPreviewImages: React.Dispatch<React.SetStateAction<string[]>>;
 }) {
   return (
-    <div className="grid grid-cols-2 gap-4">
+    <div className="grid grid-cols-2 gap-4 my-8">
       {previewImages.map((img, i) => {
         return (
           <div key={img} className="flex">
