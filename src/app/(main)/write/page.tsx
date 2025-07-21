@@ -28,29 +28,25 @@ export default function WritePage() {
   // 이미지 스토리지에 업로드 후 url 반환
   const uploadImages = async () => {
     const uploadUrls = [];
+    const convertURLtoFiles = [];
 
+    // previewImages를 File 객체로 변환하기
     for (const file of previewImages) {
-      const fileUUid = uuid();
-      const filePath = `post/${fileUUid}`;
-
-      //previewImages를 File 객체로 변환하기
       const newFile = await convertURLtoFile(file);
+      convertURLtoFiles.push(newFile);
+    }
 
-      //파일 업로드
-      const { error } = await supabase.storage
-        .from("images")
-        .upload(filePath, newFile);
+    // 파일 업로드
+    const results = await Promise.all(
+      convertURLtoFiles.map((file) =>
+        supabase.storage.from("images").upload(`post/${uuid()}`, file)
+      )
+    );
 
-      if (error) {
-        console.error("이미지 파일 업로드 실패 :", error.message);
-        return;
-      }
-
-      //url 가져오기
+    for (const result of results) {
       const { data: urlData } = supabase.storage
         .from("images")
-        .getPublicUrl(filePath);
-
+        .getPublicUrl(result.data?.path as string);
       uploadUrls.push(urlData.publicUrl);
     }
 
@@ -58,15 +54,17 @@ export default function WritePage() {
     return uploadUrls;
   };
 
+  // 발행 버튼 클릭
   const handleClickUpload = async () => {
     try {
       if (!userData) {
-        alert("등록 중에 오류가 발생했습니다.");
+        alert("로그인이 필요합니다.");
       }
 
       const uploadUrls = await uploadImages();
 
       if (uploadUrls?.length === 0) {
+        //TODO - 토스트로 바꾸기
         alert("이미지를 등록해주세요");
         return;
       }
@@ -78,6 +76,7 @@ export default function WritePage() {
           content: content,
           image_urls: uploadUrls,
         });
+
         if (error) {
           console.error(error.message);
           alert("등록에 실패했습니다.");
