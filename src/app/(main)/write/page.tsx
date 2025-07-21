@@ -12,6 +12,7 @@ export default function WritePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [isUploading, setIsUploading] = useState(false);
 
   const router = useRouter();
   const supabase = createClient();
@@ -56,9 +57,13 @@ export default function WritePage() {
 
   // 발행 버튼 클릭
   const handleClickUpload = async () => {
+    if (isUploading) return;
+    setIsUploading(true);
+
     try {
       if (!userData) {
         alert("로그인이 필요합니다.");
+        return;
       }
 
       const uploadUrls = await uploadImages();
@@ -88,27 +93,26 @@ export default function WritePage() {
     } catch (error) {
       console.error("등록에 실패했습니다.", error);
       alert("등록 중에 오류가 발생했습니다.");
+    } finally {
+      setIsUploading(false);
     }
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    //NOTE - e.target.files의 files 속성이 존재하지 않기 때문에 files가 존재하는 HTMLInputElement타입을 as 키워드로 지정
-    const fileList = e.target.files as FileList;
+    const fileList = e.target.files;
+    if (!fileList) return;
 
     if (previewImages.length >= 6) {
       alert("사진은 최대 6장까지 등록가능합니다.");
       return;
-    } else {
-      // 리스트를 배열로 저장
-      const filesArray = Array.from(fileList);
-
-      // url로 변경
-      const selectedFiles = filesArray.map((file) => {
-        return URL.createObjectURL(file);
-      });
-      //images 상태 값에 배열 합치기
-      setPreviewImages((prev) => prev.concat(selectedFiles));
     }
+
+    // 프리뷰 이미지
+    const filesArray = Array.from(fileList);
+    const selectedFiles = filesArray.map((file) => {
+      return URL.createObjectURL(file);
+    });
+    setPreviewImages((prev) => prev.concat(selectedFiles));
   };
 
   const backSpaceBtn = () => {
@@ -124,7 +128,7 @@ export default function WritePage() {
           <img src="/icons/arrow-left.svg" alt="arrow-left" />
         </button>
         <button type="button" onClick={handleClickUpload}>
-          발행
+          {isUploading ? "발행중.." : "발행"}
         </button>
       </section>
 
