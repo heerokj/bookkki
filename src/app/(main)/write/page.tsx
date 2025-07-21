@@ -105,13 +105,18 @@ export default function WritePage() {
     const fileList = e.target.files;
     if (!fileList) return;
 
-    if (previewImages.length >= 6) {
+    if (fileList.length > 6) {
       alert("사진은 최대 6장까지 등록가능합니다.");
       return;
     }
 
     // 프리뷰 이미지
     const filesArray = Array.from(fileList);
+    if (previewImages.length >= 6) {
+      alert("사진은 최대 6장까지 등록가능합니다.");
+      return;
+    }
+
     const selectedFiles = filesArray.map((file) => {
       return URL.createObjectURL(file);
     });
