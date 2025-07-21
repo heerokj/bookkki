@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import { createClient } from "@/shared/utils/supabase/client";
+import Toast from "@/components/common/Toast";
 
 export default function WritePage() {
   const userData = useContext(UserContext);
@@ -13,6 +14,7 @@ export default function WritePage() {
   const [content, setContent] = useState("");
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [isToast, setIsToast] = useState(false);
 
   const router = useRouter();
   const supabase = createClient();
@@ -69,8 +71,9 @@ export default function WritePage() {
       const uploadUrls = await uploadImages();
 
       if (uploadUrls?.length === 0) {
+        setIsToast(true);
         //TODO - 토스트로 바꾸기
-        alert("이미지를 등록해주세요");
+        // alert("이미지를 등록해주세요");
         return;
       }
 
@@ -183,6 +186,13 @@ export default function WritePage() {
           </div>
         </div>
       </section>
+      {isToast && (
+        <Toast
+          setToast={setIsToast}
+          text="이미지를 등록해주세요."
+          time={1000}
+        />
+      )}
     </div>
   );
 }
