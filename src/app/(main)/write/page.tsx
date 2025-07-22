@@ -159,7 +159,7 @@ export default function WritePage() {
             <p className="font-extrabold">사진 추가하기</p>
             <label htmlFor="inputFile">
               <div
-                className={`p-2 py-3 my-4 font-medium border-[1px] border-gray-300 rounded-xl text-center w-1/4 bg-white ${
+                className={`inline-block p-2 py-3 my-4 font-medium border-[1px] border-gray-300 rounded-xl text-center w-1/4 bg-white ${
                   previewImages.length < 6
                     ? `hover:bg-gray-100 cursor-pointer`
                     : `bg-gray-100 text-gray-300 `
