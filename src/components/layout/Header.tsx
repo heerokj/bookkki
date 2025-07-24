@@ -1,20 +1,22 @@
 "use client";
 
 import { HEADER_LISTS } from "@/shared/constants/header";
+import { UserContext } from "@/context/UserContext";
+import { useContext } from "react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { UserContext } from "@/context/UserContext";
-import { useContext } from "react";
 import Profile from "../common/Profile";
+import { usePathname } from "next/navigation";
 
 export default function Header() {
   const userData = useContext(UserContext);
+  const pathname = usePathname();
 
   return (
-    <div className="flex justify-between items-center border-b-[1px] h-[64px]">
+    <div className="flex justify-between items-center border-b-[1px] h-16">
       <div className="flex gap-[50px]">
-        <div className="flex gap-4 mt-[10px]">
+        <div className="flex gap-10 items-center">
           {HEADER_LISTS.map((header) => {
             return (
               <Link key={`header${header.href}`} href={header.href}>
@@ -27,9 +29,13 @@ export default function Header() {
                     className="w-[40px] h-[40px]"
                   />
                 ) : (
-                  <div className="text-[17px] px-4 pt-2 font-bold hover:text-gray-400">
+                  <p
+                    className={`text-xl hover:text-gray-400 font-bold ${
+                      pathname === header.href && "text-gray-400"
+                    }`}
+                  >
                     {header.text}
-                  </div>
+                  </p>
                 )}
               </Link>
             );
@@ -38,26 +44,24 @@ export default function Header() {
       </div>
       <div className="flex gap-4">
         {userData ? (
-          <>
-            <div className="pt-2">
+          <div className="flex gap-4 items-center">
+            <p>
               <b>{userData.nickname}</b> 님 환영합니다!
-            </div>
+            </p>
             <Profile info={userData} />
             <button
               onClick={() => signOut({ redirectTo: "/" })}
-              className="w-[80px] h-[35px] p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]"
+              className="w-20 h-9 p-2 px-4 rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]"
             >
               로그아웃
             </button>
-          </>
+          </div>
         ) : (
-          <>
-            <Link href="/sign-in">
-              <button className="p-[7px] px-[15px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[14px]">
-                로그인
-              </button>
-            </Link>
-          </>
+          <Link href="/sign-in">
+            <button className="p-2 px-4 rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-sm">
+              로그인
+            </button>
+          </Link>
         )}
       </div>
     </div>
