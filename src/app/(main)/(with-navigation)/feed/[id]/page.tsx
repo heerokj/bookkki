@@ -4,7 +4,7 @@ import { createClient } from "@/shared/utils/supabase/server";
 import { fetchFeedDetailAction } from "@/lib/actions/read-feed-detail-action";
 import { fetchCommentListAction } from "@/lib/actions/read-comment-action";
 import type { Metadata } from "next";
-import BackButton from "@/components/common/BackButton";
+import BackIcon from "@/components/common/BackIcon";
 
 export async function generateMetadata({
   params,
@@ -54,7 +54,7 @@ export default async function FeedDetail({
   return (
     <>
       <div className="feed-image-container flex justify-end ">
-        <BackButton />
+        <BackIcon />
       </div>
       <div className="feed-content-container grid grid-cols-2 mb-[50px] h-[500px]">
         <FeedImage feedImage={postDetailData} />

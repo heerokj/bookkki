@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function BackButton() {
+export default function BackIcon() {
   const router = useRouter();
   const handleBackButtonClick = () => {
     router.back();
@@ -14,9 +14,10 @@ export default function BackButton() {
       <img
         src="/icons/arrow-left.svg"
         alt="arrow"
-        width={20}
-        height={20}
+        width={25}
+        height={25}
         onClick={handleBackButtonClick}
+        className="hover:cursor-pointer"
       />
     </div>
   );
