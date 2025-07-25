@@ -1,14 +1,14 @@
 "use client";
 
-import BookImage from "./BookImage";
-import SocialLoinButtons from "./SocialLoginButtons";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import bcrypt from "bcryptjs";
 import { createClient } from "@/shared/utils/supabase/client";
 import { useState } from "react";
-import Toast from "../common/Toast";
+import Toast from "../../common/Toast";
+import BookImage from "./BookImage";
+import SocialLoinButtons from "./SocialLoginButtons";
 
 interface IFormInput {
   userId: string;

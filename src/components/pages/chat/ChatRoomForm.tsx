@@ -1,10 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import ChatRoomCrateModal from "./ChatRoomCreateModal";
 import { useSession } from "next-auth/react";
+import ChatRoomCrateModal from "./ChatRoomCreateModal";
 
-export default function ChatForm() {
+export default function ChatRoomForm() {
   const [showModal, setShowModal] = useState(false);
   const session = useSession();
 

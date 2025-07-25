@@ -1,9 +1,10 @@
 "use client";
 import { useGetFeedList } from "@/hooks/use-feeds";
-import FeedCard from "./FeedCard";
+
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import Loading from "@/app/(main)/(with-navigation)/feed/loading";
+import FeedCard from "./FeedCard";
 
 export default function FeedCardList() {
   const [ref, inView] = useInView();
@@ -22,8 +23,8 @@ export default function FeedCardList() {
   if (isError) return <span>오류가 발생했습니다</span>;
 
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-4">
+    <div className="feed-container">
+      <div className="feed-wrap grid grid-cols-3 gap-4">
         {feedList && feedList.length > 0 ? (
           feedList.map((post) => <FeedCard key={post.id} {...post} />)
         ) : (

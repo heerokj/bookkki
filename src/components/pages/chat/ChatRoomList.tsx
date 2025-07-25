@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useInfiniteChatRoom } from "@/hooks/use-chats";
 import Loading from "@/app/(main)/(with-navigation)/chat/loading";
-import BlueButton from "../common/BlueButton";
+import BlueButton from "@/components/common/BlueButton";
 
-export default function ChatList() {
+export default function ChatRoomList() {
   const [ref, inView] = useInView();
   const session = useSession();
   const { data, error, isLoading, fetchNextPage, hasNextPage } =

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import EmblaCarousel from "../../carousel/EmblaCarousel";
+import EmblaCarousel from "../../../carousel/EmblaCarousel";
 import banner1 from "/public/images/carousel-1.png";
 import banner2 from "/public/images/carousel-2.png";
 import banner3 from "/public/images/carousel-3.png";

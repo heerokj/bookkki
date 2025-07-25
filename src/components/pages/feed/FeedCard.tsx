@@ -7,7 +7,7 @@ import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { useContext } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Profile from "../common/Profile";
+import Profile from "../../common/Profile";
 
 export default function FeedCard(feedData: FeedData) {
   const { mutate: deleteFeed } = useDeleteFeed();

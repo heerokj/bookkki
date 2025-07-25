@@ -1,9 +1,9 @@
 "use client";
 
+import BlueButton from "@/components/common/BlueButton";
 import { useAddChatRoom } from "@/hooks/use-chats";
 import { ModalProps } from "@/types/chat";
 import React, { useEffect, useState } from "react";
-import BlueButton from "../common/BlueButton";
 
 const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
   const [roomTitle, setRoomTitle] = useState("");
