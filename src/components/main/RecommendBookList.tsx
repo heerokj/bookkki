@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import bookImg from "../../../public/images/book-blue.jpeg";
+import bookImg from "../../../public/images/no-image-book.png";
 
 const BOOKS = [
   {
@@ -39,30 +39,24 @@ const BOOKS = [
 export default function RecommendBookList() {
   return (
     <div>
-      <ul className="slide-wrapper flex gap-6">
+      <ul className="book-wrapper flex gap-6 justify-between">
         {BOOKS.map((book, index) => (
-          <li className="slide-items" key={`${book}-${index}`}>
+          <li className="bookkki-book-card" key={`${book}-${index}`}>
             <a>
-              <div className="bookkki-book-card">
-                <div className="thumbnail">
-                  <div className="thumbnail-inner border-2">
-                    <div className="book-image overflow-hidden h-52 w-32">
-                      <Image
-                        src={bookImg}
-                        width={150}
-                        height={100}
-                        alt="book"
-                        className="w-full h-full"
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="book-info border-2 mt-2">
-                  <p className="title text-base font-bold text-nowrap">
-                    킬러 안데르스와 그의 친구 둘
-                  </p>
-                  <p className="author">요나스요나손 지음, 임호경 옮김</p>
-                </div>
+              <div className="book-thumbnail h-[200px] w-[170px]">
+                <Image
+                  src={bookImg}
+                  width={150}
+                  height={100}
+                  alt="book"
+                  className="w-full h-full rounded-md"
+                />
+              </div>
+              <div className="book-info pt-2 pb-4">
+                <p className="title text-base font-bold text-wrap">책 제목</p>
+                <p className="author text-sm text-gray-400">
+                  요나스요나손 지음, 임호경 옮김
+                </p>
               </div>
             </a>
           </li>
