@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useInfiniteChatRoom } from "@/hooks/use-chats";
 import Loading from "@/app/(main)/(with-navigation)/chat/loading";
+import BlueButton from "../common/BlueButton";
 
 export default function ChatList() {
   const [ref, inView] = useInView();
@@ -38,13 +39,11 @@ export default function ChatList() {
           chatRoomList.map((chat) => (
             <div
               key={chat.id}
-              className="border-2 rounded-md w-[250px] h-[200px] flex flex-col justify-center items-center"
+              className="border-2 rounded-md w-60 h-36 flex flex-col gap-6 p-4 items-center justify-between"
             >
-              <p className="text-[16px]">{chat.chat_room_title}</p>
+              <p className="text-base">{chat.chat_room_title}</p>
               <Link href={`/chat/${chat.id}`} onClick={handleClickChatRoom}>
-                <button className="p-[7px] w-[100px] mt-[30px] rounded-md bg-[#7cb8e2] hover:bg-[#00bbf9] text-white text-[14px]">
-                  입장하기
-                </button>
+                <BlueButton title="입장하기" width="w-44" />
               </Link>
             </div>
           ))

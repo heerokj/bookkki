@@ -8,6 +8,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Profile from "../common/Profile";
 import { usePathname } from "next/navigation";
+import BlueButton from "../common/BlueButton";
 
 export default function Header() {
   const userData = useContext(UserContext);
@@ -49,18 +50,14 @@ export default function Header() {
               <b>{userData.nickname}</b> 님 환영합니다!
             </p>
             <Profile info={userData} />
-            <button
+            <BlueButton
+              title="로그아웃"
               onClick={() => signOut({ redirectTo: "/" })}
-              className="w-20 h-9 p-2 px-4 rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]"
-            >
-              로그아웃
-            </button>
+            />
           </div>
         ) : (
           <Link href="/sign-in">
-            <button className="p-2 px-4 rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-sm">
-              로그인
-            </button>
+            <BlueButton title="로그인" />
           </Link>
         )}
       </div>

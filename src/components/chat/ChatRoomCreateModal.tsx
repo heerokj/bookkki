@@ -3,6 +3,7 @@
 import { useAddChatRoom } from "@/hooks/use-chats";
 import { ModalProps } from "@/types/chat";
 import React, { useEffect, useState } from "react";
+import BlueButton from "../common/BlueButton";
 
 const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
   const [roomTitle, setRoomTitle] = useState("");
@@ -54,10 +55,9 @@ const ChatRoomCrateModal = ({ title, setModal }: ModalProps) => {
               onChange={(e) => setRoomTitle(e.target.value)}
               value={roomTitle}
               placeholder="채팅방 이름"
+              maxLength={25}
             />
-            <button className="w-[100px] h-[35px] rounded-md bg-[#84bbe1] hover:bg-[#00bbf9] text-white text-[13px]">
-              {isPending ? "..." : "생성"}
-            </button>
+            <BlueButton title="생성" isPending={isPending} />
           </form>
         </div>
       </div>
