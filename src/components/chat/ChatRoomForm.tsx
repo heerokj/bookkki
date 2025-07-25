@@ -20,7 +20,7 @@ export default function ChatForm() {
     <>
       <div className="write-icon-container flex justify-end p-4">
         <button type="button" onClick={onHandleModalStatus}>
-          <img src="/icons/square-plus.svg" alt="plus" width={20} height={20} />
+          <img src="/icons/square-plus.svg" alt="plus" width={25} height={25} />
         </button>
       </div>
       {showModal && (

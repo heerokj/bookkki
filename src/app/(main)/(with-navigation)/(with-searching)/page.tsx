@@ -1,6 +1,6 @@
 import BookCafeList from "@/components/main/BookCafeList";
 import RecommendBookList from "@/components/main/RecommendBookList";
-import SectionBlock from "@/components/main/SectionBlock";
+import SectionBlock from "@/components/main/ui/SectionBlock";
 
 export default async function Home() {
   return (
@@ -10,7 +10,7 @@ export default async function Home() {
       </SectionBlock>
       <SectionBlock
         title="북끼의 추천"
-        description="제가 추천해준 책 읽어보실래요? 2025년 07년 22일 업데이트"
+        description="제가 추천해준 책 읽어보실래요?"
       >
         <RecommendBookList />
       </SectionBlock>

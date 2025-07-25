@@ -31,23 +31,22 @@ export default function SearchPage() {
       <div className="grid grid-cols-5 gap-6">
         {bookList.map((book, index) => {
           return (
-            <div
-              key={`${book.isbn}-${index}`}
-              className="overflow-hidden h-[380px]"
-            >
+            <div key={`${book.isbn}-${index}`} className="overflow-hidden">
               <div className="overflow-hidden h-[300px]">
                 <Image
-                  src={book.image}
+                  src={book?.image}
                   width={150}
                   height={100}
                   alt={book.title ?? "book"}
                   className="w-full h-full"
                 />
               </div>
-              <p className="pt-2 text-[15px] font-bold text-nowrap">
-                {book.title}
-              </p>
-              <p className="text-[14px] text-gray-500">{book.author}</p>
+              <div className="pt-2 pb-4">
+                <p className="text-base font-bold text-nowrap">{book.title}</p>
+                <p className="text-sm text-gray-500">
+                  {book.author.replace(/\^/g, ",")}
+                </p>
+              </div>
             </div>
           );
         })}
