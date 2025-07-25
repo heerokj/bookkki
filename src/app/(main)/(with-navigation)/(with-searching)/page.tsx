@@ -1,12 +1,13 @@
-import BookCafeList from "@/components/main/BookCafeList";
-import RecommendBookList from "@/components/main/RecommendBookList";
-import SectionBlock from "@/components/main/ui/SectionBlock";
+import BookCafeList from "@/components/pages/main/BookCafeList";
+import LatestFeedList from "@/components/pages/main/LatestFeedList";
+import RecommendBookList from "@/components/pages/main/RecommendBookList";
+import SectionBlock from "@/components/pages/main/ui/SectionBlock";
 
 export default async function Home() {
   return (
     <div>
       <SectionBlock title="최신순">
-        <div>1</div>
+        <LatestFeedList />
       </SectionBlock>
       <SectionBlock
         title="북끼의 추천"

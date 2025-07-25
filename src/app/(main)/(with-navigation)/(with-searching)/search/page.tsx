@@ -27,14 +27,14 @@ export default function SearchPage() {
 
   return (
     <div>
-      <p className="py-[20px]">검색결과 {total}</p>
+      <p className="py-[20px] font-semibold">검색결과 {total}권</p>
       <div className="grid grid-cols-5 gap-6">
         {bookList.map((book, index) => {
           return (
             <div key={`${book.isbn}-${index}`} className="overflow-hidden">
-              <div className="overflow-hidden h-[300px]">
+              <div className="overflow-hidden h-[300px] rounded-md">
                 <Image
-                  src={book?.image}
+                  src={book.image}
                   width={150}
                   height={100}
                   alt={book.title ?? "book"}
@@ -42,8 +42,8 @@ export default function SearchPage() {
                 />
               </div>
               <div className="pt-2 pb-4">
-                <p className="text-base font-bold text-nowrap">{book.title}</p>
-                <p className="text-sm text-gray-500">
+                <p className="text-base font-bold text-wrap">{book.title}</p>
+                <p className="text-sm text-gray-400">
                   {book.author.replace(/\^/g, ",")}
                 </p>
               </div>

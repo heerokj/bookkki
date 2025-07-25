@@ -1,4 +1,3 @@
-import FeedCardList from "@/components/feed/FeedCardList";
 import { fetchFeeds } from "@/lib/actions/read-feed-action";
 import { queryKeys } from "@/shared/constants/queryKey";
 import type { Metadata } from "next";
@@ -10,6 +9,7 @@ import {
 } from "@tanstack/react-query";
 import Link from "next/link";
 import { META } from "@/shared/constants/metadata";
+import FeedCardList from "@/components/pages/feed/FeedCardList";
 
 export const metadata: Metadata = {
   title: "피드 - 북끼",

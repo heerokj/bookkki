@@ -1,5 +1,5 @@
-import ChatForm from "@/components/chat/ChatRoomForm";
-import ChatList from "@/components/chat/ChatRoomList";
+import ChatRoomForm from "@/components/pages/chat/ChatRoomForm";
+import ChatRoomList from "@/components/pages/chat/ChatRoomList";
 import { META } from "@/shared/constants/metadata";
 import type { Metadata } from "next";
 
@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 export default function ChattingPage() {
   return (
     <div className="mb-6">
-      <ChatForm />
-      <ChatList />
+      <ChatRoomForm />
+      <ChatRoomList />
     </div>
   );
 }

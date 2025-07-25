@@ -1,12 +1,12 @@
 "use client";
 
-import PreviewImage from "@/components/write/PreviewImage";
 import { v4 as uuid } from "uuid";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/UserContext";
 import { createClient } from "@/shared/utils/supabase/client";
 import Toast from "@/components/common/Toast";
+import PreviewImage from "@/components/pages/write/PreviewImage";
 
 export default function WritePage() {
   const userData = useContext(UserContext);
@@ -131,11 +131,16 @@ export default function WritePage() {
 
   return (
     <div>
-      <section className="bar flex justify-between items-center border-b-[1px] h-[50px]">
+      <section className="bar flex justify-between items-center border-b-[1px] h-[60px]">
         <button type="button" onClick={backSpaceBtn}>
-          <img src="/icons/arrow-left.svg" alt="arrow-left" />
+          <img
+            src="/icons/arrow-left.svg"
+            alt="arrow-left"
+            width={25}
+            height={25}
+          />
         </button>
-        <button type="button" onClick={handleClickUpload}>
+        <button type="button" onClick={handleClickUpload} className="text-lg">
           {isUploading ? "발행중.." : "발행"}
         </button>
       </section>
