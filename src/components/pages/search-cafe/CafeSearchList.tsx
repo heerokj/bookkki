@@ -1,6 +1,6 @@
 import React from "react";
 import CafeCard from "./CafeCard";
-import CafeMap from "./CafeMap";
+import KaKaoMap from "./KakaoMap";
 
 const CAFE = [1, 2, 3, 4, 5, 6, 7];
 export default function CafeSearchList() {
@@ -12,7 +12,7 @@ export default function CafeSearchList() {
             <CafeCard key={`${cafe}-${index}`} />
           ))}
         </div>
-        <CafeMap />
+        <KaKaoMap />
       </div>
     </div>
   );

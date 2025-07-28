@@ -2,7 +2,7 @@
 import useKakaoLoader from "@/hooks/useKakaoLoader";
 import { Map } from "react-kakao-maps-sdk";
 
-export default function CafeMap() {
+export default function KaKaoMap() {
   useKakaoLoader();
 
   return (
