@@ -1,8 +1,9 @@
 import React from "react";
 import CafeCard from "./CafeCard";
+import CafeMap from "./CafeMap";
 
 const CAFE = [1, 2, 3, 4, 5, 6, 7];
-export default function CafeSearch() {
+export default function CafeSearchList() {
   return (
     <div className="search-wrap mt-7">
       <div className="search-result flex gap-6">
@@ -11,7 +12,7 @@ export default function CafeSearch() {
             <CafeCard key={`${cafe}-${index}`} />
           ))}
         </div>
-        <div className="search-result-map w-1/2 border-2">지도</div>
+        <CafeMap />
       </div>
     </div>
   );

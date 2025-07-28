@@ -1,4 +1,4 @@
-import CafeSearch from "@/components/pages/search-cafe/CafeSearch";
+import CafeSearchList from "@/components/pages/search-cafe/CafeSearchList";
 import CafeSearchForm from "@/components/pages/search-cafe/CafeSearchForm";
 import React from "react";
 
@@ -7,7 +7,7 @@ export default function page() {
     <div className="mb-6">
       <div className="search mt-10">
         <CafeSearchForm />
-        <CafeSearch />
+        <CafeSearchList />
       </div>
     </div>
   );
