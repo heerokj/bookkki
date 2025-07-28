@@ -1,6 +1,6 @@
 import React from "react";
 import CafeCard from "./CafeCard";
-import KaKaoMap from "./KakaoMap";
+import KaKaoMap from "./KaKaoMap";
 
 const CAFE = [1, 2, 3, 4, 5, 6, 7];
 export default function CafeSearchList() {
