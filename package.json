@@ -19,6 +19,7 @@
     "date-fns": "^4.1.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.5.2",
+    "fast-xml-parser": "^5.2.5",
     "http-proxy-middleware": "^3.0.3",
     "lottie-react": "^2.4.1",
     "next": "15.1.5",
