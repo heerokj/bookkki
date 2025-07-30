@@ -10,8 +10,10 @@ export const fetchCafeList = async () => {
 
     const data = await res.json();
     const dataList = data.response.body.items.item;
+
     return dataList;
   } catch (error) {
     console.error("카페 데이터 fetch 실패", error);
+    return [];
   }
 };
