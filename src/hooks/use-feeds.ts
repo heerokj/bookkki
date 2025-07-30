@@ -1,13 +1,29 @@
 "use client";
 
 import { deleteFeedAction } from "@/lib/actions/delete-feed-action";
-import { fetchFeedList } from "@/lib/services/feeds";
+import { fetchFeedList, fetchInitialFeedList } from "@/lib/services/feeds";
 import { queryKeys } from "@/shared/constants/queryKey";
+
 import {
   useInfiniteQuery,
   useMutation,
+  useQuery,
   useQueryClient,
 } from "@tanstack/react-query";
+
+export const useGetInitialFeedList = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["initialFeed"],
+    queryFn: fetchInitialFeedList,
+    staleTime: 1000 * 60 * 5,
+  });
+
+  return {
+    data,
+    isLoading,
+    isError,
+  };
+};
 
 export const useGetFeedList = () => {
   const { data, isError, isLoading, fetchNextPage, hasNextPage } =

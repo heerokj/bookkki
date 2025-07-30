@@ -6,14 +6,14 @@ import SectionBlock from "@/components/pages/main/ui/SectionBlock";
 export default async function Home() {
   return (
     <div>
-      <SectionBlock title="최신순">
-        <LatestFeedList />
-      </SectionBlock>
       <SectionBlock
         title="북끼의 추천"
         description="제가 추천해준 책 읽어보실래요?"
       >
         <RecommendBookList />
+      </SectionBlock>
+      <SectionBlock title="최신 피드">
+        <LatestFeedList />
       </SectionBlock>
       <SectionBlock
         title="북카페 추천"

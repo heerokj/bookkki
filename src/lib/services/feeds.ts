@@ -4,6 +4,24 @@ import { createClient } from "@/shared/utils/supabase/client";
 
 const supabase = createClient();
 
+export const fetchInitialFeedList = async () => {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .range(0, 4)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.error("최초 피드 목록을 불러오는데 실패했습니다", error.message);
+    }
+    return data;
+  } catch (error) {
+    console.error("최초 피드 목록을 불러오는데 실패했습니다", error);
+  }
+  return;
+};
+
 export const fetchFeedList = async (pageParam: number, limit: number) => {
   const from = (pageParam - 1) * limit;
   const to = pageParam * limit - 1;
