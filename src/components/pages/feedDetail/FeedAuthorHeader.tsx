@@ -1,7 +1,7 @@
 "use client";
 
 import { FeedUser } from "@/types/feed";
-import Profile from "../common/Profile";
+import Profile from "../../common/Profile";
 
 export default function FeedAuthorHeader({ feedUser }: { feedUser: FeedUser }) {
   return (

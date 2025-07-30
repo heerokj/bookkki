@@ -1,7 +1,7 @@
 "use client";
 import { useContext } from "react";
 import { UserContext } from "@/context/UserContext";
-import Profile from "../common/Profile";
+import Profile from "../../common/Profile";
 import { useForm } from "react-hook-form";
 import { useInsertComment } from "@/hooks/use-comments";
 import { FeedComment } from "@/types/feed";

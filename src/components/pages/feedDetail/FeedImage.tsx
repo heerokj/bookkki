@@ -1,7 +1,7 @@
 "use client";
 import { FeedData } from "@/types/feed";
 import Image from "next/image";
-import EmblaCarousel from "../carousel/EmblaCarousel";
+import EmblaCarousel from "../../carousel/EmblaCarousel";
 
 export default function FeedImage({ feedImage }: { feedImage: FeedData }) {
   return (

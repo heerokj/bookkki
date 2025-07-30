@@ -1,5 +1,5 @@
-import FeedContent from "@/components/feedDetail/FeedContent";
-import FeedImage from "@/components/feedDetail/FeedImage";
+import FeedContent from "@/components/pages/feedDetail/FeedContent";
+import FeedImage from "@/components/pages/feedDetail/FeedImage";
 import { createClient } from "@/shared/utils/supabase/server";
 import { fetchFeedDetailAction } from "@/lib/actions/read-feed-detail-action";
 import { fetchCommentListAction } from "@/lib/actions/read-comment-action";

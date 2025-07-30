@@ -1,6 +1,6 @@
 "use client";
 import React, { useRef, useState } from "react";
-import Profile from "../common/Profile";
+import Profile from "../../common/Profile";
 import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedComment, FeedData } from "@/types/feed";
 import { User } from "@/types/user";
