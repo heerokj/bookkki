@@ -3,11 +3,12 @@
 import React from "react";
 import Image from "next/image";
 import { useGetInitialFeedList } from "@/hooks/use-feeds";
+import MainCafeFeedListSkeleton from "@/components/skeleton/MainCafeFeedListSkeleton";
 
 export default function LatestFeedList() {
   const { data: feedList, isError, isLoading } = useGetInitialFeedList();
 
-  if (isLoading) return <div>로딩중</div>;
+  if (isLoading) return <MainCafeFeedListSkeleton />;
   if (isError) return <div>에러</div>;
   return (
     <div>
