@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { useGetInitialFeedList } from "@/hooks/use-feeds";
 import MainCafeFeedListSkeleton from "@/components/skeleton/MainCafeFeedListSkeleton";
+import Link from "next/link";
 
 export default function LatestFeedList() {
   const { data: feedList, isError, isLoading } = useGetInitialFeedList();
@@ -18,7 +19,7 @@ export default function LatestFeedList() {
             className="bookkki-book-card hover:cursor-pointer"
             key={`${book.id}-${index}`}
           >
-            <a>
+            <Link href={`/feed/${book.id}`}>
               <div className="book-thumbnail h-[170px] w-[220px]">
                 <Image
                   src={book.image_urls[0]}
@@ -36,7 +37,7 @@ export default function LatestFeedList() {
                   {book.content}
                 </p>
               </div>
-            </a>
+            </Link>
           </li>
         ))}
       </ul>
