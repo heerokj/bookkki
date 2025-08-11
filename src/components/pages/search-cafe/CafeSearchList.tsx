@@ -4,27 +4,33 @@ import CafeCard from "./CafeCard";
 import KaKaoMap from "./KaKaoMap";
 import { useGetInitialCafe, useGetSearchCafe } from "@/hooks/use-cafe";
 import { useInView } from "react-intersection-observer";
+import { useSearchParams } from "next/navigation";
 
-export default function CafeSearchList({ searchText }: { searchText: string }) {
+export default function CafeSearchList() {
   const [ref, inView] = useInView();
-  const isSearching = Boolean(searchText?.trim()); // 검색 중인지 여부 판단
+
+  const searchParams = useSearchParams();
+  const keyword = searchParams.get("keyword") as string;
+  const isSearching = Boolean(keyword?.trim()); // 검색 중인지 여부 판단
 
   const {
     data: initialData,
     isLoading: isInitialLoading,
     isError: isInitialError,
+    refetch,
   } = useGetInitialCafe();
 
   // 검색 시 데이터 불러오기
   const {
-    data,
+    data: isSearchData,
     isLoading: isSearchLoading,
     isError: isSearchError,
     fetchNextPage,
     hasNextPage,
-  } = useGetSearchCafe(searchText);
+  } = useGetSearchCafe(keyword);
 
-  const searchData = data?.pages.flatMap((page) => page?.data) ?? [];
+  const searchData = isSearchData?.pages.flatMap((page) => page?.data) ?? [];
+  console.log("🚀 ~ CafeSearchList ~ searchData:", searchData);
 
   useEffect(() => {
     if (!isSearching) return;
@@ -72,7 +78,7 @@ export default function CafeSearchList({ searchText }: { searchText: string }) {
 }
 
 /*
-1. 첫 진입 시 데이터는 기본 데이터 (5개) - 더보기, 모든 피드를 불러왔습니다. 문구 없음
+1. 첫 진입 시 데이터는 기본 데이터 (5개) - 더보기, 모든 피드를 불러왔습니다. 문구 없음 ok
 2. 검색하면 검색데이터 보여줌 & 기본 데이터는 사라짐
 3. 검색바에 검색에 지우면 다시 기본데이터 보여줌
 */

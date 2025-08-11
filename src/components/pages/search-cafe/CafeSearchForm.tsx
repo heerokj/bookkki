@@ -4,21 +4,28 @@ import { useDebounce } from "@/hooks/useDebounce";
 import React, { useEffect, useState } from "react";
 import searchIcon from "@/../../public/icons/search.svg";
 import Image from "next/image";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CafeSearchForm({
-  onChange,
-}: {
-  onChange: (text: string) => void;
-}) {
-  const [searchText, setSearchText] = useState("");
+export default function CafeSearchForm() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  // 디바운스된 값
+  //NOTE -  초기 검색어가 없다면 "", 검색어가 변경된다면 searchText 변경
+  const [searchText, setSearchText] = useState(
+    searchParams.get("keyword") || ""
+  );
+
+  // 디바운스 값
   const debouncedText = useDebounce(searchText, 1000);
 
-  // 디바운스된 값이 바뀔 때만 부모에게 전달
+  //NOTE - 디바운스 값이 변경될 때 URL 쿼리 업데이트
   useEffect(() => {
-    onChange(debouncedText);
-  }, [debouncedText, onChange]);
+    if (debouncedText.trim()) {
+      router.push(`/cafe-book?keyword=${encodeURIComponent(debouncedText)}`);
+    } else {
+      router.push(`/cafe-book`);
+    }
+  }, [debouncedText, router]);
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
