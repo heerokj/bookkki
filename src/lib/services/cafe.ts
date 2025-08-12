@@ -4,7 +4,7 @@ export const fetchCafeList = async () => {
     const res = await fetch(`/api/cafes`);
 
     if (!res.ok) {
-      throw new Error("카페 데이터 fetch 실패");
+      throw new Error("카페 데이터 fetch 에러");
     }
 
     const data = await res.json();
@@ -12,35 +12,11 @@ export const fetchCafeList = async () => {
 
     return dataList;
   } catch (error) {
-    console.error("카페 데이터 fetch 실패", error);
+    console.error("카페 데이터 fetch 에러", error);
     return [];
   }
 };
 
-// 카페 검색 API 호출
-export const fetchSearchCafe1 = async (keyword: string) => {
-  const text = keyword.trim();
-  if (!text) return [];
-
-  try {
-    const res = await fetch(
-      `/api/searchCafe?keyword=${encodeURIComponent(text)}`
-    );
-
-    if (!res.ok) {
-      throw new Error("카페 검색 데이터 fetch 실패");
-    }
-
-    const data = await res.json();
-    const dataList = data.response.body.items.item ?? [];
-
-    return dataList;
-  } catch (error) {
-    console.error("카페 검색 데이터 fetch 실패", error);
-  }
-};
-
-//서치 무한스크롤
 export const fetchSearchCafe = async (
   keyword: string,
   numOfRows: number,
@@ -57,11 +33,11 @@ export const fetchSearchCafe = async (
     );
 
     if (!res.ok) {
-      throw new Error("Search Infinite API 에러");
+      throw new Error("카페 검색 무한스크롤 API 에러");
     }
 
     return res.json();
   } catch (error) {
-    console.error("Search Infinite API 에러", error);
+    console.error("카페 검색 무한스크롤 API 에러", error);
   }
 };
