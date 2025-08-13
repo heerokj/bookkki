@@ -3,11 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import cafeImg from "/public/images/no-image-cafe.jpeg";
-import { useGetInitialCafeList } from "@/hooks/use-cafe";
+import { useGetInitialCafe } from "@/hooks/use-cafe";
 import MainCafeListSkeleton from "@/components/skeleton/MainCafeFeedListSkeleton";
+import Link from "next/link";
 
 export default function BookCafeList() {
-  const { data: cafeList, isLoading, isError } = useGetInitialCafeList();
+  const { data: cafeList, isLoading, isError } = useGetInitialCafe();
+  // console.log("🚀 ~ BookCafeList ~ cafeList:", cafeList);
 
   if (isLoading) return <MainCafeListSkeleton />;
   if (isError) return <div>에러</div>;
@@ -20,7 +22,7 @@ export default function BookCafeList() {
             className="bookkki-cafe-card hover:cursor-pointer"
             key={`${cafe.CNTC_RESRCE_NO}-${index}`}
           >
-            <a>
+            <Link href={`cafe-book?keyword=${cafe.TITLE}`}>
               <div className="cafe-thumbnail h-[170px] w-[220px]">
                 <Image
                   src={cafeImg}
@@ -38,7 +40,7 @@ export default function BookCafeList() {
                   {cafe.ADDRESS}
                 </p>
               </div>
-            </a>
+            </Link>
           </li>
         ))}
     </ul>
