@@ -1,7 +1,12 @@
 "use client";
 import useKakaoLoader from "@/hooks/useKakaoLoader";
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useState } from "react";
+import {
+  Map,
+  MapMarker,
+  MapTypeControl,
+  ZoomControl,
+} from "react-kakao-maps-sdk";
+import { useEffect, useState } from "react";
 import { CafeData } from "@/types/cafe";
 
 // type Props = {
@@ -9,14 +14,22 @@ import { CafeData } from "@/types/cafe";
 //   isSearchData: CafeData;
 // };
 
-export default function KaKaoMap({ initialCafe }: { initialCafe: CafeData }) {
+export default function KaKaoMap({
+  initialCafe,
+  searchCafe,
+}: {
+  initialCafe: CafeData;
+  searchCafe: CafeData;
+}) {
+  useKakaoLoader();
   const [location, setLocation] = useState(
     convertToLatLng(initialCafe.COORDINATES)
   );
 
-  useKakaoLoader();
-
-  // useEffect(() => {}, [location]);
+  useEffect(() => {
+    if (!searchCafe?.COORDINATES) return;
+    setLocation(convertToLatLng(searchCafe.COORDINATES));
+  }, [searchCafe]);
 
   return (
     <div className="search-result-map border-2 w-1/2">
@@ -33,6 +46,8 @@ export default function KaKaoMap({ initialCafe }: { initialCafe: CafeData }) {
         <MapMarker position={location}>
           <div style={{ color: "#000" }}>카페상호넣을예정</div>
         </MapMarker>
+        <MapTypeControl position={"TOPRIGHT"} />
+        <ZoomControl position={"RIGHT"} />
       </Map>
     </div>
   );
