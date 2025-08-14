@@ -2,7 +2,7 @@ import { XMLParser } from "fast-xml-parser";
 export async function GET() {
   try {
     const res = await fetch(
-      `https://api.kcisa.kr/openapi/API_CIA_090/request?serviceKey=${process.env.NEXT_PUBLIC_SERVICE_KEY}&numOfRows=5&pageNo=1`
+      `https://api.kcisa.kr/openapi/API_CIA_090/request?serviceKey=${process.env.NEXT_PUBLIC_SERVICE_KEY}&numOfRows=5&pageNo=20`
     );
     const xml = await res.text();
     const parser = new XMLParser();
