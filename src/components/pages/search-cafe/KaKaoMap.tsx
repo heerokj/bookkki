@@ -6,30 +6,12 @@ import {
   MapTypeControl,
   ZoomControl,
 } from "react-kakao-maps-sdk";
-import { useEffect, useState } from "react";
 import { CafeData } from "@/types/cafe";
 
-// type Props = {
-//   initialData: CafeData;
-//   isSearchData: CafeData;
-// };
-
-export default function KaKaoMap({
-  initialCafe,
-  searchCafe,
-}: {
-  initialCafe: CafeData;
-  searchCafe: CafeData;
-}) {
+export default function KaKaoMap({ cafe }: { cafe: CafeData }) {
   useKakaoLoader();
-  const [location, setLocation] = useState(
-    convertToLatLng(initialCafe.COORDINATES)
-  );
 
-  useEffect(() => {
-    if (!searchCafe?.COORDINATES) return;
-    setLocation(convertToLatLng(searchCafe.COORDINATES));
-  }, [searchCafe]);
+  const location = convertToLatLng(cafe.COORDINATES);
 
   return (
     <div className="search-result-map border-2 w-1/2">
@@ -44,7 +26,7 @@ export default function KaKaoMap({
         level={3} // 지도의 확대 레벨
       >
         <MapMarker position={location}>
-          <div style={{ color: "#000" }}>카페상호넣을예정</div>
+          <div style={{ color: "#000" }}>{cafe.TITLE}</div>
         </MapMarker>
         <MapTypeControl position={"TOPRIGHT"} />
         <ZoomControl position={"RIGHT"} />

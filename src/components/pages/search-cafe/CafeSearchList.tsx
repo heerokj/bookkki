@@ -1,13 +1,15 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import CafeCard from "./CafeCard";
 import KaKaoMap from "./KaKaoMap";
 import { useGetInitialCafe, useGetSearchCafe } from "@/hooks/use-cafe";
 import { useInView } from "react-intersection-observer";
 import { useSearchParams } from "next/navigation";
+import { CafeData } from "@/types/cafe";
 
 export default function CafeSearchList() {
   const [ref, inView] = useInView();
+  const [selectedCafe, setSelectedCafe] = useState<CafeData>();
 
   // 쿼리 파라미터 가져오기
   const searchParams = useSearchParams();
@@ -32,8 +34,10 @@ export default function CafeSearchList() {
     hasNextPage,
   } = useGetSearchCafe(keyword);
 
-  const searchList =
-    isSearchCafeList?.pages.flatMap((page) => page?.data) ?? [];
+  const searchList = useMemo(() => {
+    return isSearchCafeList?.pages.flatMap((page) => page?.data) ?? [];
+  }, [isSearchCafeList]);
+
   const showSearchStatus = keywordExistence && searchList.length >= 6; // 검색어 있거나 검색 결과가 6개 미만인경우
 
   useEffect(() => {
@@ -41,6 +45,18 @@ export default function CafeSearchList() {
       fetchNextPage();
     }
   }, [inView, hasNextPage, fetchNextPage]);
+
+  useEffect(() => {
+    if (keywordExistence) {
+      setSelectedCafe(searchList?.[0]);
+    } else {
+      setSelectedCafe(initialCafeList?.[0]);
+    }
+  }, [initialCafeList, keywordExistence, searchList]);
+
+  const handleClickCard = (clickCafe: CafeData) => {
+    setSelectedCafe(clickCafe);
+  };
 
   if (isInitialLoading) return <span>데이터 가져오는 중...</span>;
   if (isInitialError) return <span>오류가 발생했습니다</span>;
@@ -54,19 +70,21 @@ export default function CafeSearchList() {
           <div className="flex flex-col gap-4">
             {!keywordExistence &&
               initialCafeList?.map((cafe) => (
-                <CafeCard
+                <div
                   key={cafe.CNTC_RESRCE_NO}
-                  title={cafe.TITLE}
-                  address={cafe.ADDRESS}
-                />
+                  onClick={() => handleClickCard(cafe)}
+                >
+                  <CafeCard title={cafe.TITLE} address={cafe.ADDRESS} />
+                </div>
               ))}
             {keywordExistence &&
               searchList?.map((cafe) => (
-                <CafeCard
+                <div
                   key={cafe.CNTC_RESRCE_NO}
-                  title={cafe.TITLE}
-                  address={cafe.ADDRESS}
-                />
+                  onClick={() => handleClickCard(cafe)}
+                >
+                  <CafeCard title={cafe.TITLE} address={cafe.ADDRESS} />
+                </div>
               ))}
             {keywordExistence &&
               !isSearchLoading &&
@@ -90,10 +108,7 @@ export default function CafeSearchList() {
             </div>
           )}
         </div>
-        <KaKaoMap
-          initialCafe={initialCafeList![0]}
-          searchCafe={searchList![0]}
-        />
+        {selectedCafe && <KaKaoMap cafe={selectedCafe} />}
       </div>
     </div>
   );
