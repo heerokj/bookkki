@@ -31,7 +31,7 @@ export default function CafeSearchForm() {
     <form onSubmit={(e) => e.preventDefault()}>
       <div className="input-area flex ">
         <div className="inputWrapper flex gap-2 px-4 w-1/2 h-12 rounded-full bg-gray-100">
-          <button>
+          <button type="button" aria-label="검색">
             <Image src={searchIcon} width={20} height={20} alt="search" />
           </button>
           <input

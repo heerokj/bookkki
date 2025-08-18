@@ -2,15 +2,14 @@ import React from "react";
 import Image from "next/image";
 import cafeImg from "../../../../public/images/no-image-cafe.jpeg";
 
-export default function CafeCard({
-  title,
-  address,
-}: {
+type Props = {
   title: string;
   address: string;
-}) {
+};
+
+export default function CafeCard({ title, address }: Props) {
   return (
-    <div className="search-cafe-card flex gap-4 border-2 rounded-lg p-2 ">
+    <div className="search-cafe-card flex gap-4 border-2 rounded-lg p-2 hover:cursor-pointer">
       <div className="h-[105px] w-[150px]">
         <Image
           src={cafeImg}

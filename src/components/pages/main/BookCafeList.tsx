@@ -9,7 +9,6 @@ import Link from "next/link";
 
 export default function BookCafeList() {
   const { data: cafeList, isLoading, isError } = useGetInitialCafe();
-  // console.log("🚀 ~ BookCafeList ~ cafeList:", cafeList);
 
   if (isLoading) return <MainCafeListSkeleton />;
   if (isError) return <div>에러</div>;
