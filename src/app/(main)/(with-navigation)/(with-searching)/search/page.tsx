@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
 import Image from "next/image";
+import SearchListSkeleton from "@/components/skeleton/SearchListSkeleton";
 
 export default function SearchPage() {
   const [ref, inView] = useInView();
@@ -22,7 +23,7 @@ export default function SearchPage() {
     }
   }, [inView, hasNextPage, fetchNextPage]);
 
-  if (isLoading) return <span>로딩중입니다...</span>;
+  if (isLoading) return <SearchListSkeleton />;
   if (error) return <span>오류가 발생했습니다 : {error.message}</span>;
 
   return (
