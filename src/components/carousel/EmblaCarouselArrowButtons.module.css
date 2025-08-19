@@ -21,17 +21,22 @@
   justify-content: center;
   pointer-events: auto;
 }
+
 .embla__button__svg {
-  width: 35%;
-  height: 35%;
+  width: 50%;
+  height: 50%;
+  color: #737272;
+  border: 1px solid #bab8b8;
+  border-radius: 50%;
+  padding: 5px;
 }
 
-.embla__button--prev {
+.embla__button__prev {
   position: absolute;
   left: -3rem;
 }
 
-.embla__button--next {
+.embla__button__next {
   position: absolute;
   right: -3rem;
 }
