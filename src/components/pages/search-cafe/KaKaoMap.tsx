@@ -14,7 +14,7 @@ export default function KaKaoMap({ cafe }: { cafe: CafeData }) {
   const location = convertToLatLng(cafe.COORDINATES);
 
   return (
-    <div className="search-result-map border-2 w-1/2">
+    <div className="search-result-map border-2 h-[700px]">
       <Map // 지도를 표시할 Container
         id="map"
         center={location}

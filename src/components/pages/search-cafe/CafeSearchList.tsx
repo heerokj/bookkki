@@ -47,9 +47,9 @@ export default function CafeSearchList() {
   }, [inView, hasNextPage, fetchNextPage]);
 
   useEffect(() => {
-    if (keywordExistence) {
-      setSelectedCafe(searchList?.[0]);
-    } else {
+    if (keywordExistence && searchList.length > 0) {
+      setSelectedCafe(searchList[0]);
+    } else if (!keywordExistence) {
       setSelectedCafe(initialCafeList?.[0]);
     }
   }, [initialCafeList, keywordExistence, searchList]);
@@ -58,58 +58,51 @@ export default function CafeSearchList() {
     setSelectedCafe(clickCafe);
   };
 
+  const list = keywordExistence ? searchList : initialCafeList;
+
   if (isInitialLoading) return <span>데이터 가져오는 중...</span>;
   if (isInitialError) return <span>오류가 발생했습니다</span>;
-  if (isSearchLoading) return <span>검색중...</span>;
   if (isSearchError) return <span>검색 중 오류가 발생했습니다</span>;
 
   return (
-    <div className="search-wrap mt-7">
-      <div className="search-result flex gap-6 h-[700px]">
-        <div className="search-result-list w-1/2 overflow-y-auto">
+    <div className="search-wrap mt-7 flex gap-2">
+      <section className="search-result flex-1">
+        <div className="search-result-list overflow-y-auto">
           <div className="flex flex-col gap-4">
-            {!keywordExistence &&
-              initialCafeList?.map((cafe) => (
-                <div
-                  key={cafe.CNTC_RESRCE_NO}
-                  onClick={() => handleClickCard(cafe)}
-                >
-                  <CafeCard title={cafe.TITLE} address={cafe.ADDRESS} />
-                </div>
-              ))}
-            {keywordExistence &&
-              searchList?.map((cafe) => (
-                <div
-                  key={cafe.CNTC_RESRCE_NO}
-                  onClick={() => handleClickCard(cafe)}
-                >
-                  <CafeCard title={cafe.TITLE} address={cafe.ADDRESS} />
-                </div>
-              ))}
+            {list?.map((cafe) => (
+              <div
+                key={cafe.CNTC_RESRCE_NO}
+                onClick={() => handleClickCard(cafe)}
+              >
+                <CafeCard title={cafe.TITLE} address={cafe.ADDRESS} />
+              </div>
+            ))}
             {keywordExistence &&
               !isSearchLoading &&
-              searchList.length === 0 && (
-                <div className="py-6 text-center text-gray-500">
+              (list?.length ?? 0) === 0 && (
+                <p className="py-6 text-center text-gray-500">
                   검색 결과가 없습니다.
-                </div>
+                </p>
               )}
           </div>
+
           {showSearchStatus && (
             <div ref={ref} className="text-center pt-4">
-              <div className="text-center">
-                {isSearchLoading ? (
-                  <div>데이터 가져오는 중...</div>
-                ) : hasNextPage ? (
-                  <div>더보기</div>
-                ) : (
-                  <div>모든 피드를 불러왔습니다.</div>
-                )}
-              </div>
+              {isSearchLoading ? (
+                <div>데이터 가져오는 중...</div>
+              ) : hasNextPage ? (
+                <div>더보기</div>
+              ) : (
+                <div>모든 피드를 불러왔습니다.</div>
+              )}
             </div>
           )}
         </div>
+      </section>
+
+      <section className="search-result-map flex-1">
         {selectedCafe && <KaKaoMap cafe={selectedCafe} />}
-      </div>
+      </section>
     </div>
   );
 }

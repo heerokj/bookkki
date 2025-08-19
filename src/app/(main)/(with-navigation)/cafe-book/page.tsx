@@ -1,4 +1,3 @@
-"use client";
 import CafeSearchList from "@/components/pages/search-cafe/CafeSearchList";
 import CafeSearchForm from "@/components/pages/search-cafe/CafeSearchForm";
 import React from "react";
