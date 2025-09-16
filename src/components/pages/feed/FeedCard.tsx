@@ -1,6 +1,6 @@
 "use client";
 import { FeedData } from "@/types/feed";
-import { useSession } from "next-auth/react";
+// import { useSession } from "next-auth/react";
 import { UserContext } from "@/context/UserContext";
 import { useDeleteFeed } from "@/hooks/use-feeds";
 import { getDistanceToNow } from "@/shared/utils/Date/date";
@@ -12,13 +12,6 @@ import Profile from "../../common/Profile";
 export default function FeedCard(feedData: FeedData) {
   const { mutate: deleteFeed } = useDeleteFeed();
   const userData = useContext(UserContext);
-  const session = useSession();
-  const handleClickFeedCard = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!session.data) {
-      alert("로그인이 필요합니다");
-      e.preventDefault();
-    }
-  };
 
   const handleDeleteFeed = () => {
     const isConfirmed = window.confirm("삭제하시겠습니까?");
@@ -45,7 +38,7 @@ export default function FeedCard(feedData: FeedData) {
           <Link
             className="feed-body"
             href={`/feed/${feedData.id}`}
-            onClick={handleClickFeedCard}
+            // onClick={handleClickFeedCard}
           >
             <div className="overflow-hidden">
               {feedData.image_urls && (

@@ -13,8 +13,7 @@ export default function FeedCommentList({
   setComments,
 }: {
   feedData: FeedData;
-
-  userData: User;
+  userData: User | null;
   comments: FeedComment[];
   setComments: React.Dispatch<React.SetStateAction<FeedComment[]>>;
 }) {

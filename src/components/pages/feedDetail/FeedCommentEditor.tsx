@@ -23,9 +23,12 @@ export default function FeedCommentEditor({
 
   const { register, handleSubmit, reset } = useForm<FormValues>();
 
-  if (!userData) return <div>유저 정보가 없습니다!</div>;
-
   const onSubmit = (data: FormValues) => {
+    if (!userData) {
+      alert("로그인이 필요합니다!");
+      return;
+    }
+
     mutation.mutate(
       {
         userId: userData.id,

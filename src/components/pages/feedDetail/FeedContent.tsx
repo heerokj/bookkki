@@ -18,11 +18,6 @@ export default function FeedContent({
   const focusTest = useRef<HTMLInputElement>(null);
   const [comments, setComments] = useState<FeedComment[]>(commentDataList);
 
-  if (!userData) {
-    console.log("유저가 존재하지 않습니다!");
-    return;
-  }
-
   return (
     <div className="feed-contents flex flex-col justify-between border-[1px] rounded-sm">
       <FeedAuthorHeader feedUser={feedData.users} />
