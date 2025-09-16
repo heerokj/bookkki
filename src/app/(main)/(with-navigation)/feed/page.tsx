@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { META } from "@/shared/constants/metadata";
 import FeedCardList from "@/components/pages/feed/FeedCardList";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "피드 - 북끼",
@@ -43,7 +44,7 @@ export default async function Feed() {
     <div className="mb-6">
       <div className="write-icon-container flex justify-end">
         <Link href={"/write"} className="p-4">
-          <img
+          <Image
             src="/icons/pencil-line.svg"
             alt="pencil"
             width={25}

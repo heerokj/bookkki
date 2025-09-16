@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import ChatRoomCrateModal from "./ChatRoomCreateModal";
+import Image from "next/image";
 
 export default function ChatRoomForm() {
   const [showModal, setShowModal] = useState(false);
@@ -20,7 +21,12 @@ export default function ChatRoomForm() {
     <>
       <div className="write-icon-container flex justify-end p-4">
         <button type="button" onClick={onHandleModalStatus}>
-          <img src="/icons/square-plus.svg" alt="plus" width={25} height={25} />
+          <Image
+            src="/icons/square-plus.svg"
+            alt="plus"
+            width={25}
+            height={25}
+          />
         </button>
       </div>
       {showModal && (

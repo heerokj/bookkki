@@ -7,6 +7,7 @@ import { UserContext } from "@/context/UserContext";
 import { createClient } from "@/shared/utils/supabase/client";
 import Toast from "@/components/common/Toast";
 import PreviewImage from "@/components/pages/write/PreviewImage";
+import Image from "next/image";
 
 export default function WritePage() {
   const userData = useContext(UserContext);
@@ -133,7 +134,7 @@ export default function WritePage() {
     <div>
       <section className="bar flex justify-between items-center border-b-[1px] h-[60px]">
         <button type="button" onClick={backSpaceBtn}>
-          <img
+          <Image
             src="/icons/arrow-left.svg"
             alt="arrow-left"
             width={25}

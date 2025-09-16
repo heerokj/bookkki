@@ -1,13 +1,14 @@
 "use client";
 
 import { login } from "@/lib/actions/auth";
+import Image from "next/image";
 
 export default function SocialLoinButtons() {
   return (
     <div className="social-login-buttons flex gap-4">
       <button onClick={() => login("kakao")}>
-        <img
-          src="images/kakao_btn_square.png"
+        <Image
+          src="/images/kakao_btn_square.png"
           alt="카카오"
           height={40}
           width={40}
@@ -15,15 +16,20 @@ export default function SocialLoinButtons() {
         />
       </button>
       <button onClick={() => login("naver")}>
-        <img
-          src="images/naver_btn_circle.png"
+        <Image
+          src="/images/naver_btn_circle.png"
           alt="네이버"
           height={40}
           width={40}
         />
       </button>
       <button onClick={() => login("github")}>
-        <img src="images/github_btn.png" alt="깃허브" height={40} width={40} />
+        <Image
+          src="/images/github_btn.png"
+          alt="깃허브"
+          height={40}
+          width={40}
+        />
       </button>
     </div>
   );

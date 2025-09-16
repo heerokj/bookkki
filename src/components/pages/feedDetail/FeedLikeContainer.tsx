@@ -2,6 +2,7 @@
 
 import { getDistanceToNow } from "@/shared/utils/Date/date";
 import { FeedData } from "@/types/feed";
+import Image from "next/image";
 import React, { MutableRefObject } from "react";
 
 export default function FeedLikeContainer({
@@ -16,14 +17,29 @@ export default function FeedLikeContainer({
       <div className="flex justify-between">
         <div className="flex gap-4">
           <button onClick={() => alert("추후 업데이트 될 예정입니다🙂")}>
-            <img src="/icons/heart-black.svg" alt="heart" />
+            <Image
+              src="/icons/heart-black.svg"
+              height={20}
+              width={20}
+              alt="heart"
+            />
           </button>
           <button onClick={() => focusTest.current?.focus()}>
-            <img src="/icons/message-circle.svg" alt="message" />
+            <Image
+              src="/icons/message-circle.svg"
+              height={20}
+              width={20}
+              alt="message"
+            />
           </button>
         </div>
         <button onClick={() => alert("추후 업데이트 될 예정입니다🙂")}>
-          <img src="/icons/bookmark.svg" alt="bookmark" />
+          <Image
+            src="/icons/bookmark.svg"
+            height={20}
+            width={20}
+            alt="bookmark"
+          />
         </button>
       </div>
       <div>

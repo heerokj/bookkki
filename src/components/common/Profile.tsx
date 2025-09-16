@@ -1,4 +1,5 @@
 import Avatar from "boring-avatars";
+import Image from "next/image";
 
 type UserInfo = {
   created_at?: string;
@@ -34,10 +35,12 @@ export default function Profile({
             overflow: "hidden",
           }}
         >
-          <img
+          <Image
             src={info.profile_url}
             alt="profile"
             style={{ borderRadius: "50%" }}
+            width={35}
+            height={35}
             className="w-full h-full object-cover"
           />
         </div>

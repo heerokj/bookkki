@@ -1,4 +1,5 @@
-//NOTE - props로 받는 타입 공부하기
+import Image from "next/image";
+
 export default function PreviewImage({
   previewImages,
   setPreviewImages,
@@ -12,9 +13,11 @@ export default function PreviewImage({
         return (
           <div key={img} className="flex">
             <div className="w-[270px] h-[150px] overflow-hidden">
-              <img
+              <Image
                 src={img}
                 alt={`${img}-${i}`}
+                width={270}
+                height={150}
                 className="object-cover w-full h-full"
               />
             </div>
@@ -24,7 +27,7 @@ export default function PreviewImage({
                   setPreviewImages(previewImages.filter((t) => t !== img))
                 }
               >
-                <img src="/icons/x.svg" alt="x" className="w-[15px] h-[15px]" />
+                <Image src="/icons/x.svg" alt="x" height={15} width={15} />
               </button>
             </div>
           </div>

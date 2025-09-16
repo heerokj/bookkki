@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Footer() {
   return (
     <div className="border-t-[1px] py-[20px]">
@@ -6,24 +8,34 @@ export default function Footer() {
         <ul className="flex gap-5">
           <li>
             <a href="mailto:wjdgmlfhr0321@gmail.com">
-              <img src="/icons/mail.svg" alt="email" />
+              <Image
+                src="/icons/mail.svg"
+                width={20}
+                height={20}
+                alt="email"
+                className="mt-[1px]"
+              />
             </a>
           </li>
           <li>
             <a href="https://github.com/heerokj/bookkki">
-              <img
+              <Image
                 src="/icons/github.svg"
                 alt="github"
-                className="w-[20px] h-[20px] mt-[1px]"
+                width={20}
+                height={20}
+                className="mt-[1px]"
               />
             </a>
           </li>
           <li>
             <a href="https://wjdgmlfhr0321.tistory.com/">
-              <img
+              <Image
                 src="/icons/tistory.svg"
                 alt="tistory"
-                className="w-[16px] h-[16px] mt-[3px]"
+                width={16}
+                height={16}
+                className="mt-[3px]"
               />
             </a>
           </li>

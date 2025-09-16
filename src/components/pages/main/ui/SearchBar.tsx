@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -22,7 +23,7 @@ export default function SearchBar() {
     <div className="input-area flex justify-center pt-[40px]">
       <div className="inputWrapper flex gap-2 px-4 w-[600px] h-14 rounded-full bg-gray-100">
         <button onSubmit={onSubmit}>
-          <img src="icons/search.svg" alt="search" width={20} height={20} />
+          <Image src="icons/search.svg" alt="search" width={20} height={20} />
         </button>
         <input
           value={search}
