@@ -12,7 +12,7 @@ export default async function Home() {
       >
         <RecommendBookList />
       </SectionBlock>
-      <SectionBlock title="최신 피드">
+      <SectionBlock title="최신 피드" description="자유롭게 공유하며 소통해요!">
         <LatestFeedList />
       </SectionBlock>
       <SectionBlock

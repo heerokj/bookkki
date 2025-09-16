@@ -18,7 +18,7 @@ export default function BookCafeList() {
       {cafeList &&
         cafeList.map((cafe, index) => (
           <li
-            className="bookkki-cafe-card hover:cursor-pointer"
+            className="bookkki-cafe-card hover:cursor-pointer transition-transform duration-300 hover:scale-105"
             key={`${cafe.CNTC_RESRCE_NO}-${index}`}
           >
             <Link href={`cafe-book?keyword=${cafe.TITLE}`}>

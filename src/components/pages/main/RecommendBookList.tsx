@@ -41,7 +41,10 @@ export default function RecommendBookList() {
     <div>
       <ul className="book-wrapper flex gap-6 justify-between">
         {BOOKS.map((book, index) => (
-          <li className="bookkki-book-card" key={`${book}-${index}`}>
+          <li
+            className="bookkki-book-card hover:cursor-pointer transition-transform duration-300 hover:scale-105"
+            key={`${book}-${index}`}
+          >
             <a>
               <div className="book-thumbnail h-[200px] w-[170px]">
                 <Image

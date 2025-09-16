@@ -11,8 +11,4 @@ export const HEADER_LISTS = [
     text: "북카페찾기",
     href: "/cafe-book",
   },
-  {
-    text: "채팅",
-    href: "/chat",
-  },
 ];

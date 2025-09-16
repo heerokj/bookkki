@@ -16,7 +16,7 @@ export default function LatestFeedList() {
       <ul className="book-wrapper flex gap-6 justify-between">
         {feedList?.map((book, index) => (
           <li
-            className="bookkki-book-card hover:cursor-pointer"
+            className="bookkki-book-card hover:cursor-pointer transition-transform duration-300 hover:scale-105"
             key={`${book.id}-${index}`}
           >
             <Link href={`/feed/${book.id}`}>
