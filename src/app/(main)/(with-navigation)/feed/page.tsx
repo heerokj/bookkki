@@ -11,6 +11,8 @@ import Link from "next/link";
 import { META } from "@/shared/constants/metadata";
 import FeedCardList from "@/components/pages/feed/FeedCardList";
 import Image from "next/image";
+import { Suspense } from "react";
+import FeedListSkeleton from "@/components/skeleton/FeedListSkeleton";
 
 export const metadata: Metadata = {
   title: "피드 - 북끼",
@@ -54,7 +56,9 @@ export default async function Feed() {
         </Link>
       </div>
       <HydrationBoundary state={dehydratedState}>
-        <FeedCardList />
+        <Suspense fallback={<FeedListSkeleton />}>
+          <FeedCardList />
+        </Suspense>
       </HydrationBoundary>
     </div>
   );

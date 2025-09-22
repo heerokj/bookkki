@@ -1,10 +1,9 @@
 "use client";
 import { useGetFeedList } from "@/hooks/use-feeds";
-
 import { useInView } from "react-intersection-observer";
 import { useEffect } from "react";
-import Loading from "@/app/(main)/(with-navigation)/feed/loading";
 import FeedCard from "./FeedCard";
+import FeedListSkeleton from "@/components/skeleton/FeedListSkeleton";
 
 export default function FeedCardList() {
   const [ref, inView] = useInView();
@@ -32,7 +31,11 @@ export default function FeedCardList() {
         )}
       </div>
       <div ref={ref} className="text-center pt-[40px]">
-        {hasNextPage ? <Loading /> : <div>모든 피드를 불러왔습니다.</div>}
+        {hasNextPage ? (
+          <FeedListSkeleton />
+        ) : (
+          <div>모든 피드를 불러왔습니다.</div>
+        )}
       </div>
     </div>
   );

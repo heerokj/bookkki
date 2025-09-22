@@ -1,25 +1,39 @@
 import SkeletonBox from "./SkeletonBox";
 
 export default function FeedListSkeleton() {
+  const count = 6;
   return (
-    <>
-      <div className="skeleton-container border rounded-2xl shadow-sm">
-        <div className="skeleton-heading flex justify-between p-2">
-          <div className="flex gap-2 h-[35px]">
-            <SkeletonBox
-              width="w-[35px]"
-              height="h-[35px]"
-              rounded="rounded-full"
-            />
-            <SkeletonBox width="w-28" height="h-4" className="mt-4" />
-          </div>
-        </div>
-        <SkeletonBox height="h-[300px]" />
-        <div className="skeleton-content h-[65px] p-2">
-          <SkeletonBox width="w-28" height="h-4" className="my-3" />
-          <SkeletonBox width="w-20" height="h-2" className="my-3" />
-        </div>
+    <div className="mb-6">
+      <div className="h-[50px]"></div>
+      <div className="grid grid-cols-3 gap-4">
+        {Array(count)
+          .fill(0)
+          .map((_, index) => (
+            <FeedCardSkeleton key={index} />
+          ))}
       </div>
-    </>
+    </div>
   );
 }
+
+const FeedCardSkeleton = () => {
+  return (
+    <div className="skeleton-container border rounded-2xl shadow-sm">
+      <div className="skeleton-heading flex justify-between p-2">
+        <div className="flex gap-2 h-[35px]">
+          <SkeletonBox
+            width="w-[35px]"
+            height="h-[35px]"
+            rounded="rounded-full"
+          />
+          <SkeletonBox width="w-28" height="h-4" className="mt-4" />
+        </div>
+      </div>
+      <SkeletonBox height="h-[300px]" />
+      <div className="skeleton-content h-[65px] p-2">
+        <SkeletonBox width="w-28" height="h-4" className="my-3" />
+        <SkeletonBox width="w-20" height="h-2" className="my-3" />
+      </div>
+    </div>
+  );
+};
