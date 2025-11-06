@@ -4,6 +4,12 @@ export async function GET() {
     const res = await fetch(
       `https://api.kcisa.kr/openapi/API_CIA_090/request?serviceKey=${process.env.NEXT_PUBLIC_SERVICE_KEY}&numOfRows=5&pageNo=20`
     );
+
+    if (!res.ok) {
+      console.error("공공데이터 API 오류:", res.status, res.statusText);
+      return new Response("공공데이터 API 오류", { status: res.status });
+    }
+
     const xml = await res.text();
     const parser = new XMLParser();
     const json = parser.parse(xml);

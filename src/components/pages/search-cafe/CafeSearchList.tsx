@@ -67,7 +67,7 @@ export default function CafeSearchList() {
   return (
     <div className="search-wrap mt-7 flex gap-2">
       <section className="search-result flex-1">
-        <div className="search-result-list overflow-y-auto">
+        <div className="search-result-list max-h-[700px] overflow-y-auto">
           <div className="flex flex-col gap-4">
             {list?.map((cafe) => (
               <div
